@@ -1,3 +1,0 @@
-/home/michal/Documents/Programming/Database/source/build/CMakeFiles/rebuild_cache.dir
-/home/michal/Documents/Programming/Database/source/build/CMakeFiles/edit_cache.dir
-/home/michal/Documents/Programming/Database/source/build/CMakeFiles/DB.dir
