@@ -1,0 +1,43 @@
+1. Zrobic interfejs interfejsu
+2. Zrobic implementacje interfejsu z inputem z command line
+3. Zrobic kompilator
+a. ogarnac jakies steps
+b. ogarnac metode jak najlepiej tokenizowac komendy
+4.SQL command line executor
+a. pass through jesli kompilator mowi ze git
+b. else blad
+c. z powrotem odpowiednie implementacje tego jak obsluzyc output
+5. Virtual Machine
+a.wykonuje polecenia- implementacja odpowiednich polecenia
+6.DB- interfejs 
+7.DB- struktrua danych
+
+1. Dokonczenie Tokenizera //jest 
+2. Testy reczne //jest
+3. Testy- napisanie testow wszystkich klas //jest
+4. Dopisanie brakujacych klas //jest
+5. Implementacja jakiegos memory storaga (najpierw interfejs, potem konkrety)
+
+-stworzenie Parsera- sortowanie komend SQL //jest
+-operacje na bazie danych- DataWarehouse- proste selecty+ Testy
+1. Dodanie WHERE- przyjmuje jeden argument- domyslnie EQUALS PODANE_SLOWO //jest
+1a. Naprawa Select- byla zmiana Table   //jest
+2. Zrobienie testów Selecta w kodzie //jest
+3. Napisanie testow  //sa
+4. Rozszerzenie WHERE- =, <, >
+5. Dodanie * do select
+6. Rozbudownaie DataWarehous
+    -wykonywanie komend
+    -inicjalizacja przy uruchomieniu
+    -zapis po zamknieciu
+7. Zrobienie petli main 
+
+8. Dodanie CREATE Table
+9. Rozbudowanie wszystkiego o typy danych
+10. Dodanie 
+
+
+
+
+-dodanie *
+!kazdy etap=testy
