@@ -24,6 +24,8 @@ add_executable(${PROJECT_NAME}
     Compiler/Tokenizer.cpp 
     Compiler/Parser.h 
     Compiler/Parser.cpp
+    Compiler/Compiler.h 
+    Compiler/Compiler.cpp
 
     MemoryStorage/DataWarehouse.h 
     MemoryStorage/DataWarehouse.cpp

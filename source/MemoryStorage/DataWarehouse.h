@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../SQLCommands/SQLCommand.h"
-#include "../Common/DBExecResult.h"
 #include "../Common/Table.h"
 
 #include <memory>
@@ -14,6 +13,6 @@ class DataWarehouse{
     public:
         DataWarehouse();
         ~DataWarehouse();
-        std::unique_ptr<DBExecResult> execute(SQLvec);
+        std::unique_ptr<Table> executeQuery(SQLvec);
         std::shared_ptr<Table> tab;
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SQLCommand.h"
+#include "SQLExceptions.h"
 
 class Where : public SQLCommand
 {

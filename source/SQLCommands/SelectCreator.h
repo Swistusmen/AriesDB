@@ -5,7 +5,6 @@ class SelectCreator: public Creator{
     public:
         bool doesAWordRepresentSQLCommand(std::string word) override{
             this->toLower(word);
-            std::cout<<word<<std::endl;
             return keyWord==word;
         };
 

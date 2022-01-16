@@ -1,32 +1,38 @@
 #include "Interface/Interface.h"
-#include "Compiler/Tokenizer.h"
-#include "Compiler/Parser.h"
+#include "Compiler/Compiler.h"
 #include "Common/Table.h"
 #include "MemoryStorage/DataWarehouse.h"
 #include <iostream>
+
+void printTable(std::shared_ptr<Table> tab);
 
 int main()
 {
     /*std::cout << "Hello world\n";
     std::cout << takeInputFromKeyboard(std::cin) << std::endl;*/
 
-    Tokenizer tokenizer;
-    std::string test="where category Fashion";
-    auto tokens=tokenizer.tokenizeInputString(test);
+    std::string test = "select * from Shops";
+    Compiler compiler;
+    auto tokens=compiler.compile(test);
 
-    Parser parser;
-    tokens=parser.sortCommands(std::move(tokens));
-    
     DataWarehouse db;
-    auto ptrToTable=tokens->at(0)->execute(db.tab);
-    std::cout<<(ptrToTable==nullptr)<<std::endl;
-    std::for_each(ptrToTable->rows.begin(),ptrToTable->rows.end(),[](auto row){
-        std::for_each(row.begin(),row.end(),[](auto element){
-            std::cout<<element<<" ";
-        });
-        std::cout<<std::endl;
-    })    ;
-
+    std::cout << tokens->size() << std::endl;
+    auto ptrToTable = tokens->at(0)->execute(db.tab);
+    printTable(ptrToTable);
 
     return 0;
+}
+
+void printTable(std::shared_ptr<Table> tab)
+{
+    std::for_each(tab->columns.begin(), tab->columns.end(), [](auto a)
+                  { std::cout << a << " "; });
+    std::cout << std::endl;
+
+    std::for_each(tab->rows.begin(), tab->rows.end(), [](auto row)
+                  {
+                      std::for_each(row.begin(), row.end(), [](auto element)
+                                    { std::cout << element << " "; });
+                      std::cout << std::endl;
+                  });
 }

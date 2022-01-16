@@ -19,7 +19,11 @@ DataWarehouse::~DataWarehouse(){
     tab.reset();
 }
 
-std::unique_ptr<DBExecResult> DataWarehouse::execute(SQLvec vec){
-   // TODO:
+std::unique_ptr<Table> DataWarehouse::executeQuery(SQLvec vec){
+    
+    //write a method which takes vector of tables ()- it calls a metod on every element of a table, thanks to what we got smaller table
+    //output of previous query is an input of next query
+    //after all, every table in a vector is unified into one big output table which is returned
+
     return nullptr;
 }

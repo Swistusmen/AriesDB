@@ -13,7 +13,7 @@ std::vector<std::string> Tokenizer::splitLongStringIntoAWords(std::string inputS
     std::string buffer;
 
     for(auto letter: inputStr){
-        if(letter != DELIMITER){
+        if(letter != DELIMITER && letter!=',' ){
             buffer+=letter;
         }else{
             words.push_back(buffer);
@@ -35,7 +35,7 @@ std::unique_ptr<std::vector<std::unique_ptr<SQLCommand>>> Tokenizer::initializeS
         if(respond.has_value()){
             commands->push_back(std::move(respond.value()));
         }else{
-            commands->back()->addArgument(words[i]);
+            words[i]=="*"? commands->pop_back() :  commands->back()->addArgument(words[i]);
         }
     }
     return commands;

@@ -22,15 +22,30 @@ std::shared_ptr<Table> Where::execute(std::shared_ptr<Table> table)
     {
         return nullptr;
     }
+    if(arguments.size()%3!=0){
+        throw new WrongArguments;
+    }
 
     auto columnMatch = std::find(table->columns.begin(), table->columns.end(), arguments.at(0));
     if (columnMatch != table->columns.end())
     {
         const int columnIndex = columnMatch - table->columns.begin();
-        const auto condition = arguments.at(1);
+        const auto conditionValue = arguments.at(2);
+        std::string conditionOperator=arguments.at(1);
 
-        table->rows.remove_if([columnIndex, condition](auto& a)
-                       { return a.at(columnIndex) != condition; });
+        if(conditionOperator=="="){
+            table->rows.remove_if([columnIndex, conditionValue](auto& a)
+                       { return a.at(columnIndex) != conditionValue; });
+        }else if(conditionOperator=="<"){
+            table->rows.remove_if([columnIndex, conditionValue](auto& a)
+                       { return a.at(columnIndex) >= conditionValue; });
+        }else if(conditionOperator==">"){
+            table->rows.remove_if([columnIndex, conditionValue](auto& a)
+                       { return a.at(columnIndex) <= conditionValue; });
+        }else{
+            throw new WrongArguments;
+        }
+
         return table;
     }
 
