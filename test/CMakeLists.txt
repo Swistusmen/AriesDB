@@ -20,6 +20,7 @@ add_executable(${PROJECT_NAME}
     SQLCommands/From_test.cpp
     Compiler/Tokenizer_test.cpp
     Compiler/Parser_test.cpp
+    MemoryStorage/DataWarehouse_test.cpp
     Mocks/TableMocks.h
     )
 
