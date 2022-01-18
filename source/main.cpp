@@ -11,14 +11,14 @@ int main()
     /*std::cout << "Hello world\n";
     std::cout << takeInputFromKeyboard(std::cin) << std::endl;*/
 
-    std::string test = "select * from Shops";
+    std::string test = "select shop, category from Shops where id > 3";
     Compiler compiler;
     auto tokens=compiler.compile(test);
 
     DataWarehouse db;
-    std::cout << tokens->size() << std::endl;
-    auto ptrToTable = tokens->at(0)->execute(db.tab);
-    printTable(ptrToTable);
+    
+    auto result =db.executeQuery(std::move(tokens));
+    printTable(result);
 
     return 0;
 }

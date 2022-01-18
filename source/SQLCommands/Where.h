@@ -17,5 +17,5 @@ public:
     std::shared_ptr<Table> execute(std::shared_ptr<Table>) override;
 
 private:
-    static const int validity = 3;
+    static const int validity = 2;
 };

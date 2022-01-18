@@ -16,7 +16,7 @@ public:
     ~From() override;
 
     int getValidity() override { return validity; };
-    std::shared_ptr<Table> execute(std::shared_ptr<Table> ) override;
+    std::shared_ptr<Table> execute(std::shared_ptr<Table>) override;
 
 private:
     static const int validity = 1;

@@ -1,4 +1,5 @@
 #include "DataWarehouse.h"
+#include<iostream>
 
 DataWarehouse::DataWarehouse(){
     tab=std::make_shared<Table>("Shops","1");
@@ -19,11 +20,44 @@ DataWarehouse::~DataWarehouse(){
     tab.reset();
 }
 
-std::unique_ptr<Table> DataWarehouse::executeQuery(SQLvec vec){
-    
-    //write a method which takes vector of tables ()- it calls a metod on every element of a table, thanks to what we got smaller table
-    //output of previous query is an input of next query
-    //after all, every table in a vector is unified into one big output table which is returned
+std::shared_ptr<Table> DataWarehouse::executeQuery(SQLvec&& vec){
+    std::vector<std::shared_ptr<Table>> systemTables{tab}; //vector of tables provided by the system- for now it's that
+    std::vector<std::shared_ptr<Table>> processingTables=systemTables;
 
-    return nullptr;
+    for(const auto& command: *vec){
+        std::cout<<"Command validity: "<<command->getValidity()<<std::endl;
+        std::cout<<processingTables.size()<<std::endl;
+        processingTables=command->execute(processingTables);
+        std::cout<<processingTables.size()<<std::endl;
+    }
+
+    return mergeVectorOfResultTablesIntoOne(processingTables);
+}
+
+std::shared_ptr<Table> DataWarehouse::mergeVectorOfResultTablesIntoOne(std::vector<std::shared_ptr<Table>> tables){
+    const int noTables=tables.size();
+    std::cout<<"Number of tables: "<<noTables<<std::endl;
+    if(noTables==0){
+        return nullptr;
+    }
+
+    if(noTables==1){
+        return tables.at(0);
+    }
+
+    auto it=tables.begin();
+    auto outputTable=*it;
+    
+
+    for(;it!=tables.end();++it){
+        outputTable->columns.insert(outputTable->columns.end(),(*it)->columns.begin(),(*it)->columns.end());
+
+        std::for_each(outputTable->rows.begin(),outputTable->rows.end(),[&it](auto row){
+                std::for_each((*it)->rows.begin(),(*it)->rows.end(),[&row](auto toAdd){
+                    row.insert(row.end(),toAdd.begin(),toAdd.end());
+                });
+        });
+    }
+
+    return outputTable;
 }

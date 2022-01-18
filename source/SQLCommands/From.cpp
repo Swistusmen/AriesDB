@@ -18,3 +18,4 @@ std::shared_ptr<Table> From::execute(std::shared_ptr<Table> table){
         return table;
     return nullptr;
 }
+

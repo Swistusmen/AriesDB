@@ -13,6 +13,9 @@ class DataWarehouse{
     public:
         DataWarehouse();
         ~DataWarehouse();
-        std::unique_ptr<Table> executeQuery(SQLvec);
+        std::shared_ptr<Table> executeQuery(SQLvec&&);
         std::shared_ptr<Table> tab;
+
+    private:
+        std::shared_ptr<Table> mergeVectorOfResultTablesIntoOne(std::vector<std::shared_ptr<Table>> tables);
 };
