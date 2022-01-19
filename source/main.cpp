@@ -2,15 +2,16 @@
 #include "Compiler/Compiler.h"
 #include "Common/Table.h"
 #include "MemoryStorage/DataWarehouse.h"
+#include "MemoryStorage/Pager/OSInterface/FileOperations.h"
 #include <iostream>
+
+#include <filesystem>
 
 void printTable(std::shared_ptr<Table> tab);
 
 int main()
 {
-    /*std::cout << "Hello world\n";
-    std::cout << takeInputFromKeyboard(std::cin) << std::endl;*/
-
+    /*
     std::string test = "select shop, category from Shops where id > 3";
     Compiler compiler;
     auto tokens=compiler.compile(test);
@@ -18,7 +19,10 @@ int main()
     DataWarehouse db;
     
     auto result =db.executeQuery(std::move(tokens));
-    printTable(result);
+    printTable(result);*/
+
+    
+    
 
     return 0;
 }

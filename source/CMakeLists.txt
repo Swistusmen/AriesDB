@@ -30,6 +30,8 @@ add_executable(${PROJECT_NAME}
     MemoryStorage/DataWarehouse.h 
     MemoryStorage/DataWarehouse.cpp
 
+    MemoryStorage/Pager/OSInterface/FileOperations.h
+
     SQLCommands/Creator.h 
     SQLCommands/From.cpp 
     SQLCommands/From.h 
