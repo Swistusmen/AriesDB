@@ -18,6 +18,7 @@ add_executable(${PROJECT_NAME}
     SQLCommands/Select_test.cpp
     SQLCommands/Where_test.cpp
     SQLCommands/From_test.cpp
+    Common/DataBaseTable_test.cpp
     Compiler/Tokenizer_test.cpp
     Compiler/Parser_test.cpp
     MemoryStorage/DataWarehouse_test.cpp

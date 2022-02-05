@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Common/Table.h"
+#include "../Common/DataBaseTable.h"
 
 #include <memory>
 #include <string>
@@ -28,10 +29,10 @@ public:
 
     virtual std::shared_ptr<Table> execute(std::shared_ptr<Table>) = 0;
 
-    std::vector<std::shared_ptr<Table>> execute(const std::vector<std::shared_ptr<Table>> & tables)
+    virtual std::vector<std::shared_ptr<Table>> execute(std::vector<std::shared_ptr<Table>> & tables)
     {
         std::vector<std::shared_ptr<Table>> vecOfValidTables;
-        for (const auto &tab : tables)
+        for (auto &tab : tables)
         {
             auto res = this->execute(tab);
             if (res != nullptr)
@@ -41,6 +42,8 @@ public:
         }
         return vecOfValidTables;
     }
+
+    virtual std::vector<std::shared_ptr<Table>> execute(const std::vector< DataBaseTable>& tableOfVectors){return {};};
 
 protected:
     std::vector<std::string> arguments;

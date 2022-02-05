@@ -25,10 +25,7 @@ std::shared_ptr<Table> DataWarehouse::executeQuery(SQLvec&& vec){
     std::vector<std::shared_ptr<Table>> processingTables=systemTables;
 
     for(const auto& command: *vec){
-        std::cout<<"Command validity: "<<command->getValidity()<<std::endl;
-        std::cout<<processingTables.size()<<std::endl;
         processingTables=command->execute(processingTables);
-        std::cout<<processingTables.size()<<std::endl;
     }
 
     return mergeVectorOfResultTablesIntoOne(processingTables);
@@ -36,7 +33,6 @@ std::shared_ptr<Table> DataWarehouse::executeQuery(SQLvec&& vec){
 
 std::shared_ptr<Table> DataWarehouse::mergeVectorOfResultTablesIntoOne(std::vector<std::shared_ptr<Table>> tables){
     const int noTables=tables.size();
-    std::cout<<"Number of tables: "<<noTables<<std::endl;
     if(noTables==0){
         return nullptr;
     }

@@ -15,7 +15,6 @@ public:
 
     int getValidity() override { return validity; };
     std::shared_ptr<Table> execute(std::shared_ptr<Table>) override;
-    std::vector<std::shared_ptr<Table>> execute(std::vector<std::shared_ptr<Table>>& );
 
 private:
     static const int validity = 3;

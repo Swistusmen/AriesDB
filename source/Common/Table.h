@@ -5,7 +5,12 @@
 #include <list>
 
 struct Table{
-        Table(std::string DBName, std::string version):tableName(DBName),tableVersion(version){};
+        Table()=default;
+        Table(const std::string& DBName,const std::string& version):tableName(DBName),tableVersion(version){};
+        Table(const Table& tab):columns(tab.columns),rows(tab.rows){
+            tableName=tab.tableName+"Copy";
+            tableVersion="Temporary";
+        }
         
         ~Table(){
             columns.clear();
