@@ -1,5 +1,4 @@
 #include "DataWarehouse.h"
-#include<iostream>
 
 DataWarehouse::DataWarehouse(){
     tab=std::make_shared<Table>("Shops","1");
@@ -56,4 +55,37 @@ std::shared_ptr<Table> DataWarehouse::mergeVectorOfResultTablesIntoOne(std::vect
     }
 
     return outputTable;
+}
+
+const std::string& DataWarehouse::getDeviceStorageLocation() const
+{
+    return pager.getDeviceDataBaseStorageLocation();
+}
+       
+void DataWarehouse::setDeviceStroageLocation(const std::string& storageLocation) 
+{
+    pager.changeDeviceDataBaseStorageLocation(storageLocation);
+}
+
+std::shared_ptr<Table> test_executeQuery(std::unique_ptr<std::vector<std::unique_ptr<SQLCommand>>>&& vec,DataWarehouse& db){
+    auto tab=std::make_shared<Table>("Shops","1");
+    tab->columns=std::vector<std::string>{"id","shop","category","floor"};
+    std::vector<std::string> a{"1","Rossman","Beauty","1"};
+    std::vector<std::string> b{"2","H&M","Fashion","1"};
+    std::vector<std::string> c{"3","C&A","Fashion","1"};
+    std::vector<std::string> d{"4","NewYorker","Fashion","2"};
+    std::vector<std::string> e{"5","Biedronka","Supermarket","2"};
+    tab->rows.push_back(a);
+    tab->rows.push_back(b);
+    tab->rows.push_back(c);
+    tab->rows.push_back(d);
+    tab->rows.push_back(e);
+    std::vector<std::shared_ptr<Table>> systemTables{tab}; //vector of tables provided by the system- for now it's that
+    std::vector<std::shared_ptr<Table>> processingTables=systemTables;
+
+    for(const auto& command: *vec){
+        processingTables=command->execute(processingTables);
+    }
+
+    return db.mergeVectorOfResultTablesIntoOne(processingTables);
 }

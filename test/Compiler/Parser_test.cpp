@@ -19,11 +19,11 @@ TEST(PARSER,SORT_FROM_SELECT_WHERE_CORRECTLY_1){
     Parser parser;
     res=parser.sortCommands(std::move(res));
     const int noSQL=res->size();
-    std::vector<int>  validity;
+    std::vector<SQL::Code>  validity;
     for(int i=0;i<noSQL;i++){
-        validity.push_back(res->at(i)->getValidity());
+        validity.push_back(res->at(i)->getPriority());
     }
-    std::vector<int> expected{1,1,1,2,3};
+    std::vector<SQL::Code> expected{SQL::Code::FROM,SQL::Code::FROM,SQL::Code::FROM,SQL::Code::WHERE,SQL::Code::SELECT};
     ASSERT_EQ(expected, validity);
 }
 
@@ -37,11 +37,11 @@ TEST(PARSER,SORT_FROM_SELECT_WHERE_CORRECTLY_2){
     Parser parser;
     res=parser.sortCommands(std::move(res));
     const int noSQL=res->size();
-    std::vector<int>  validity;
+    std::vector<SQL::Code>  validity;
     for(int i=0;i<noSQL;i++){
-        validity.push_back(res->at(i)->getValidity());
+        validity.push_back(res->at(i)->getPriority());
     }
-    std::vector<int> expected{1,2,2,3,3};
+    std::vector<SQL::Code> expected{SQL::Code::FROM,SQL::Code::WHERE,SQL::Code::WHERE,SQL::Code::SELECT,SQL::Code::SELECT};
     ASSERT_EQ(expected, validity);
 }
 
@@ -53,10 +53,10 @@ TEST(PARSER,SORT_FROM_SELECT_WHERE_CORRECTLY_3){
     Parser parser;
     res=parser.sortCommands(std::move(res));
     const int noSQL=res->size();
-    std::vector<int>  validity;
+    std::vector<SQL::Code>  validity;
     for(int i=0;i<noSQL;i++){
-        validity.push_back(res->at(i)->getValidity());
+        validity.push_back(res->at(i)->getPriority());
     }
-    std::vector<int> expected{1,2,3};
+    std::vector<SQL::Code> expected{SQL::Code::FROM,SQL::Code::WHERE,SQL::Code::SELECT};
     ASSERT_EQ(expected, validity);
 }

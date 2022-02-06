@@ -1,8 +1,7 @@
 #include "Interface/Interface.h"
 #include "Compiler/Compiler.h"
-#include "Common/Table.h"
 #include "MemoryStorage/DataWarehouse.h"
-#include "MemoryStorage/Pager/OSInterface/FileOperations.h"
+
 #include <iostream>
 
 #include <filesystem>
@@ -36,11 +35,7 @@ int main()
     tab->rows.push_back(d);
     tab->rows.push_back(e);
     
-    
-
-
-    
-    
+    DataWarehouse db;
 
     return 0;
 }

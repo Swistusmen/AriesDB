@@ -11,6 +11,7 @@ include_directories(
     Compiler
     Common 
     MemoryStorage
+    MemoryStorage/Pager 
 )
 
 add_executable(${PROJECT_NAME}
@@ -19,6 +20,8 @@ add_executable(${PROJECT_NAME}
 
     Common/Table.h 
     Common/DBExecResult.h
+    Common/DataBaseTable.h 
+    Common/DataBaseTable.cpp
 
     Compiler/Tokenizer.h 
     Compiler/Tokenizer.cpp 
@@ -27,11 +30,13 @@ add_executable(${PROJECT_NAME}
     Compiler/Compiler.h 
     Compiler/Compiler.cpp
 
-    MemoryStorage/DataWarehouse.h 
-    MemoryStorage/DataWarehouse.cpp
-
     MemoryStorage/Pager/OSInterface/FileOperations.h
-
+    MemoryStorage/Pager/OSInterface/FileOperations.cpp
+    MemoryStorage/Pager/Pager.h 
+    MemoryStorage/DataWarehouse.h
+    MemoryStorage/Pager/Pager.cpp
+    MemoryStorage/DataWarehouse.cpp 
+    
     SQLCommands/Creator.h 
     SQLCommands/From.cpp 
     SQLCommands/From.h 

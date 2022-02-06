@@ -1,10 +1,5 @@
 #include "Pager.h"
 
-Pager::Pager()
-{
-    lastUpdateTime = std::chrono::system_clock::now();
-}
-
 Pager::~Pager()
 {
     cleanProgramDataBaseTables();
@@ -12,14 +7,16 @@ Pager::~Pager()
 
 void Pager::synchronizeDeviceStorageWithADBState()
 {
-    std::vector<const DataBaseTable&> toUpdate;
+    std::list<std::vector<DataBaseTable>::iterator> toUpdate;
 
-    std::copy_if(tables.begin(),tables.end(),std::back_inserter(toUpdate),[this](auto dbTable){
-        return dbTable.getLastModificationDate()-lastUpdateTime>backupTimeIntervalInSeconds;
-    });
+    for(auto it=tables.begin();it!=tables.end();it++){
+        if(it->getLastModificationDate()-lastUpdateTime>backupTimeIntervalInSeconds){
+            toUpdate.push_back(it);
+        }
+    }
 
     for(const auto& tab:toUpdate){
-        saveATableIntoATextFile(currentDataBasePath,tab.getTableName(),tab.getTableForReadOnly());
+        saveATableIntoATextFile(currentDataBasePath,tab->getTableName(),tab->getTableDataForReadOnly());
     }
     lastUpdateTime = std::chrono::system_clock::now();
 }

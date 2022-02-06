@@ -13,9 +13,9 @@ public:
 
     ~Select() override;
 
-    int getValidity() override { return validity; };
+    SQL::Code getPriority() override { return priority; };
     std::shared_ptr<Table> execute(std::shared_ptr<Table>) override;
 
 private:
-    static const int validity = 3;
+    static const SQL::Code priority = SQL::Code::SELECT;
 };

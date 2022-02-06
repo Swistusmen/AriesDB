@@ -2,6 +2,7 @@
 
 #include "../Common/Table.h"
 #include "../Common/DataBaseTable.h"
+#include "Commands.h"
 
 #include <memory>
 #include <string>
@@ -25,7 +26,7 @@ public:
 
     void addArgument(std::string word) { arguments.push_back(word); };
     std::vector<std::string> &getArguments() { return arguments; };
-    virtual int getValidity() = 0;
+    virtual SQL::Code getPriority() = 0;
 
     virtual std::shared_ptr<Table> execute(std::shared_ptr<Table>) = 0;
 

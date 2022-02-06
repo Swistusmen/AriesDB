@@ -15,10 +15,10 @@ public:
 
     ~From() override;
 
-    int getValidity() override { return validity; };
+    SQL::Code getPriority() override { return priority; };
     std::shared_ptr<Table> execute(std::shared_ptr<Table>) override;
     std::vector<std::shared_ptr<Table>> execute(const std::vector<DataBaseTable>& tableOfVectors) override;
 
 private:
-    static const int validity = 1;
+    static const SQL::Code priority= SQL::Code::FROM;
 };
