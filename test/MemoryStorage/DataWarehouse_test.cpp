@@ -6,6 +6,8 @@
 #include "../../source/SQLCommands/Select.h"
 
 #include "../../source/MemoryStorage/DataWarehouse.cpp"
+#include "../../source/MemoryStorage/Pager/Pager.cpp"
+#include "../../source/MemoryStorage/Pager/OSInterface/FileOperations.cpp"
 
 #include <vector>
 #include <memory>
@@ -27,7 +29,7 @@ TEST(Data_Warehoouse,Simple_query_select_from_where_one_table){
     // mocking compiler output
     
     DataWarehouse db;
-    auto output=db.executeQuery(std::move(res));
+    auto output=test_executeQuery(std::move(res),db);
     std::vector<std::string> flatTable;
     flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
     std::for_each(output->rows.begin(),output->rows.end(),[&flatTable](auto row){
