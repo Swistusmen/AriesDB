@@ -14,7 +14,7 @@ std::vector<std::string> splitString(std::string val, char delimiter){
     return output;
 }
 
-std::filesystem::path saveATableIntoATextFile(std::filesystem::path path,const std::string &filename, const Table& table)
+std::optional<std::filesystem::path> saveATableIntoATextFile(std::filesystem::path path,const std::string &filename, const Table& table)
 {
     std::ofstream file;
     std::string newFile = path.string() + PATH_SEPARATOR + filename;
@@ -32,19 +32,20 @@ std::filesystem::path saveATableIntoATextFile(std::filesystem::path path,const s
                           file << '\n';
                       });
         file.close();
-    }else{
-        throw new std::invalid_argument("Could not open a file");
+        return path;
     }
-    return path;
+    return {};
 }
 
-Table loadAFile(std::filesystem::path path,const std::string& filename)
+std::optional<Table> loadAFile(std::filesystem::path path,const std::string& filename)
 {
     std::ifstream file;
     std::string fileToRead=path.string()+PATH_SEPARATOR+filename;
+    size_t npos=filename.find_last_of(".");
+    std::string rawFilenName=filename.substr(0,npos);
     file.open(fileToRead);
     if(file.is_open()){
-        Table output("DTO","1");
+        Table output(rawFilenName,"1");
         std::string buffer;
         std::getline(file,buffer);
         output.columns=std::move(splitString(buffer,' '));
@@ -56,7 +57,7 @@ Table loadAFile(std::filesystem::path path,const std::string& filename)
         file.close();
         return output;
     }else{
-        throw new std::invalid_argument("Could not open a file to load");
+        return {};
     }
 }
 
@@ -65,7 +66,7 @@ std::vector<std::string> listFiles(std::filesystem::path path)
     std::vector<std::string> files;
     for (const auto &it : std::filesystem::directory_iterator(path))
     {
-        files.push_back(std::filesystem::absolute(it.path()).string());
+        files.push_back(std::filesystem::absolute(it.path()).filename().string());
     }
     return files;
 }

@@ -1,10 +1,10 @@
 #include "Tokenizer.h"
 
-std::unique_ptr<std::vector<std::unique_ptr<SQLCommand>>> Tokenizer::tokenizeInputString(std::string &inputString)
+std::vector<std::unique_ptr<SQLCommand>> Tokenizer::tokenizeInputString(std::string &inputString)
 {
     auto words = splitLongStringIntoAWords(inputString);
     auto commands = initializeSQLCommands(words);
-    return std::move(commands);
+    return commands;
 }
 
 std::vector<std::string> Tokenizer::splitLongStringIntoAWords(std::string inputStr)
@@ -13,7 +13,7 @@ std::vector<std::string> Tokenizer::splitLongStringIntoAWords(std::string inputS
     std::string buffer;
 
     for(auto letter: inputStr){
-        if(letter != DELIMITER && letter!=',' ){
+        if(letter != Delimiters::DELIMITER_1 && letter!=Delimiters::DELIMITER_2 ){
             buffer+=letter;
         }else{
             words.push_back(buffer);
@@ -25,17 +25,17 @@ std::vector<std::string> Tokenizer::splitLongStringIntoAWords(std::string inputS
     return std::move(words);
 }
 
-std::unique_ptr<std::vector<std::unique_ptr<SQLCommand>>> Tokenizer::initializeSQLCommands(std::vector<std::string> &words)
+std::vector<std::unique_ptr<SQLCommand>> Tokenizer::initializeSQLCommands(std::vector<std::string> &words)
 {
-    int noWords = words.size();
-    auto commands=std::make_unique<std::vector<std::unique_ptr<SQLCommand>>>();
+    const int noWords = words.size();
+    std::vector<std::unique_ptr<SQLCommand>> commands;
     for (int i = 0; i < noWords; i++)
     {
         auto respond=sqlCreator.createACommand(words[i]);
         if(respond.has_value()){
-            commands->push_back(std::move(respond.value()));
+            commands.push_back(std::move(respond.value()));
         }else{
-            words[i]=="*"? commands->pop_back() :  commands->back()->addArgument(words[i]);
+            words[i]=="*"? commands.pop_back() :  commands.back()->addArgument(words[i]);
         }
     }
     return commands;

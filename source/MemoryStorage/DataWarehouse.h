@@ -5,22 +5,21 @@
 
 //high level interface for a database
 
-using SQLvec =std::unique_ptr<std::vector<std::unique_ptr<SQLCommand>>>; //To Refactor
-
 class DataWarehouse{
     public:
         DataWarehouse();
         ~DataWarehouse();
-        std::shared_ptr<Table> executeQuery(SQLvec&&);
-        std::shared_ptr<Table> tab;
+        std::unique_ptr<Table> executeQuery(std::vector<std::unique_ptr<SQLCommand>>&&);
+        std::unique_ptr<Table> tab;
 
         const std::string& getDeviceStorageLocation() const;
         void setDeviceStroageLocation(const std::string& storageLocation);
 
     private:
 
-        friend std::shared_ptr<Table> test_executeQuery(std::unique_ptr<std::vector<std::unique_ptr<SQLCommand>>>&&,DataWarehouse&);
-        std::shared_ptr<Table> mergeVectorOfResultTablesIntoOne(std::vector<std::shared_ptr<Table>> tables);
+        friend std::unique_ptr<Table> test_executeQuery(std::vector<std::unique_ptr<SQLCommand>>&&,DataWarehouse&);
+        std::unique_ptr<Table> mergeVectorOfResultTablesIntoOne(std::vector<std::unique_ptr<Table>>& tables);
+        std::unique_ptr<Table> executeReadOnlyQuery(std::vector<std::unique_ptr<SQLCommand>>&&);
 
     private:
         Pager pager;

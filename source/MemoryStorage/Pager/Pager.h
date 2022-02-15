@@ -14,6 +14,8 @@ public:
 
     const std::vector<DataBaseTable> &getTablesForReadOnly() const;
 
+    void changeDB(const std::string&storageLocation);
+    
     void synchronizeDeviceStorageWithADBState();
     void cleanProgramDataBaseTables();
     void changeDeviceDataBaseStorageLocation(const std::string &path);

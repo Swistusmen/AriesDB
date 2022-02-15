@@ -15,17 +15,17 @@
 
 TEST(Data_Warehoouse,Simple_query_select_from_where_one_table){
     // mocking compiler output
-    auto res=std::make_unique<std::vector<std::unique_ptr<SQLCommand>>>();
+    std::vector<std::unique_ptr<SQLCommand>> res;
     
-    res->emplace_back(std::make_unique<From>());
-    res->back()->addArgument("Shops");
-    res->push_back(std::make_unique<Where>());
-    res->back()->addArgument("id");
-    res->back()->addArgument(">");
-    res->back()->addArgument("3");
-    res->push_back(std::make_unique<Select>()); 
-    res->back()->addArgument("category");
-    res->back()->addArgument("shop");
+    res.emplace_back(std::make_unique<From>());
+    res.back()->addArgument("Shops");
+    res.push_back(std::make_unique<Where>());
+    res.back()->addArgument("id");
+    res.back()->addArgument(">");
+    res.back()->addArgument("3");
+    res.push_back(std::make_unique<Select>()); 
+    res.back()->addArgument("category");
+    res.back()->addArgument("shop");
     // mocking compiler output
     
     DataWarehouse db;

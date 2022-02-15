@@ -1,0 +1,6 @@
+id shop category floor 
+1 Rossman Beauty 1 
+2 H&M Fashion 1 
+3 C&A Fashion 1 
+4 NewYorker Fashion 2 
+5 Biedronka Supermarket 2 

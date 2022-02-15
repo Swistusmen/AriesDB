@@ -8,7 +8,7 @@ struct Table{
         Table()=default;
         Table(const std::string& DBName,const std::string& version):tableName(DBName),tableVersion(version){};
         Table(const Table& tab):columns(tab.columns),rows(tab.rows){
-            tableName=tab.tableName+"Copy";
+            tableName=tab.tableName;
             tableVersion="Temporary";
         }
         

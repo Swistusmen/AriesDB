@@ -4,11 +4,11 @@
 
 struct ShopTable
 {
-    std::shared_ptr<Table> tab;
+    std::unique_ptr<Table> tab;
 
     ShopTable()
     {
-        tab = std::make_shared<Table>("Shops", "1");
+        tab = std::make_unique<Table>("Shops", "1");
         tab->columns = std::vector<std::string>{"id", "shop", "category", "floor"};
         std::vector<std::string> a{"1", "Rossman", "Beauty", "1"};
         std::vector<std::string> b{"2", "H&M", "Fashion", "1"};

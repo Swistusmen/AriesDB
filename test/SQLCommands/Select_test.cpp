@@ -7,7 +7,7 @@ TEST(Select, Select_single_column)
     ShopTable shop;
     SQLCommand *select = new Select;
     select->addArgument("shop");
-    auto res = select->execute(shop.tab);
+    auto res = select->execute(std::move(shop.tab));
 
     std::vector<std::string> expected{"Rossman", "H&M", "C&A", "NewYorker", "Biedronka"};
     std::vector<std::string> whatIGet;
@@ -25,7 +25,7 @@ TEST(Select, Select_two_columns)
     SQLCommand *select = new Select;
     select->addArgument("shop");
     select->addArgument("category");
-    auto res = select->execute(shop.tab);
+    auto res = select->execute(std::move(shop.tab));
 
     std::vector<std::string> expected{"Rossman", "H&M", "C&A", "NewYorker", "Biedronka", "Beauty", "Fashion", "Fashion", "Fashion", "Supermarket"};
     std::vector<std::string> whatIGet;

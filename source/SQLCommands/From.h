@@ -16,8 +16,8 @@ public:
     ~From() override;
 
     SQL::Code getPriority() override { return priority; };
-    std::shared_ptr<Table> execute(std::shared_ptr<Table>) override;
-    std::vector<std::shared_ptr<Table>> execute(const std::vector<DataBaseTable>& tableOfVectors) override;
+    std::unique_ptr<Table> execute(std::unique_ptr<Table>) override;
+    std::vector<std::unique_ptr<Table>> execute(const std::vector<DataBaseTable>& tableOfVectors) override;
 
 private:
     static const SQL::Code priority= SQL::Code::FROM;

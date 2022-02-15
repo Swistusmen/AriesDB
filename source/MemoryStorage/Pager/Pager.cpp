@@ -5,18 +5,32 @@ Pager::~Pager()
     cleanProgramDataBaseTables();
 }
 
+void Pager::changeDB(const std::string &storageLocation)
+{
+    synchronizeDeviceStorageWithADBState();
+    changeDeviceDataBaseStorageLocation(storageLocation);
+    loadDataTables();
+}
+
 void Pager::synchronizeDeviceStorageWithADBState()
 {
+    if (currentDataBasePath == "")
+    {
+        return;
+    }
     std::list<std::vector<DataBaseTable>::iterator> toUpdate;
 
-    for(auto it=tables.begin();it!=tables.end();it++){
-        if(it->getLastModificationDate()-lastUpdateTime>backupTimeIntervalInSeconds){
+    for (auto it = tables.begin(); it != tables.end(); it++)
+    {
+        if (it->getLastModificationDate() - lastUpdateTime > backupTimeIntervalInSeconds)
+        {
             toUpdate.push_back(it);
         }
     }
 
-    for(const auto& tab:toUpdate){
-        saveATableIntoATextFile(currentDataBasePath,tab->getTableName(),tab->getTableDataForReadOnly());
+    for (const auto &tab : toUpdate)
+    {
+        saveATableIntoATextFile(currentDataBasePath, tab->getTableName(), tab->getTableDataForReadOnly());
     }
     lastUpdateTime = std::chrono::system_clock::now();
 }
@@ -31,18 +45,23 @@ void Pager::cleanProgramDataBaseTables()
 
 void Pager::loadDataTables()
 {
-    if(currentDataBasePath==""){
+    if (currentDataBasePath == "")
+    {
         return;
     }
+    files = listFiles(currentDataBasePath);
 
-    files=listFiles(currentDataBasePath);
-
-    if(files.empty()){
+    if (files.empty())
+    {
         return;
     }
-
-    for(const auto& fileName: files){
-        tables.push_back(loadAFile(currentDataBasePath,fileName));
+    for (const auto &fileName : files)
+    {
+        auto loadedFile = loadAFile(currentDataBasePath, fileName);
+        if (loadedFile.has_value())
+        {
+            tables.push_back(std::move(loadedFile.value()));
+        }
     }
     lastUpdateTime = std::chrono::system_clock::now();
 }

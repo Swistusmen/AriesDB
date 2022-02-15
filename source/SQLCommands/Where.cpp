@@ -16,7 +16,7 @@ Where::~Where()
 {
 }
 
-std::shared_ptr<Table> Where::execute(std::shared_ptr<Table> table)
+std::unique_ptr<Table> Where::execute(std::unique_ptr<Table> table)
 {
     if (table == nullptr)
     {

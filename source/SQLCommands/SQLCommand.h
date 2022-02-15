@@ -28,23 +28,23 @@ public:
     std::vector<std::string> &getArguments() { return arguments; };
     virtual SQL::Code getPriority() = 0;
 
-    virtual std::shared_ptr<Table> execute(std::shared_ptr<Table>) = 0;
+    virtual std::unique_ptr<Table> execute(std::unique_ptr<Table>) = 0;
 
-    virtual std::vector<std::shared_ptr<Table>> execute(std::vector<std::shared_ptr<Table>> & tables)
+    virtual std::vector<std::unique_ptr<Table>> execute(std::vector<std::unique_ptr<Table>> & tables)
     {
-        std::vector<std::shared_ptr<Table>> vecOfValidTables;
+        std::vector<std::unique_ptr<Table>> vecOfValidTables;
         for (auto &tab : tables)
         {
-            auto res = this->execute(tab);
+            auto res = this->execute(std::move(tab));
             if (res != nullptr)
             {
-                vecOfValidTables.push_back(res);
+                vecOfValidTables.push_back(std::move(res));
             }
         }
         return vecOfValidTables;
     }
 
-    virtual std::vector<std::shared_ptr<Table>> execute(const std::vector< DataBaseTable>& tableOfVectors){return {};};
+    virtual std::vector<std::unique_ptr<Table>> execute(const std::vector< DataBaseTable>& tableOfVectors){return {};};
 
 protected:
     std::vector<std::string> arguments;

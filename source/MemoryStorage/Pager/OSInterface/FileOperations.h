@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <memory>
-#include <iostream>
+#include <optional>
 
 #include "../../../Common/Table.h"
 
@@ -16,9 +16,9 @@
 
 std::vector<std::string> splitString(std::string val, char delimiter);
 
-std::filesystem::path saveATableIntoATextFile(std::filesystem::path path,const std::string &filename, const Table& table);
+std::optional<std::filesystem::path> saveATableIntoATextFile(std::filesystem::path path,const std::string &filename, const Table& table);
 
-Table loadAFile(std::filesystem::path path,const std::string& filename);
+std::optional<Table> loadAFile(std::filesystem::path path,const std::string& filename);
 
 std::vector<std::string> listFiles(std::filesystem::path path);
 
