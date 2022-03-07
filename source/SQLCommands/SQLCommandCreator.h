@@ -1,15 +1,13 @@
 #pragma once
-#include <string>
-#include <vector>
+
 #include <memory>
 #include <optional>
-#include <algorithm>
+#include "Where.h"
+#include "Select.h"
+#include "On.h"
+#include "From.h"
 
 #include "SQLCommand.h"
-#include "FromCreator.h"
-#include "SelectCreator.h"
-#include "WhereCreator.h"
-#include "OnCreator.h"
 
 class SQLCommandCreator{
 public:
@@ -17,9 +15,5 @@ public:
 
     ~SQLCommandCreator();
 
-    std::optional<std::unique_ptr<SQLCommand>>createACommand(std::string word);
-
-private:
-    //TODO: refactor
-    std::vector<std::unique_ptr<Creator>> creators;
+    std::optional<std::unique_ptr<SQLCommand>>createACommand(const std::string& word);
 };

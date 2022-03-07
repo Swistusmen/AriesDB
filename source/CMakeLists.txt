@@ -37,18 +37,15 @@ add_executable(${PROJECT_NAME}
     MemoryStorage/Pager/Pager.cpp
     MemoryStorage/DataWarehouse.cpp 
     
-    SQLCommands/Creator.h 
+
     SQLCommands/On.cpp 
     SQLCommands/On.h 
     SQLCommands/From.cpp 
     SQLCommands/From.h 
-    SQLCommands/FromCreator.h 
     SQLCommands/Select.cpp 
     SQLCommands/Select.h 
-    SQLCommands/SelectCreator.h 
     SQLCommands/Where.cpp 
     SQLCommands/Where.h 
-    SQLCommands/WhereCreator.h 
     SQLCommands/SQLCommand.h
     SQLCommands/SQLCommandCreator.h 
     SQLCommands/SQLCommandCreator.cpp

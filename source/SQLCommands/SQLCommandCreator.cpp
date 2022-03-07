@@ -1,24 +1,25 @@
 #include "SQLCommandCreator.h"
 
 SQLCommandCreator::SQLCommandCreator(){
-    creators.push_back(std::make_unique<FromCreator>());
-    creators.push_back(std::make_unique<WhereCreator>());
-    creators.push_back(std::make_unique<SelectCreator>());
-    creators.push_back(std::make_unique<OnCreator>());
 }
 
 SQLCommandCreator::~SQLCommandCreator(){
-    creators.clear();
 }
 
-std::optional<std::unique_ptr<SQLCommand>> SQLCommandCreator::createACommand(std::string word)
+std::optional<std::unique_ptr<SQLCommand>> SQLCommandCreator::createACommand(const std::string& word)
 {
-    //can be higly improved using std::find but first tests
-    const int noCreators=creators.size();
-    for(int i=0;i<noCreators;i++){
-        if(creators[i]->doesAWordRepresentSQLCommand(word)){
-            return creators[i]->createASQLCommand();
+    SQL::Code code=SQL::toCode(word);
+    switch(code){
+        case SQL::Code::FROM:{
+            return std::make_unique<From>();
+        }case SQL::Code::ON:{
+            return std::make_unique<On>();
+        }case SQL::Code::SELECT:{
+            return std::make_unique<Select>();
+        }case SQL::Code::WHERE:{
+            return std::make_unique<Where>();
+        }default:{
+            return {};
         }
     }
-    return {};
 }
