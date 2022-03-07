@@ -24,12 +24,13 @@ public:
         arguments.clear();
     };
 
-    void addArgument(std::string word) { arguments.push_back(word); };
+    virtual void addArgument(const std::string& word) { arguments.push_back(word); };
     std::vector<std::string> &getArguments() { return arguments; };
     virtual SQL::Code getPriority() = 0;
 
     virtual std::unique_ptr<Table> execute(std::unique_ptr<Table>) = 0;
 
+    //TODO: it need to be refactored, the stupidiest thing I've ever done
     virtual std::vector<std::unique_ptr<Table>> execute(std::vector<std::unique_ptr<Table>> & tables)
     {
         std::vector<std::unique_ptr<Table>> vecOfValidTables;

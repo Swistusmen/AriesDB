@@ -4,10 +4,9 @@
 namespace SQL{
     enum class Code{
         FROM,
+        ON, 
         WHERE,
         SELECT,
         NONE,
     };
-
-   
 }

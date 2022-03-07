@@ -42,17 +42,29 @@ std::unique_ptr<Table> DataWarehouse::mergeVectorOfResultTablesIntoOne(std::vect
         return std::move(tables.at(0));
     }
 
+    std::cout<<(tables.at(0)==nullptr)<<" "<<(tables.at(1)==nullptr)<<std::endl;
     auto it = tables.begin();
+    std::cout<<(tables.at(0)==nullptr)<<" "<<(tables.at(1)==nullptr)<<std::endl;
     auto outputTable = std::move(*it);
-
-    for (; it != tables.end(); ++it)
+    std::cout<<(tables.at(0)==nullptr)<<" "<<(tables.at(1)==nullptr)<<std::endl;
+    int i=0;
+    std::cout<<"Tables: "<<tables.size()<<std::endl;
+    it++;
+    for (; it != tables.end();it++)
     {
+        std::cout<<"Obieg "<<i++<<" is nuppltr: "<<(outputTable==nullptr)<<std::endl;
+        std::cout<<((*it)==nullptr)<<std::endl;
         outputTable->columns.insert(outputTable->columns.end(), (*it)->columns.begin(), (*it)->columns.end());
+        std::cout<<"ELuwina\n";
+        std::cout<<(*it)->tableName<<std::endl;
 
-        std::for_each(outputTable->rows.begin(), outputTable->rows.end(), [&it](auto row)
-                      { std::for_each((*it)->rows.begin(), (*it)->rows.end(), [&row](auto toAdd)
-                                      { row.insert(row.end(), toAdd.begin(), toAdd.end()); }); });
+        for(auto row=outputTable->rows.begin(), add=(*it)->rows.begin();row!=outputTable->rows.end() ;add++,row++){
+            std::cout<<"O\n";
+            row->insert(row->end(),add->begin(),add->end());    
+        }
+
     }
+    std::cout<<"Wyszedlem z petli i koncze z tym syfem\n";
 
     return outputTable;
 }

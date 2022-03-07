@@ -4,6 +4,7 @@ SQLCommandCreator::SQLCommandCreator(){
     creators.push_back(std::make_unique<FromCreator>());
     creators.push_back(std::make_unique<WhereCreator>());
     creators.push_back(std::make_unique<SelectCreator>());
+    creators.push_back(std::make_unique<OnCreator>());
 }
 
 SQLCommandCreator::~SQLCommandCreator(){

@@ -34,4 +34,11 @@ std::vector<std::unique_ptr<Table>> From::execute(const std::vector<DataBaseTabl
     return matchingTables;
 }
 
+void From::addArgument(const std::string& word) 
+{
+    if(word=="join")
+        return;
+    arguments.push_back(word);
+}
+
 

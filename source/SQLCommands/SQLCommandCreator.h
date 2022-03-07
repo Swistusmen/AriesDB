@@ -9,6 +9,7 @@
 #include "FromCreator.h"
 #include "SelectCreator.h"
 #include "WhereCreator.h"
+#include "OnCreator.h"
 
 class SQLCommandCreator{
 public:
@@ -19,5 +20,6 @@ public:
     std::optional<std::unique_ptr<SQLCommand>>createACommand(std::string word);
 
 private:
+    //TODO: refactor
     std::vector<std::unique_ptr<Creator>> creators;
 };

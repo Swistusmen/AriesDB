@@ -38,6 +38,8 @@ add_executable(${PROJECT_NAME}
     MemoryStorage/DataWarehouse.cpp 
     
     SQLCommands/Creator.h 
+    SQLCommands/On.cpp 
+    SQLCommands/On.h 
     SQLCommands/From.cpp 
     SQLCommands/From.h 
     SQLCommands/FromCreator.h 
@@ -51,3 +53,5 @@ add_executable(${PROJECT_NAME}
     SQLCommands/SQLCommandCreator.h 
     SQLCommands/SQLCommandCreator.cpp
 )
+
+#target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)

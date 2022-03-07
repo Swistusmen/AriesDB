@@ -11,6 +11,9 @@ struct Table{
             tableName=tab.tableName;
             tableVersion="Temporary";
         }
+        Table(Table&&)=default;
+        Table& operator=(Table&&)=default;
+        Table& operator=(const Table& )=default;
         
         ~Table(){
             columns.clear();
