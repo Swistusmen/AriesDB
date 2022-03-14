@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../../source/SQLCommands/On.cpp"
+#include "../../source/SQLCommands/On.h"
 #include "../Mocks/TableMocks.h"
 
 TEST(On, On_correct_join_two_correct_tables){
@@ -8,7 +8,10 @@ TEST(On, On_correct_join_two_correct_tables){
     SQLCommand* on=new On;
     on->addArgument("Shops.id");
     on->addArgument("Workers.worker_id");
-    auto res=on->execute(std::move(shop.tab));
+    std::vector<std::unique_ptr<Table>> input;
+    input.push_back(std::move(workers.tab));
+    input.push_back(std::move(shop.tab));
+    auto res=on->execute(input);
 
     std::vector<std::string> expected{
         "id", "shop", "category", "floor","worker_id", "work_place", "name", "surname",
@@ -19,8 +22,8 @@ TEST(On, On_correct_join_two_correct_tables){
         "5", "Biedronka", "Supermarket", "2","5", "H&M", "Thomas", "Biden"
     };
     std::vector<std::string> actual;
-    actual.insert(actual.end(),res->columns.begin(),res->columns.end());
-    for(const auto& it: res->rows){
+    actual.insert(actual.end(),res[0]->columns.begin(),res[0]->columns.end());
+    for(const auto& it: res[0]->rows){
         actual.insert(actual.end(),it.begin(),it.end());
     }
 

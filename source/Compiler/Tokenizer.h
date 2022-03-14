@@ -12,6 +12,7 @@ namespace Delimiters
 {
     constexpr char DELIMITER_1 = ' ';
     constexpr char DELIMITER_2 =',';
+    const std::string UNWANTED = "";
     constexpr int DELIMITER_SIZE = 1;
 }
 

@@ -13,16 +13,21 @@ std::vector<std::string> Tokenizer::splitLongStringIntoAWords(std::string inputS
     std::string buffer;
 
     for(const auto& letter: inputStr){
+        
         if(letter != Delimiters::DELIMITER_1 && letter!=Delimiters::DELIMITER_2 ){
             if(letter!='=' &&letter!= '<' &&letter!='>'){
                 buffer+=letter;
             }else{
+                if(!buffer.empty()){
                 words.push_back(buffer);
-                words.push_back(std::to_string(letter));
                 buffer="";
+                }
+                words.push_back(std::string{letter});
             }
         }else{
+            if(buffer!=""){
             words.push_back(buffer);
+            }
             buffer="";
         }
     }

@@ -41,12 +41,11 @@ std::vector<std::unique_ptr<Table>> On::execute(std::vector<std::unique_ptr<Tabl
     std::vector<std::array<std::string, 2>> tableAndColumnValues;
     std::transform(arguments.begin(), arguments.end(), std::back_inserter(tableAndColumnValues), getTableNameAndColumnNameFromArgument);
 
-    std::unique_ptr<Table> a;
     const int indexOfValueToCompare_1 = getIndexOfColumn(tableAndColumnValues, tablesToMerge[0]);
     const int indexOfValueToCompare_2 = getIndexOfColumn(tableAndColumnValues, tablesToMerge[1]);
 
     auto output = std::make_unique<Table>(tableAndColumnValues[0][0], "1");
-
+    
     for (auto &it : tablesToMerge[0]->rows)
     {
         auto found = std::find_if(tablesToMerge[1]->rows.begin(), tablesToMerge[1]->rows.end(), [&it, indexOfValueToCompare_1, indexOfValueToCompare_2](auto it2)
@@ -58,6 +57,13 @@ std::vector<std::unique_ptr<Table>> On::execute(std::vector<std::unique_ptr<Tabl
         }
     }
 
+    for(const auto& it: tablesToMerge[0]->columns){
+        output->columns.push_back(it);
+    }
+    for(const auto& it: tablesToMerge[1]->columns){
+        output->columns.push_back(it);
+    }
+    
     std::vector<std::unique_ptr<Table>> out;
     for (auto &it : tables)
     {
