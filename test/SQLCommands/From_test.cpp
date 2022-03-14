@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../../source/SQLCommands/From.h"
+#include "../../source/SQLCommands/From.cpp"
 #include "../Mocks/TableMocks.h"
 
 TEST(From, One_correct_table_in_db){

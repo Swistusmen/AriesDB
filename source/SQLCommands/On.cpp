@@ -68,6 +68,7 @@ std::vector<std::unique_ptr<Table>> On::execute(std::vector<std::unique_ptr<Tabl
     return out;
 }
 
+//this should be moved to common space for SQL Commands
 int On::getIndexOfColumn(const std::vector<std::array<std::string, 2>> &tableColumn, std::unique_ptr<Table> &table)
 {
     if (table == nullptr)
@@ -96,4 +97,11 @@ std::array<std::string, 2> getTableNameAndColumnNameFromArgument(const std::stri
 std::unique_ptr<Table> On::execute(std::unique_ptr<Table>)
 {
     return nullptr;
+}
+
+void On::addArgument(const std::string& word)
+{
+    if(word!="="){
+        arguments.push_back(word);
+    }
 }

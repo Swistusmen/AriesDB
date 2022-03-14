@@ -13,7 +13,6 @@ enable_testing()
 add_executable(${PROJECT_NAME}
     main.cpp
     Interface/Interface_test.cpp
-    SQLCommands/FromCreator_test.cpp
     SQLCommands/SQLCommandsCreator_test.cpp
     SQLCommands/Select_test.cpp
     SQLCommands/Where_test.cpp

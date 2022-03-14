@@ -18,7 +18,7 @@ namespace Delimiters
 class Tokenizer
 {
 public:
-    std::vector<std::unique_ptr<SQLCommand>> tokenizeInputString(std::string &inputStr);
+    std::vector<std::unique_ptr<SQLCommand>> tokenizeInputString(const std::string &inputStr);
 
 private:
     std::vector<std::string> splitLongStringIntoAWords(std::string inputStr);

@@ -1,6 +1,6 @@
 #include "Tokenizer.h"
 
-std::vector<std::unique_ptr<SQLCommand>> Tokenizer::tokenizeInputString(std::string &inputString)
+std::vector<std::unique_ptr<SQLCommand>> Tokenizer::tokenizeInputString(const std::string &inputString)
 {
     auto words = splitLongStringIntoAWords(inputString);
     auto commands = initializeSQLCommands(words);
@@ -12,9 +12,15 @@ std::vector<std::string> Tokenizer::splitLongStringIntoAWords(std::string inputS
     std::vector<std::string> words;
     std::string buffer;
 
-    for(auto letter: inputStr){
+    for(const auto& letter: inputStr){
         if(letter != Delimiters::DELIMITER_1 && letter!=Delimiters::DELIMITER_2 ){
-            buffer+=letter;
+            if(letter!='=' &&letter!= '<' &&letter!='>'){
+                buffer+=letter;
+            }else{
+                words.push_back(buffer);
+                words.push_back(std::to_string(letter));
+                buffer="";
+            }
         }else{
             words.push_back(buffer);
             buffer="";
@@ -22,7 +28,7 @@ std::vector<std::string> Tokenizer::splitLongStringIntoAWords(std::string inputS
     }
     if(buffer!="")
         words.push_back(buffer);
-    return std::move(words);
+    return words;
 }
 
 std::vector<std::unique_ptr<SQLCommand>> Tokenizer::initializeSQLCommands(std::vector<std::string> &words)
