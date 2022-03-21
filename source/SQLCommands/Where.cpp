@@ -23,7 +23,8 @@ std::unique_ptr<Table> Where::execute(std::unique_ptr<Table> table)
         return nullptr;
     }
     if(arguments.size()%3!=0){
-        throw new WrongArguments;
+        log="Error, Where: syntax error, get wrong number arguments";
+        return nullptr;
     }
 
     auto columnMatch = std::find(table->columns.begin(), table->columns.end(), arguments.at(0));
@@ -43,7 +44,8 @@ std::unique_ptr<Table> Where::execute(std::unique_ptr<Table> table)
             table->rows.remove_if([columnIndex, conditionValue](auto& a)
                        { return a.at(columnIndex) <= conditionValue; });
         }else{
-            throw new WrongArguments;
+            log="Error, Where: syntax error, get wrong comparation argument, should be =,< or >";
+            return nullptr;
         }
 
         return table;

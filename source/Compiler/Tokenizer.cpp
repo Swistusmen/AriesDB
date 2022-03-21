@@ -3,7 +3,14 @@
 std::vector<std::unique_ptr<SQLCommand>> Tokenizer::tokenizeInputString(const std::string &inputString)
 {
     auto words = splitLongStringIntoAWords(inputString);
+    if(words.empty()){
+        logger.log("Could not tokenize command, there are no tokens",0);
+        return{};
+    }
     auto commands = initializeSQLCommands(words);
+    if(commands.empty()){
+        logger.log("Could not find any SQL keyword, check syntax one more time",0);
+    }
     return commands;
 }
 

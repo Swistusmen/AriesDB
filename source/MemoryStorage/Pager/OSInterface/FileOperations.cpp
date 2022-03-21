@@ -71,3 +71,12 @@ std::vector<std::string> listFiles(std::filesystem::path path)
     return files;
 }
 
+std::string getDirectoryPath(const std::string& filepath)
+{
+    return std::filesystem::path(filepath).parent_path();
+}
+
+std::string getFileNameFromPath(const std::string& filepath)
+{
+    return std::filesystem::path(filepath).filename();
+}

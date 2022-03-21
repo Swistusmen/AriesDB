@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Logger/Logger.h"
 #include "../SQLCommands/SQLCommand.h"
 #include "Pager/Pager.h"
 
@@ -7,7 +8,7 @@
 
 class DataWarehouse{
     public:
-        DataWarehouse();
+        DataWarehouse(Logger& _logger);
         ~DataWarehouse();
         std::unique_ptr<Table> executeQuery(std::vector<std::unique_ptr<SQLCommand>>&&);
         std::unique_ptr<Table> tab;
@@ -23,4 +24,5 @@ class DataWarehouse{
 
     private:
         Pager pager;
+        Logger& logger;
 };

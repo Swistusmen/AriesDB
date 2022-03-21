@@ -31,6 +31,9 @@ std::vector<std::unique_ptr<Table>> From::execute(const std::vector<DataBaseTabl
             matchingTables.emplace_back(std::make_unique<Table>(it.getTableDataForReadOnly()));
         }
     }
+    if(matchingTables.empty()){
+        log="Error, From: could not find matching table";
+    }
     return matchingTables;
 }
 

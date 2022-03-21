@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <optional>
 
 class SQLCommand
 {
@@ -47,6 +48,12 @@ public:
 
     virtual std::vector<std::unique_ptr<Table>> execute(const std::vector< DataBaseTable>& tableOfVectors){return {};};
 
+    std::optional<std::string> getLog() const {
+        if(log=="")
+            return {};
+        return log;
+    };
 protected:
     std::vector<std::string> arguments;
+    std::string log{""};
 };

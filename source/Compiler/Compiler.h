@@ -5,6 +5,7 @@
 class Compiler
 {
 public:
+    Compiler(Logger& _logger):tokenizer(_logger){};
     std::vector<std::unique_ptr<SQLCommand>> compile(std::string &);
 
 private:

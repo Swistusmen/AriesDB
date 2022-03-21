@@ -7,6 +7,7 @@
 
 #include "../SQLCommands/SQLCommand.h"
 #include "../SQLCommands/SQLCommandCreator.h"
+#include "../Logger/Logger.h"
 
 namespace Delimiters
 {
@@ -19,10 +20,12 @@ namespace Delimiters
 class Tokenizer
 {
 public:
+    Tokenizer(Logger& _logger):logger(_logger){};
     std::vector<std::unique_ptr<SQLCommand>> tokenizeInputString(const std::string &inputStr);
 
 private:
     std::vector<std::string> splitLongStringIntoAWords(std::string inputStr);
     std::vector<std::unique_ptr<SQLCommand>> initializeSQLCommands(std::vector<std::string> &words);
     SQLCommandCreator sqlCreator;
+    Logger& logger;
 };

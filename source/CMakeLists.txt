@@ -16,7 +16,6 @@ include_directories(
 
 add_executable(${PROJECT_NAME}
     main.cpp
-    Interface/Interface.h 
 
     Common/Table.h 
     Common/DBExecResult.h
@@ -29,6 +28,13 @@ add_executable(${PROJECT_NAME}
     Compiler/Parser.cpp
     Compiler/Compiler.h 
     Compiler/Compiler.cpp
+
+    Interface/Interface.h 
+    Interface/ConsoleInterface.h
+    Interface/ConsoleInterface.cpp
+
+    Logger/Logger.h 
+    Logger/Logger.cpp
 
     MemoryStorage/Pager/OSInterface/FileOperations.h
     MemoryStorage/Pager/OSInterface/FileOperations.cpp
