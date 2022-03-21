@@ -23,6 +23,7 @@ add_executable(${PROJECT_NAME}
     Compiler/Parser_test.cpp
     MemoryStorage/DataWarehouse_test.cpp
     Mocks/TableMocks.h
+    WholeApp/BlackBox.cpp
     )
 
 target_link_libraries(${PROJECT_NAME} ${GTEST_LIBRARIES} pthread)

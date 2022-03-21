@@ -17,7 +17,7 @@
 
 class Mocked_DataWarehouse: public ::testing::Test{
     public:
-     Mocked_DataWarehouse():logger("",1),db(logger){
+     Mocked_DataWarehouse():logger("/home/michal/Documents/Programming/Database/Logs/test.txt",1),db(logger){
          db.setDeviceStroageLocation("/home/michal/Documents/Programming/Database/source/Tables");
      }   
     protected:
@@ -44,7 +44,7 @@ TEST(Data_Warehoouse,Simple_query_select_from_where_one_table){
     res.back()->addArgument("category");
     res.back()->addArgument("shop");
     // mocking compiler output
-    Logger logger("",8);
+    Logger logger("/home/michal/Documents/Programming/Database/Logs/test.txt",8);
     DataWarehouse db(logger);
     auto output=test_executeQuery(std::move(res),db);
     std::vector<std::string> flatTable;
