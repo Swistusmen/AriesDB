@@ -6,8 +6,8 @@
 #include <optional>
 
 #include "../SQLCommands/SQLCommand.h"
-#include "../SQLCommands/SQLCommandCreator.h"
 #include "../Logger/Logger.h"
+#include "Grammar.h"
 
 namespace Delimiters
 {
@@ -17,15 +17,16 @@ namespace Delimiters
     constexpr int DELIMITER_SIZE = 1;
 }
 
+//responsible for lexical analysis
+
 class Tokenizer
 {
 public:
     Tokenizer(Logger& _logger):logger(_logger){};
-    std::vector<std::unique_ptr<SQLCommand>> tokenizeInputString(const std::string &inputStr);
+    std::vector<Grammar::Token> tokenizeInputString(const std::string &inputStr);
 
 private:
     std::vector<std::string> splitLongStringIntoAWords(std::string inputStr);
-    std::vector<std::unique_ptr<SQLCommand>> initializeSQLCommands(std::vector<std::string> &words);
-    SQLCommandCreator sqlCreator;
+    std::vector<Grammar::Token> convertWordsIntoTokens(const std::vector<std::string>& words);
     Logger& logger;
 };

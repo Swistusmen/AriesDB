@@ -4,6 +4,7 @@ ConsoleInterface::ConsoleInterface(Logger &_logger) : logger(_logger){};
 
 std::string ConsoleInterface::userInput(const int _member)
 {
+#ifdef RELASE
     readLogsHistory(_member);
     std::string buffer{""};
     std::cout<<"db > ";
@@ -56,8 +57,15 @@ std::string ConsoleInterface::userInput(const int _member)
     logIndex=-1;
     logger.beginSession(_member);
     logger.log(buffer, _member);
-
     return buffer;
+#else 
+    std::cout << "db > ";
+    std::string input;
+    std::getline(std::cin,input);
+    logger.beginSession(_member);
+    logger.log(input, _member);
+    return input;
+#endif
 }
 
 void ConsoleInterface::revertLineToBeginState(std::string& buffer)

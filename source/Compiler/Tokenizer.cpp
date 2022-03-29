@@ -1,17 +1,13 @@
 #include "Tokenizer.h"
 
-std::vector<std::unique_ptr<SQLCommand>> Tokenizer::tokenizeInputString(const std::string &inputString)
+std::vector<Grammar::Token> Tokenizer::tokenizeInputString(const std::string &inputString)
 {
     auto words = splitLongStringIntoAWords(inputString);
     if(words.empty()){
         logger.log("Could not tokenize command, there are no tokens",0);
         return{};
     }
-    auto commands = initializeSQLCommands(words);
-    if(commands.empty()){
-        logger.log("Could not find any SQL keyword, check syntax one more time",0);
-    }
-    return commands;
+    return convertWordsIntoTokens(words);
 }
 
 std::vector<std::string> Tokenizer::splitLongStringIntoAWords(std::string inputStr)
@@ -43,18 +39,16 @@ std::vector<std::string> Tokenizer::splitLongStringIntoAWords(std::string inputS
     return words;
 }
 
-std::vector<std::unique_ptr<SQLCommand>> Tokenizer::initializeSQLCommands(std::vector<std::string> &words)
+std::vector<Grammar::Token> Tokenizer::convertWordsIntoTokens(const std::vector<std::string>& words)
 {
-    const int noWords = words.size();
-    std::vector<std::unique_ptr<SQLCommand>> commands;
-    for (int i = 0; i < noWords; i++)
-    {
-        auto respond=sqlCreator.createACommand(words[i]);
-        if(respond.has_value()){
-            commands.push_back(std::move(respond.value()));
-        }else{
-            words[i]=="*"? commands.pop_back() :  commands.back()->addArgument(words[i]);
-        }
+    std::vector<Grammar::Token> tokens;
+    const int noWords=words.size();
+    for(int i=0;i<noWords;i++){
+        Grammar::Token t;
+        t.expr=words[i];
+        t.number=i;
+        t.lexem=Grammar::identifyLexem(words[i]);
+        tokens.push_back(t);
     }
-    return commands;
+    return tokens;
 }

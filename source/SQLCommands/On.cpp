@@ -26,7 +26,11 @@ std::vector<std::unique_ptr<Table>> On::execute(std::vector<std::unique_ptr<Tabl
         });
         return found==arguments.end(); });
 
-    if (tables.end() - toMerge != 2)
+    std::cout<<tables.end() - toMerge<<std::endl;
+    for(const auto& it: tables){
+        std::cout<<it->tableName<<std::endl;
+    }
+    if (tables.end() - toMerge != 2) //TODO: tutaj sie wywala
     {
         log="Error, On: found more than 2 matching tables";
         return {};

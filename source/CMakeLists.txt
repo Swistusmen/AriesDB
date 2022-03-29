@@ -22,12 +22,16 @@ add_executable(${PROJECT_NAME}
     Common/DataBaseTable.h 
     Common/DataBaseTable.cpp
 
+    Compiler/Grammar.h 
+    Compiler/Grammar.cpp
     Compiler/Tokenizer.h 
     Compiler/Tokenizer.cpp 
     Compiler/Parser.h 
     Compiler/Parser.cpp
     Compiler/Compiler.h 
     Compiler/Compiler.cpp
+    Compiler/PreCompiledFunctions.h 
+    Compiler/PreCompiledFunctions.cpp
 
     Interface/Interface.h 
     Interface/ConsoleInterface.h

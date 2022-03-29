@@ -7,6 +7,7 @@ namespace SQL{
         ON, 
         WHERE,
         SELECT,
+        JOIN,
         NONE,
     };
 
@@ -22,8 +23,17 @@ namespace SQL{
             return Code::WHERE;
         }else if(code=="select"){
             return Code::SELECT;
+        }else if(code=="join"){
+            return Code::JOIN;
         }else{
             return Code::NONE;
         }
+    }
+
+    static bool isCompiledTime(const Code& _code){
+        if(_code==Code::JOIN){
+            return true;
+        }
+        return false;
     }
 }
