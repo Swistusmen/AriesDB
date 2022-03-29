@@ -6,6 +6,8 @@
 #include "../../source/SQLCommands/Select.cpp"
 
 #include "../../source/Compiler/Parser.cpp"
+#include "../../source/Compiler/PreCompiledFunctions.h"
+#include "../../source/Compiler/PreCompiledFunctions.cpp"
 
 #include <vector>
 
@@ -16,7 +18,8 @@ TEST(PARSER,SORT_FROM_SELECT_WHERE_CORRECTLY_1){
     res.push_back(std::make_unique<Select>());
     res.push_back(std::make_unique<From>());
     res.push_back(std::make_unique<Where>());
-    Parser parser;
+    Logger logger ("/home/michal/Documents/Programming/Database/Logs/test.txt",8);
+    Parser parser(logger);
     parser.sortCommands(res);
     const int noSQL=res.size();
     std::vector<SQL::Code>  validity;
@@ -34,7 +37,8 @@ TEST(PARSER,SORT_FROM_SELECT_WHERE_CORRECTLY_2){
     res.push_back(std::make_unique<Select>());
     res.push_back(std::make_unique<From>());
     res.push_back(std::make_unique<Where>());
-    Parser parser;
+    Logger logger ("/home/michal/Documents/Programming/Database/Logs/test.txt",8);
+    Parser parser(logger);
     parser.sortCommands(res);
     const int noSQL=res.size();
     std::vector<SQL::Code>  validity;
@@ -50,7 +54,8 @@ TEST(PARSER,SORT_FROM_SELECT_WHERE_CORRECTLY_3){
     res.push_back(std::make_unique<Select>());
     res.push_back(std::make_unique<From>());
     res.push_back(std::make_unique<Where>());
-    Parser parser;
+    Logger logger ("/home/michal/Documents/Programming/Database/Logs/test.txt",8);
+    Parser parser(logger);
     parser.sortCommands(res);
     const int noSQL=res.size();
     std::vector<SQL::Code>  validity;

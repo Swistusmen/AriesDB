@@ -2,6 +2,8 @@
 #include "../../source/Compiler/Tokenizer.h"
 #include "../../source/Compiler/Tokenizer.cpp"
 #include "../../source/Logger/Logger.h"
+#include "../../source/Compiler/Grammar.h"
+#include "../../source/Compiler/Grammar.cpp"
 
 #include <typeinfo>
 #include <optional>
@@ -19,7 +21,7 @@ TEST(TOKENIZER,CREATE_FROM_WITH_ARGUMENTS){
     Logger logger("/home/michal/Documents/Programming/Database/Logs/test.txt",8);
     Tokenizer tokenizer(logger);
     auto res=tokenizer.tokenizeInputString(testValue);
-    ASSERT_EQ(1, res.size());
+    ASSERT_EQ(3, res.size());
 }
 
 TEST(TOKENIZER,CREATE_FROM_WITH_ARGUMENTS_CHECK_NO_ARGUMENTS){
@@ -28,7 +30,7 @@ TEST(TOKENIZER,CREATE_FROM_WITH_ARGUMENTS_CHECK_NO_ARGUMENTS){
     Tokenizer tokenizer(logger);
     auto res=tokenizer.tokenizeInputString(testValue);
     auto val=std::move(res.at(0));
-    ASSERT_EQ(2, val->getArguments().size());
+    ASSERT_EQ(Grammar::Lexem::Command,val.lexem);
 }
 
 TEST(TOKENIZER,CREATE_MULTIPLE_THE_SAME_COMMANDS){
@@ -36,7 +38,7 @@ TEST(TOKENIZER,CREATE_MULTIPLE_THE_SAME_COMMANDS){
     Logger logger("/home/michal/Documents/Programming/Database/Logs/test.txt",8);
     Tokenizer tokenizer(logger);
     auto res=tokenizer.tokenizeInputString(testValue);
-    ASSERT_EQ(2, res.size());
+    ASSERT_EQ(6, res.size());
 }
 
 TEST(TOKENIZER,JOIN_INSIDE_JOIN){
@@ -44,7 +46,7 @@ TEST(TOKENIZER,JOIN_INSIDE_JOIN){
     Logger logger("/home/michal/Documents/Programming/Database/Logs/test.txt",8);
     Tokenizer tokenizer(logger);
     auto res=tokenizer.tokenizeInputString(testValue);
-    ASSERT_EQ(3, res.size());
+    ASSERT_EQ(16, res.size());
 }
 
 TEST(TOKENIZER,JOIN_INSIDE_JOIN_2){
@@ -52,6 +54,6 @@ TEST(TOKENIZER,JOIN_INSIDE_JOIN_2){
     Logger logger("/home/michal/Documents/Programming/Database/Logs/test.txt",8);
     Tokenizer tokenizer(logger);
     auto res=tokenizer.tokenizeInputString(testValue);
-    ASSERT_EQ(3, res.size());
+    ASSERT_EQ(14, res.size());
 }
 
