@@ -18,19 +18,15 @@ On::~On()
 // for now only =
 std::vector<std::unique_ptr<Table>> On::execute(std::vector<std::unique_ptr<Table>> &tables)
 {
-    auto toMerge = std::partition(tables.begin(), tables.end(), [this](auto &table)
-                                  {
+    auto toMerge = std::partition(tables.begin(), tables.end(), [this](auto &table)                      {
         auto found=std::find_if(arguments.begin(),arguments.end(),[&table](auto LongString){
             auto pair=getTableNameAndColumnNameFromArgument(LongString);
-            return pair[0]==table->tableName;
+            auto tables2=splitString(table->tableName,'*');
+            return std::find(tables2.begin(),tables2.end(),pair[0])!=tables2.end();
         });
         return found==arguments.end(); });
 
-    std::cout<<tables.end() - toMerge<<std::endl;
-    for(const auto& it: tables){
-        std::cout<<it->tableName<<std::endl;
-    }
-    if (tables.end() - toMerge != 2) //TODO: tutaj sie wywala
+    if (tables.end() - toMerge != 2) 
     {
         log="Error, On: found more than 2 matching tables";
         return {};
@@ -49,7 +45,8 @@ std::vector<std::unique_ptr<Table>> On::execute(std::vector<std::unique_ptr<Tabl
     const int indexOfValueToCompare_1 = getIndexOfColumn(tableAndColumnValues, tablesToMerge[0]);
     const int indexOfValueToCompare_2 = getIndexOfColumn(tableAndColumnValues, tablesToMerge[1]);
 
-    auto output = std::make_unique<Table>(tableAndColumnValues[0][0], "1");
+    auto output = std::make_unique<Table>(tableAndColumnValues[0][0]+"*"+
+    tableAndColumnValues[1][0], "1");
     
     for (auto &it : tablesToMerge[0]->rows)
     {
@@ -86,7 +83,9 @@ int On::getIndexOfColumn(const std::vector<std::array<std::string, 2>> &tableCol
     {
         return -1;
     }
-    int mapIndex = table->tableName == tableColumn[0][0] ? 0 : 1;
+    auto tables=splitString(table->tableName,'*');
+    auto matchingTableName=std::find(tables.begin(),tables.end(),tableColumn[0][0]);
+    int mapIndex = matchingTableName!=tables.end() ? 0 : 1;
     auto found = std::find(table->columns.begin(), table->columns.end(), tableColumn[mapIndex][1]);
     if (found == table->columns.end())
     {
@@ -102,6 +101,19 @@ std::array<std::string, 2> getTableNameAndColumnNameFromArgument(const std::stri
     std::array<std::string, 2> result;
     result[0] = argument.substr(0, npos);
     result[1] = argument.substr(npos + 1, argument.size() - 1);
+    return result;
+}
+
+std::vector<std::string> splitString(const std::string& arg,char splitter){
+    std::vector<std::string> result;
+    result.push_back("");
+    for(const auto& it: arg){
+        if(it!=splitter){
+            result.back()+=it;
+        }else{
+            result.push_back("");
+        }
+    }
     return result;
 }
 

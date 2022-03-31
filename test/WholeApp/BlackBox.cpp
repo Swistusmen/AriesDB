@@ -100,12 +100,11 @@ TEST_F(App,SIMPLE_SELECT_SOME_FROM_SHOPS_JOIN_WORKERS_ON_ID_EQUALS_ID_WHERE_ID_I
 TEST_F(App,SIMPLE_SELECT_ALL_FROM_SHOPS_JOIN_WORKERS_ON_ID_EQUALS_ID_JOIN_ON_PRODUCTS){
     std::string input="select * from shops join workers on shops.id = workers.worker_id join products on workers.worker_id = products.product_id";
     auto commands = compiler.compile(input);
-    //this one to fix
+    std::cout<<"AAAAAAAAAAAAAAAAAAAAA\n";
     auto response = db.executeQuery(std::move(commands));
-    if(response==nullptr || logger.wasQuerySuccessful(0)){
-        ASSERT_EQ(1,0);
-    }
-    
+    std::cout<<"AAAAAAAAAAAAAAAAAAAAA\n";
+    if(response!=nullptr){
+    std::cout<<"AAAAAAAAAAAAAAAAAAAAA\n";
     std::vector<std::string> expected{"worker_id", "work_place", "name", "surname", "id", "shop", "category", "floor", 
     "1", "Rossman", "Adam", "Waters", "1", "Rossman", "Beauty", "1",
       "2", "Rossman", "Joseph", "Eilish", "2", "H&M", "Fashion","1",
@@ -114,5 +113,7 @@ TEST_F(App,SIMPLE_SELECT_ALL_FROM_SHOPS_JOIN_WORKERS_ON_ID_EQUALS_ID_JOIN_ON_PRO
     "5", "H&M", "Thomas", "Biden", "5", "Biedronka", "Supermarket", "2" };
     auto actual=flat(response);
     ASSERT_EQ(expected,actual);
-    ASSERT_EQ(1,1);
+
+    }
+    ASSERT_EQ(1,0);
 }

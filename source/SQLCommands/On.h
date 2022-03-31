@@ -7,6 +7,7 @@
 //TODO: create subset of commonly used functions
 
 std::array<std::string,2> getTableNameAndColumnNameFromArgument(const std::string& argument);
+std::vector<std::string> splitString(const std::string& arg,char splitter);
 
 class On : public SQLCommand
 {
