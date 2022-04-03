@@ -11,10 +11,9 @@
 #include <optional>
 
 #include "../../../Common/Table.h"
+#include "../../../Common/Algorithms.h"
 
 #define PATH_SEPARATOR "/"
-
-std::vector<std::string> splitString(std::string val, char delimiter);
 
 std::optional<std::filesystem::path> saveATableIntoATextFile(std::filesystem::path path,const std::string &filename, const Table& table);
 

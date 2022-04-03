@@ -2,3 +2,4 @@
 
 #define TEXT_INTERFACE
 #define ONE_MEMBER_BUILD
+#define RELEASE_CLI 

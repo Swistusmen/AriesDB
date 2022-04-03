@@ -4,8 +4,7 @@
 #include <string>
 #include <thread>
 #include "../Logger/Logger.h"
-
-//IMPROVE: can work more nicely- ending signs when backspace or enter
+#include "../Config.h"
 
 class ConsoleInterface{
     public:
@@ -26,5 +25,7 @@ class ConsoleInterface{
         const int arrowUp{65};
         const int arrowDown{66};
         const int backspace{127};
+        const int arrowLeft{68};
+        const int arrowRight{67};
         const int enter{13};
 };

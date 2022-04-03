@@ -4,7 +4,7 @@ ConsoleInterface::ConsoleInterface(Logger &_logger) : logger(_logger){};
 
 std::string ConsoleInterface::userInput(const int _member)
 {
-#ifdef RELASE
+#ifdef RELEASE_CLI
     readLogsHistory(_member);
     std::string buffer{""};
     std::cout<<"db > ";
@@ -39,6 +39,14 @@ std::string ConsoleInterface::userInput(const int _member)
             }
             
         }
+        else if(input==arrowLeft){
+            removeCharFromConsole();
+            removeCharFromConsole();
+            removeCharFromConsole();
+            removeCharFromConsole();
+            std::cout << "\x1B[1D";
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        }
         else if(input==enter){
             system("stty cooked");
             removeCharFromConsole();
@@ -57,8 +65,10 @@ std::string ConsoleInterface::userInput(const int _member)
     logIndex=-1;
     logger.beginSession(_member);
     logger.log(buffer, _member);
+
+    std::cout<<buffer<<std::endl;
     return buffer;
-#else 
+#else
     std::cout << "db > ";
     std::string input;
     std::getline(std::cin,input);

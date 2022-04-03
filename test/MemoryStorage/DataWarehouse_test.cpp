@@ -10,6 +10,8 @@
 #include "../../source/MemoryStorage/Pager/Pager.cpp"
 #include "../../source/MemoryStorage/Pager/OSInterface/FileOperations.cpp"
 #include "../../source/Logger/Logger.cpp"
+#include "../../source/Common/Algorithms.h"
+#include "../../source/Common/Algorithms.cpp"
 
 #include <vector>
 #include <memory>

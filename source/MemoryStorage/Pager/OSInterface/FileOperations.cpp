@@ -1,19 +1,5 @@
 #include "FileOperations.h"
 
-std::vector<std::string> splitString(std::string val, char delimiter){
-    std::vector<std::string> output;
-    std::string buffer;
-    for(auto it=val.begin();it!=val.end();it++){
-        if(*it==delimiter){
-            output.push_back(buffer);
-            buffer="";
-        }else{
-            buffer+=*it;
-        }
-    }
-    return output;
-}
-
 std::optional<std::filesystem::path> saveATableIntoATextFile(std::filesystem::path path,const std::string &filename, const Table& table)
 {
     std::ofstream file;

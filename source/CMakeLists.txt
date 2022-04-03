@@ -21,6 +21,8 @@ add_executable(${PROJECT_NAME}
     Common/DBExecResult.h
     Common/DataBaseTable.h 
     Common/DataBaseTable.cpp
+    Common/Algorithms.h 
+    Common/Algorithms.cpp 
 
     Compiler/Grammar.h 
     Compiler/Grammar.cpp
