@@ -1,7 +1,7 @@
 #include "Compiler.h"
 
-std::vector<std::unique_ptr<SQLCommand>> Compiler::compile(std::string &inputString)
+std::pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType> Compiler::compile(std::string &inputString)
 {
     auto tokens = tokenizer.tokenizeInputString(inputString);
-    return parser.convertTokensIntoCommands(tokens);
+    return {parser.convertTokensIntoCommands(tokens),Commands::ExecutionType::READONLY};
 }

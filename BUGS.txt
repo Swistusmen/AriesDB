@@ -1,2 +1,2 @@
 1. Left arrow and right arrow does not work
-2. Multiple on-> on operation causes that 2  tables are merged into the on, in case of 2 ons, wanted table may change name
+2. Multiple on-> on operation causes that 2  tables are merged into the on, in case of 2 ons, wanted table may change name DONE:

@@ -9,9 +9,17 @@ DataWarehouse::~DataWarehouse()
     tab.reset();
 }
 
-std::unique_ptr<Table> DataWarehouse::executeQuery(std::vector<std::unique_ptr<SQLCommand>> &&commands)
+std::unique_ptr<Table> DataWarehouse::executeQuery(std::pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>&& commands)
 {
-    return executeReadOnlyQuery(std::move(commands));
+    switch(commands.second){
+        case Commands::ExecutionType::READONLY:
+            return executeReadOnlyQuery(std::move(commands.first));
+        case Commands::ExecutionType::MODIFY_STRUCTURE:
+        case Commands::ExecutionType::MODIFY_CONTENT:
+        default:
+            return nullptr;
+    }
+    
 }
 
 std::unique_ptr<Table> DataWarehouse::executeReadOnlyQuery(std::vector<std::unique_ptr<SQLCommand>> &&commands)

@@ -16,6 +16,7 @@
 #include <vector>
 #include <memory>
 #include <utility>
+#include <tuple>
 
 class Mocked_DataWarehouse: public ::testing::Test{
     public:
@@ -70,7 +71,8 @@ TEST_F(Mocked_DataWarehouse,POSITIVE_SELECT_FROM_WHERE){
     res.push_back(std::make_unique<Select>()); 
     res.back()->addArgument("category");
     res.back()->addArgument("shop");
-    auto output=db.executeQuery(std::move(res));
+    auto arg=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res),Commands::ExecutionType::READONLY);
+    auto output=db.executeQuery(std::move(arg));
 
     std::vector<std::string> flatTable;
     flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
@@ -86,7 +88,8 @@ TEST_F(Mocked_DataWarehouse,POSITIVE_SELECT_FROM){
      std::vector<std::unique_ptr<SQLCommand>> res;
      res.emplace_back(std::make_unique<From>());
      res.back()->addArgument("shops");
-    auto output=db.executeQuery(std::move(res));
+        auto arg=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res),Commands::ExecutionType::READONLY);
+        auto output=db.executeQuery(std::move(arg));
 
     std::vector<std::string> flatTable;
     flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
@@ -119,7 +122,8 @@ TEST_F(Mocked_DataWarehouse,POSITIVE_SELECT_FROM_JOIN_ON_WHERE_ID_BIGGER_THAN_TH
     res.push_back(std::make_unique<Select>()); 
     res.back()->addArgument("category");
     res.back()->addArgument("shop");
-    auto output=db.executeQuery(std::move(res));
+        auto arg=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res),Commands::ExecutionType::READONLY);
+    auto output=db.executeQuery(std::move(arg));
 
     std::vector<std::string> flatTable;
     flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
@@ -140,7 +144,8 @@ TEST_F(Mocked_DataWarehouse,POSITIVE_SELECT_ALL_FROM_JOIN_ON){
      res.back()->addArgument("workers.worker_id");
      res.back()->addArgument("shops.id");
 
-    auto output=db.executeQuery(std::move(res));
+        auto arg=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res),Commands::ExecutionType::READONLY);
+    auto output=db.executeQuery(std::move(arg));
 
     std::vector<std::string> flatTable;
     flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
@@ -170,7 +175,8 @@ TEST_F(Mocked_DataWarehouse,POSITIVE_SELECT_ALL_FROM_JOIN_ON_WHERE_ID_EQUALS_3){
     res.back()->addArgument("=");
     res.back()->addArgument("3");
 
-    auto output=db.executeQuery(std::move(res));
+        auto arg=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res),Commands::ExecutionType::READONLY);
+    auto output=db.executeQuery(std::move(arg));
 
     std::vector<std::string> flatTable;
     flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
@@ -196,7 +202,8 @@ TEST_F(Mocked_DataWarehouse,SAME_SELECT_AFTER_SELECT_GIVE_SAME_RESULT){
     res.back()->addArgument("=");
     res.back()->addArgument("3");
 
-    auto output=db.executeQuery(std::move(res));
+        auto arg=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res),Commands::ExecutionType::READONLY);
+    auto output=db.executeQuery(std::move(arg));
 
     std::vector<std::string> flatTable;
     flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
@@ -216,7 +223,8 @@ TEST_F(Mocked_DataWarehouse,SAME_SELECT_AFTER_SELECT_GIVE_SAME_RESULT){
     res2.back()->addArgument("=");
     res2.back()->addArgument("3");
 
-    auto output2=db.executeQuery(std::move(res2));
+        auto arg2=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res2),Commands::ExecutionType::READONLY);
+    auto output2=db.executeQuery(std::move(arg2));
 
     std::vector<std::string> flatTable2;
     flatTable2.insert(flatTable2.end(),output2->columns.begin(),output2->columns.end());
