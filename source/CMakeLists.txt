@@ -48,6 +48,10 @@ add_executable(${PROJECT_NAME}
     MemoryStorage/DataWarehouse.h
     MemoryStorage/Pager/Pager.cpp
     MemoryStorage/DataWarehouse.cpp 
+    MemoryStorage/ReadTaskExecutor.h
+    MemoryStorage/ReadTaskExecutor.cpp 
+    MemoryStorage/CommonExecutorHelperFunctions.h
+    MemoryStorage/CommonExecutorHelperFunctions.cpp
     
 
     SQLCommands/On.cpp 

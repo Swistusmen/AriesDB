@@ -1,5 +1,3 @@
 #pragma once
 
-#define TEXT_INTERFACE
-#define ONE_MEMBER_BUILD
-#define RELEASE_CLI 
+#define RELEASE_CLI //console interface for release- cannot be debugged 

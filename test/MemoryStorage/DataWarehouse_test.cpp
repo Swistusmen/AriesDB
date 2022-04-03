@@ -7,6 +7,8 @@
 #include "../../source/SQLCommands/On.h"
 
 #include "../../source/MemoryStorage/DataWarehouse.cpp"
+#include "../../source/MemoryStorage/ReadTaskExecutor.cpp"
+#include "../../source/MemoryStorage/CommonExecutorHelperFunctions.cpp"
 #include "../../source/MemoryStorage/Pager/Pager.cpp"
 #include "../../source/MemoryStorage/Pager/OSInterface/FileOperations.cpp"
 #include "../../source/Logger/Logger.cpp"
@@ -32,33 +34,6 @@ class Mocked_DataWarehouse: public ::testing::Test{
     Logger logger;
 
 };
-
-TEST(Data_Warehoouse,Simple_query_select_from_where_one_table){
-    // mocking compiler output
-    std::vector<std::unique_ptr<SQLCommand>> res;
-    
-    res.emplace_back(std::make_unique<From>());
-    res.back()->addArgument("Shops");
-    res.push_back(std::make_unique<Where>());
-    res.back()->addArgument("id");
-    res.back()->addArgument(">");
-    res.back()->addArgument("3");
-    res.push_back(std::make_unique<Select>()); 
-    res.back()->addArgument("category");
-    res.back()->addArgument("shop");
-    // mocking compiler output
-    Logger logger("/home/michal/Documents/Programming/Database/Logs/test.txt",8);
-    DataWarehouse db(logger);
-    auto output=test_executeQuery(std::move(res),db);
-    std::vector<std::string> flatTable;
-    flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
-    std::for_each(output->rows.begin(),output->rows.end(),[&flatTable](auto row){
-            flatTable.insert(flatTable.end(),row.begin(),row.end());
-    });
-    std::vector<std::string> expected{"shop", "category", "NewYorker", "Fashion", "Biedronka", "Supermarket"};
-
-    ASSERT_EQ(expected, flatTable);
-}
 
 TEST_F(Mocked_DataWarehouse,POSITIVE_SELECT_FROM_WHERE){
      std::vector<std::unique_ptr<SQLCommand>> res;
