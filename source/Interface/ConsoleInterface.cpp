@@ -128,3 +128,39 @@ void ConsoleInterface::removeCharFromConsole()
     std::cout << "\x1B[1D";
     std::cout << "\x1B[1P";
 }
+
+void ConsoleInterface::handleResponse(const CommandResult& _result)
+{
+    switch(_result.getResult()){
+        case CommandResult::Result::Failure:{
+            logger.log("Inernal Database error: could not process query, result is a nullptr",0);
+            const auto& log=logger.getLog(0);
+            for(int i=1;i<log.communicates.size();i++){
+                std::cout<<log.communicates[i]<<std::endl;
+            }
+        }break;
+        case CommandResult::Result::Success:{
+            switch (_result.getExecutionType())
+            {
+            case Commands::ExecutionType::READONLY:{
+                printTable(_result.getTable());
+            }break;
+            default:
+                break;
+            }
+        }
+    }
+}
+
+void printTable(const std::unique_ptr<Table>& tab)
+{
+    std::for_each(tab->columns.begin(), tab->columns.end(), [](auto a)
+                  { std::cout << a << " "; });
+    std::cout << std::endl;
+
+    std::for_each(tab->rows.begin(), tab->rows.end(), [](auto row)
+                  {
+                      std::for_each(row.begin(), row.end(), [](auto element)
+                                    { std::cout << element << " "; });
+                      std::cout << std::endl; });
+}

@@ -28,7 +28,7 @@ class App: public ::testing::Test{
     Logger logger;
 };
 
-std::vector<std::string> flat(std::unique_ptr<Table>& tab){
+std::vector<std::string> flat(const std::unique_ptr<Table>& tab){
     std::vector<std::string> output;
     output.insert(output.end(),tab->columns.begin(),tab->columns.end());
     std::for_each(tab->rows.begin(),tab->rows.end(),[&output](auto row){
@@ -47,7 +47,7 @@ TEST_F(App,SIMPLE_SELECT){
     "3", "C&A", "Fashion", "1",
     "4", "NewYorker", "Fashion", "2",
     "5", "Biedronka", "Supermarket", "2"};
-    auto actual=flat(response);
+    auto actual=flat(response.getTable());
     ASSERT_EQ(expected,actual);
 }
 
@@ -58,7 +58,7 @@ TEST_F(App,SIMPLE_SELECT_FROM_WHERE_ID_BIGGER_THAN_3){
     std::vector<std::string> expected{"id", "shop", "category", "floor",
     "4", "NewYorker", "Fashion", "2",
     "5", "Biedronka", "Supermarket", "2"};
-    auto actual=flat(response);
+    auto actual=flat(response.getTable());
     ASSERT_EQ(expected,actual);
 }
 
@@ -72,7 +72,7 @@ TEST_F(App,SIMPLE_SELECT_ALL_FROM_SHOPS_JOIN_WORKERS_ON_ID_EQUALS_ID){
        "3", "Rossman", "Anna", "Scott", "3", "C&A", "Fashion", "1",
      "4", "H&M", "Jeronimo", "Kardashian", "4", "NewYorker", "Fashion", "2", 
     "5", "H&M", "Thomas", "Biden", "5", "Biedronka", "Supermarket", "2" };
-    auto actual=flat(response);
+    auto actual=flat(response.getTable());
     ASSERT_EQ(expected,actual);
 }
 
@@ -83,7 +83,7 @@ TEST_F(App,SIMPLE_SELECT_ALL_FROM_SHOPS_JOIN_WORKERS_ON_ID_EQUALS_ID_WHERE_ID_IS
     std::vector<std::string> expected{"worker_id", "work_place", "name", "surname", "id", "shop", "category", "floor", 
     "1", "Rossman", "Adam", "Waters", "1", "Rossman", "Beauty", "1",
       "2", "Rossman", "Joseph", "Eilish", "2", "H&M", "Fashion","1" };
-    auto actual=flat(response);
+    auto actual=flat(response.getTable());
     ASSERT_EQ(expected,actual);
 }
 
@@ -93,7 +93,7 @@ TEST_F(App,SIMPLE_SELECT_SOME_FROM_SHOPS_JOIN_WORKERS_ON_ID_EQUALS_ID_WHERE_ID_I
     auto response = db.executeQuery(std::move(commands));
     std::vector<std::string> expected{ "work_place", "name", "surname", "id", "category", "Rossman", "Adam", "Waters", "1", "Beauty", "Rossman", "Joseph", "Eilish", "2", "Fashion" };
   
-    auto actual=flat(response);
+    auto actual=flat(response.getTable());
     ASSERT_EQ(expected,actual);
 }
 
@@ -109,6 +109,6 @@ TEST_F(App,SIMPLE_SELECT_ALL_FROM_SHOPS_JOIN_WORKERS_ON_ID_EQUALS_ID_JOIN_ON_PRO
         "4", "NewYorker", "Fashion", "2", "4", "H&M", "Jeronimo", "Kardashian", "4", "hhh", "13", "good", 
         "5", "Biedronka", "Supermarket", "2", "5", "H&M", "Thomas", "Biden", "5", "cccc", "13", "good"
      };
-    auto actual=flat(response);
+    auto actual=flat(response.getTable());
     ASSERT_EQ(expected,actual);
 }

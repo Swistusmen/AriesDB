@@ -5,12 +5,17 @@
 #include <thread>
 #include "../Logger/Logger.h"
 #include "../Config.h"
+#include "../Common/CommandResult.h"
+
+void printTable(const std::unique_ptr<Table>& tab);
 
 class ConsoleInterface{
     public:
         ConsoleInterface(Logger& _logger);
 
         std::string userInput(const int _member);
+        //TODO:in the future replace with class reposnsible only for handling reposnses, and agreagate such a class within Intefrace classes
+        void handleResponse(const CommandResult& );
     private:
         void revertLineToBeginState(std::string& buffer);
         void readLogsHistory(const int member);

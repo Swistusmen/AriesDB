@@ -3,6 +3,7 @@
 #include "../Logger/Logger.h"
 #include "../SQLCommands/SQLCommand.h"
 #include "../SQLCommands/ExecutionType.h"
+#include "../Common/CommandResult.h"
 #include "ReadTaskExecutor.h"
 #include "ModifyContentExecutor.h"
 #include "Pager/Pager.h"
@@ -13,7 +14,7 @@ class DataWarehouse{
     public:
         DataWarehouse(Logger& _logger);
         ~DataWarehouse();
-        std::unique_ptr<Table> executeQuery(std::pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>&&);
+        CommandResult executeQuery(std::pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>&&);
         std::unique_ptr<Table> tab;
 
         const std::string& getDeviceStorageLocation() const;

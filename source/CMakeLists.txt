@@ -23,6 +23,8 @@ add_executable(${PROJECT_NAME}
     Common/DataBaseTable.cpp
     Common/Algorithms.h 
     Common/Algorithms.cpp 
+    Common/CommandResult.h 
+    Common/CommandResult.cpp 
 
     Compiler/Grammar.h 
     Compiler/Grammar.cpp

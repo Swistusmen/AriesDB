@@ -15,6 +15,7 @@
 #include "../../source/Logger/Logger.cpp"
 #include "../../source/Common/Algorithms.h"
 #include "../../source/Common/Algorithms.cpp"
+#include "../../source/Common/CommandResult.cpp"
 
 #include <vector>
 #include <memory>
@@ -48,8 +49,8 @@ TEST_F(Mocked_DataWarehouse,POSITIVE_SELECT_FROM_WHERE){
     res.back()->addArgument("category");
     res.back()->addArgument("shop");
     auto arg=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res),Commands::ExecutionType::READONLY);
-    auto output=db.executeQuery(std::move(arg));
-
+    auto result=db.executeQuery(std::move(arg));
+    auto& output=result.getTable();
     std::vector<std::string> flatTable;
     flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
     std::for_each(output->rows.begin(),output->rows.end(),[&flatTable](auto row){
@@ -65,7 +66,8 @@ TEST_F(Mocked_DataWarehouse,POSITIVE_SELECT_FROM){
      res.emplace_back(std::make_unique<From>());
      res.back()->addArgument("shops");
         auto arg=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res),Commands::ExecutionType::READONLY);
-        auto output=db.executeQuery(std::move(arg));
+        auto result=db.executeQuery(std::move(arg));
+    auto& output=result.getTable();
 
     std::vector<std::string> flatTable;
     flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
@@ -99,7 +101,8 @@ TEST_F(Mocked_DataWarehouse,POSITIVE_SELECT_FROM_JOIN_ON_WHERE_ID_BIGGER_THAN_TH
     res.back()->addArgument("category");
     res.back()->addArgument("shop");
         auto arg=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res),Commands::ExecutionType::READONLY);
-    auto output=db.executeQuery(std::move(arg));
+    auto result=db.executeQuery(std::move(arg));
+    auto& output=result.getTable();
 
     std::vector<std::string> flatTable;
     flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
@@ -121,7 +124,8 @@ TEST_F(Mocked_DataWarehouse,POSITIVE_SELECT_ALL_FROM_JOIN_ON){
      res.back()->addArgument("shops.id");
 
         auto arg=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res),Commands::ExecutionType::READONLY);
-    auto output=db.executeQuery(std::move(arg));
+    auto result=db.executeQuery(std::move(arg));
+    auto& output=result.getTable();
 
     std::vector<std::string> flatTable;
     flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
@@ -152,7 +156,8 @@ TEST_F(Mocked_DataWarehouse,POSITIVE_SELECT_ALL_FROM_JOIN_ON_WHERE_ID_EQUALS_3){
     res.back()->addArgument("3");
 
         auto arg=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res),Commands::ExecutionType::READONLY);
-    auto output=db.executeQuery(std::move(arg));
+    auto result=db.executeQuery(std::move(arg));
+    auto& output=result.getTable();
 
     std::vector<std::string> flatTable;
     flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
@@ -179,7 +184,8 @@ TEST_F(Mocked_DataWarehouse,SAME_SELECT_AFTER_SELECT_GIVE_SAME_RESULT){
     res.back()->addArgument("3");
 
         auto arg=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res),Commands::ExecutionType::READONLY);
-    auto output=db.executeQuery(std::move(arg));
+    auto result=db.executeQuery(std::move(arg));
+    auto& output=result.getTable();
 
     std::vector<std::string> flatTable;
     flatTable.insert(flatTable.end(),output->columns.begin(),output->columns.end());
@@ -200,7 +206,8 @@ TEST_F(Mocked_DataWarehouse,SAME_SELECT_AFTER_SELECT_GIVE_SAME_RESULT){
     res2.back()->addArgument("3");
 
         auto arg2=std::make_pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>(std::move(res2),Commands::ExecutionType::READONLY);
-    auto output2=db.executeQuery(std::move(arg2));
+    auto result2=db.executeQuery(std::move(arg2));
+    auto& output2=result2.getTable();
 
     std::vector<std::string> flatTable2;
     flatTable2.insert(flatTable2.end(),output2->columns.begin(),output2->columns.end());

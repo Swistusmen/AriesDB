@@ -12,7 +12,7 @@ class ModifyContentExecutor{
     public:
         ModifyContentExecutor(Logger& _logger,Pager& _pager):pager(_pager),logger(_logger){}
 
-        void executeCommand(std::vector<std::unique_ptr<SQLCommand>>&&);
+        bool executeCommand(std::vector<std::unique_ptr<SQLCommand>>&&);
     private:
         Logger& logger;
         Pager& pager;

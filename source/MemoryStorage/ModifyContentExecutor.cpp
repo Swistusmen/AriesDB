@@ -1,6 +1,6 @@
 #include "ModifyContentExecutor.h"
 
-void ModifyContentExecutor::executeCommand(std::vector<std::unique_ptr<SQLCommand>>&& commands){
+bool ModifyContentExecutor::executeCommand(std::vector<std::unique_ptr<SQLCommand>>&& commands){
     switch((*commands.begin())->getPriority()){
         case SQL::Code::INTO:{
             auto& tables=pager.getTablesForModification();
@@ -12,7 +12,9 @@ void ModifyContentExecutor::executeCommand(std::vector<std::unique_ptr<SQLComman
                 auto a=commands[0]->getArguments();
                 foundedTable->addRow(std::move(a));
                 pager.synchronizeDeviceStorageWithADBState();
+                return true;
             }
+            return false;
         }break;
     }
 }
