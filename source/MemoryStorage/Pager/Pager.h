@@ -13,6 +13,7 @@ public:
     ~Pager();
 
     const std::vector<DataBaseTable> &getTablesForReadOnly() const;
+    std::vector<DataBaseTable> &getTablesForModification();
 
     void changeDB(const std::string&storageLocation);
     

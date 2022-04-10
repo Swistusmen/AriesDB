@@ -8,6 +8,7 @@
 
 #include "../../source/MemoryStorage/DataWarehouse.cpp"
 #include "../../source/MemoryStorage/ReadTaskExecutor.cpp"
+#include "../../source/MemoryStorage/ModifyContentExecutor.cpp"
 #include "../../source/MemoryStorage/CommonExecutorHelperFunctions.cpp"
 #include "../../source/MemoryStorage/Pager/Pager.cpp"
 #include "../../source/MemoryStorage/Pager/OSInterface/FileOperations.cpp"

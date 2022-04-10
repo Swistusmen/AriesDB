@@ -18,6 +18,8 @@ std::optional<std::unique_ptr<SQLCommand>> SQLCommandCreator::createACommand(con
             return std::make_unique<Select>();
         }case SQL::Code::WHERE:{
             return std::make_unique<Where>();
+        }case SQL::Code::INTO:{
+            return std::make_unique<Into>();
         } 
         /*
         commands: join are

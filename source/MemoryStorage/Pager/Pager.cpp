@@ -83,6 +83,11 @@ const std::vector<DataBaseTable> &Pager::getTablesForReadOnly() const
     return tables;
 }
 
+std::vector<DataBaseTable> &Pager::getTablesForModification()
+{
+    return tables;
+}
+
 const std::string &Pager::getDeviceDataBaseStorageLocation() const
 {
     return currentDataBasePath;

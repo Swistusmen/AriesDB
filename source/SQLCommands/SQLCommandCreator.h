@@ -6,6 +6,7 @@
 #include "Select.h"
 #include "On.h"
 #include "From.h"
+#include "Into.h"
 
 #include "SQLCommand.h"
 

@@ -2,6 +2,7 @@
 #include "Tokenizer.h"
 #include "Parser.h"
 #include "../SQLCommands/ExecutionType.h"
+#include "../SQLCommands/Commands.h"
 
 //responsible for semantic analysis
 
@@ -12,6 +13,8 @@ public:
     std::pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType> compile(std::string &);
 
 private:
+    Commands::ExecutionType deductExecutionType(const std::vector<std::unique_ptr<SQLCommand>>& _commands);
+
     Tokenizer tokenizer;
     Parser parser;
 };

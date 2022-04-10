@@ -23,8 +23,12 @@ std::optional<std::function<void(std::vector<Grammar::Token>&,Logger&)>>  Parser
 {
     if(token.lexem==Grammar::Lexem::Command&&token.expr=="join"){
         return preJoin(token);
+    }else if(token.lexem==Grammar::Lexem::Command&&token.expr=="values"){
+        return preValues(token);
+    }else if(token.lexem==Grammar::Lexem::Command&&token.expr=="insert"){
+        return preInsert(token);
     }else if(token.lexem==Grammar::Lexem::Control_sign){
-        return preStar(token); //for now only*
+        return preStar(token); 
     }
     return {};
 }

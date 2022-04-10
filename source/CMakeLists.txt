@@ -52,8 +52,9 @@ add_executable(${PROJECT_NAME}
     MemoryStorage/ReadTaskExecutor.cpp 
     MemoryStorage/CommonExecutorHelperFunctions.h
     MemoryStorage/CommonExecutorHelperFunctions.cpp
+    MemoryStorage/ModifyContentExecutor.h 
+    MemoryStorage/ModifyContentExecutor.cpp
     
-
     SQLCommands/On.cpp 
     SQLCommands/On.h 
     SQLCommands/From.cpp 
@@ -62,6 +63,8 @@ add_executable(${PROJECT_NAME}
     SQLCommands/Select.h 
     SQLCommands/Where.cpp 
     SQLCommands/Where.h 
+    SQLCommands/Into.h 
+    SQLCommands/Into.cpp
     SQLCommands/SQLCommand.h
     SQLCommands/SQLCommandCreator.h 
     SQLCommands/SQLCommandCreator.cpp

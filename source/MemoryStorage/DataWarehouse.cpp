@@ -1,6 +1,6 @@
 #include "DataWarehouse.h"
 
-DataWarehouse::DataWarehouse(Logger& _logger):logger(_logger),readTaskExecutor(pager,logger)
+DataWarehouse::DataWarehouse(Logger& _logger):logger(_logger),readTaskExecutor(pager,logger),modifyContentExecutor(logger,pager)
 {
 }
 
@@ -14,8 +14,11 @@ std::unique_ptr<Table> DataWarehouse::executeQuery(std::pair<std::vector<std::un
     switch(commands.second){
         case Commands::ExecutionType::READONLY:
             return readTaskExecutor.execute(std::move(commands.first));
+        case Commands::ExecutionType::MODIFY_CONTENT:{
+            modifyContentExecutor.executeCommand(std::move(commands.first));
+            return {};
+        }
         case Commands::ExecutionType::MODIFY_STRUCTURE:
-        case Commands::ExecutionType::MODIFY_CONTENT:
         default:
             return nullptr;
     }

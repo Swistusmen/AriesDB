@@ -4,6 +4,7 @@
 #include "../SQLCommands/SQLCommand.h"
 #include "../SQLCommands/ExecutionType.h"
 #include "ReadTaskExecutor.h"
+#include "ModifyContentExecutor.h"
 #include "Pager/Pager.h"
 
 //high level interface for a database
@@ -22,4 +23,5 @@ class DataWarehouse{
         Pager pager;
         Logger& logger;
         ReadTaskExecutor readTaskExecutor;
+        ModifyContentExecutor modifyContentExecutor;
 };

@@ -25,6 +25,7 @@ DataBaseTable::~DataBaseTable()
 void DataBaseTable::addRow(std::vector<std::string> &&vec)
 {
     table.rows.push_back(std::move(vec));
+    int a{4};
 }
 
 int DataBaseTable::findAndRemoveIfEquals(const std::vector<std::string> &columnNames, const std::vector<std::string> &operators, const std::vector<std::string> &values)

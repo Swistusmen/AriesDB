@@ -1,5 +1,38 @@
 #include "PreCompiledFunctions.h"
 
+void preValues::operator()(std::vector<Grammar::Token>& tokens,Logger& logger)
+{
+    const int currentIndex=token.number;
+    auto toAdd=std::find_if(tokens.begin(),tokens.begin()+currentIndex,[this](auto token){
+        return token.expr=="into";
+    });
+    //failuje bo nie zaincjalizowały się wartości
+    if(toAdd==tokens.begin()+currentIndex){
+        logger.log("Syntax error: missing into",0);
+        return;
+    }
+    const int toAddIndex=toAdd-tokens.begin();
+
+    std::vector<Grammar::Token> toCarry;
+    tokens.erase(tokens.begin()+currentIndex); 
+    
+    while(tokens[currentIndex].lexem==Grammar::Lexem::Argument&& currentIndex<tokens.size()){
+        toCarry.emplace_back(tokens[currentIndex]);
+        tokens.erase(tokens.begin()+currentIndex); 
+    }
+    
+    if(toCarry.empty()){
+        logger.log("Syntax error: there are no arguments after values",0);
+        return;
+    }
+    const int shift=currentIndex-toAddIndex;
+    tokens.insert(tokens.begin()+shift,toCarry.begin(),toCarry.end());
+    const int noTokens=tokens.size();
+    for(int i=0;i<noTokens;i++){
+        tokens[i].number=i;
+    }
+}
+
 void preJoin::operator()(std::vector<Grammar::Token>& tokens,Logger& logger)
 {
     const int currentIndex=token.number;
@@ -43,6 +76,16 @@ void preStar::operator()(std::vector<Grammar::Token>& tokens,Logger& logger)
     tokens.erase(tokens.begin()+currentIndex-1);
     const int noTokens=tokens.size();
     for(int i=0;i!=noTokens;i++){
+        tokens[i].number=i;
+    }
+}
+
+void preInsert::operator()(std::vector<Grammar::Token>& tokens,Logger& logger)
+{
+    const int indexToDelete=token.number;
+    tokens.erase(tokens.begin()+indexToDelete);
+    const int noTokens=tokens.size();
+    for(int i=0;i<noTokens;i++){
         tokens[i].number=i;
     }
 }

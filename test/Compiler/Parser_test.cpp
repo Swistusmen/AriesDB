@@ -9,6 +9,7 @@
 #include "../../source/Compiler/PreCompiledFunctions.h"
 #include "../../source/Compiler/PreCompiledFunctions.cpp"
 #include "../../source/Compiler/Tokenizer.h"
+#include "../../source/SQLCommands/Into.cpp"
 
 #include <vector>
 

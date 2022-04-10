@@ -7,6 +7,16 @@
 #include <algorithm>
 
 
+class preValues{
+public:
+    preValues(const Grammar::Token& _token):
+        token(_token){};
+
+    void operator()(std::vector<Grammar::Token>& tokens,Logger& logger);
+private:
+    const Grammar::Token& token;
+};
+
 class preJoin{
 public:
     preJoin(const Grammar::Token& _token):token(_token){};
@@ -19,6 +29,15 @@ private:
 class preStar{
 public:
     preStar(const Grammar::Token& _token):token(_token){};
+
+    void operator()(std::vector<Grammar::Token>& tokens,Logger& logger);
+private:
+    const Grammar::Token& token;
+};
+
+class preInsert{
+public:
+    preInsert(const Grammar::Token& _token):token(_token){};
 
     void operator()(std::vector<Grammar::Token>& tokens,Logger& logger);
 private:

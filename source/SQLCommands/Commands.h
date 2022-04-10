@@ -3,11 +3,14 @@
 
 namespace SQL{
     enum class Code{
+        INSERT,
+        INTO,
         FROM,
         ON, 
         WHERE,
         SELECT,
         JOIN,
+        VALUES,
         NONE,
     };
 
@@ -15,7 +18,11 @@ namespace SQL{
         for(auto& it:code){
             it=std::tolower(it);
         }
-        if(code=="from"){
+        if(code=="insert"){
+            return Code::INSERT;
+        }else if(code=="into"){
+            return Code::INTO;
+        }else if(code=="from"){
             return Code::FROM;
         }else if(code=="on"){
             return Code::ON;
@@ -25,6 +32,8 @@ namespace SQL{
             return Code::SELECT;
         }else if(code=="join"){
             return Code::JOIN;
+        }else if(code=="values"){
+            return Code::VALUES;
         }else{
             return Code::NONE;
         }
@@ -32,6 +41,10 @@ namespace SQL{
 
     static bool isCompiledTime(const Code& _code){
         if(_code==Code::JOIN){
+            return true;
+        }else if(_code==Code::INSERT){
+            return true;
+        }else if(_code==Code::VALUES){
             return true;
         }
         return false;
