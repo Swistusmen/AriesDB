@@ -4,6 +4,7 @@
 namespace SQL{
     enum class Code{
         INSERT,
+        UPDATE,
         INTO,
         FROM,
         ON, 
@@ -11,6 +12,7 @@ namespace SQL{
         SELECT,
         JOIN,
         VALUES,
+        SET, 
         NONE,
     };
 
@@ -20,6 +22,8 @@ namespace SQL{
         }
         if(code=="insert"){
             return Code::INSERT;
+        }else if(code=="update"){
+            return Code::UPDATE;
         }else if(code=="into"){
             return Code::INTO;
         }else if(code=="from"){
@@ -34,6 +38,8 @@ namespace SQL{
             return Code::JOIN;
         }else if(code=="values"){
             return Code::VALUES;
+        }else if(code=="set"){
+            return Code::SET;
         }else{
             return Code::NONE;
         }
@@ -46,6 +52,8 @@ namespace SQL{
             return true;
         }else if(_code==Code::VALUES){
             return true;
+        }else if(_code==Code::UPDATE){
+            return true; //but not only compile time
         }
         return false;
     }

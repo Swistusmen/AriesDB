@@ -32,6 +32,8 @@ public:
     int findAndRemoveIfEquals(const std::vector<std::string> &columnNames, const std::vector<std::string> &operators, const std::vector<std::string> &values);
     int findRowsAndUpdate(const std::vector<std::string> &columnNames, const std::vector<std::string> &operators,
                           const std::vector<std::string> &valuesToCompare, const std::vector<std::string> &newValues);
+    int findAndUpdate(const std::vector<std::string> &conditionalColumnNames, const std::vector<std::string> &operators,
+        const std::vector<std::string> &conditionalValues, const std::vector<std::string> &columnsToUpdate,const std::vector<std::string> &newValues);
    // std::vector<std::vector<const std::string>> findToToModifyAndUpdateWasChanged(const std::vector<std::pair<std::string, std::string>> &conditions);
 
 private:

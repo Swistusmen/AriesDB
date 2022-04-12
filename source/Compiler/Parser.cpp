@@ -27,6 +27,8 @@ std::optional<std::function<void(std::vector<Grammar::Token>&,Logger&)>>  Parser
         return preValues(token);
     }else if(token.lexem==Grammar::Lexem::Command&&token.expr=="insert"){
         return preInsert(token);
+    }else if(token.lexem==Grammar::Lexem::Command&&token.expr=="update"){
+        return preUpdate(token);
     }else if(token.lexem==Grammar::Lexem::Control_sign){
         return preStar(token); 
     }

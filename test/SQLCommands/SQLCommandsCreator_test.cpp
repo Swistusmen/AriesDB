@@ -5,6 +5,8 @@
 #include "../../source/SQLCommands/Select.h"
 #include "../../source/SQLCommands/Where.h"
 #include "../../source/SQLCommands/On.cpp"
+#include "../../source/SQLCommands/Update.h"
+#include "../../source/SQLCommands/Into.h"
 
 TEST(SQL_COMMAND_CREATOR,CREATE_FROM){
     std::string testValue="from";

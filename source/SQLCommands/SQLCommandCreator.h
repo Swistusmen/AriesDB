@@ -7,6 +7,7 @@
 #include "On.h"
 #include "From.h"
 #include "Into.h"
+#include "Update.h"
 
 #include "SQLCommand.h"
 

@@ -20,7 +20,9 @@ std::optional<std::unique_ptr<SQLCommand>> SQLCommandCreator::createACommand(con
             return std::make_unique<Where>();
         }case SQL::Code::INTO:{
             return std::make_unique<Into>();
-        } 
+        }case SQL::Code::UPDATE:{
+            return std::make_unique<Update>();
+        }
         /*
         commands: join are
          a command in SQL-sense, but does not have a function representation in this progra

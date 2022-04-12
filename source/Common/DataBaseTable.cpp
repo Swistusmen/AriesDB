@@ -25,7 +25,6 @@ DataBaseTable::~DataBaseTable()
 void DataBaseTable::addRow(std::vector<std::string> &&vec)
 {
     table.rows.push_back(std::move(vec));
-    int a{4};
 }
 
 int DataBaseTable::findAndRemoveIfEquals(const std::vector<std::string> &columnNames, const std::vector<std::string> &operators, const std::vector<std::string> &values)
@@ -71,6 +70,40 @@ int DataBaseTable::findRowsAndUpdate(const std::vector<std::string> &columnNames
             for (int i = 0; i < noNewValues; i++)
             {
                 copyOfRow[copyOfIndexes[i]] = newValues[i];
+            }
+            std::lock_guard<std::mutex>lock(modificationMutex);
+            *it = copyOfRow;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
+            continue;
+        }
+        updates++;
+        lastChangedDate = std::chrono::system_clock::now();
+    }
+
+    return updates;
+}
+
+int DataBaseTable::findAndUpdate(const std::vector<std::string> &conditionalColumnNames, const std::vector<std::string> &operators,
+        const std::vector<std::string> &conditionalValues, const std::vector<std::string> &columnsToUpdate,const std::vector<std::string> &newValues)
+{
+    std::vector<int> columnIndexes = getColumnIndexes(conditionalColumnNames);
+    std::vector<int> copyOfIndexes = columnIndexes;
+    auto toUpdate = findRowsMatchingTheCriteria(std::move(columnIndexes), operators, conditionalValues);
+    std::vector<int> updateIndexes = getColumnIndexes(columnsToUpdate);
+
+    int updates = 0;
+    for (auto &it : toUpdate)
+    {
+        try
+        {
+            std::vector<std::string> copyOfRow = *it;
+            const int noNewValues = newValues.size();
+            for (int i = 0; i < noNewValues; i++)
+            {
+                copyOfRow[updateIndexes[i]] = newValues[i];
             }
             std::lock_guard<std::mutex>lock(modificationMutex);
             *it = copyOfRow;

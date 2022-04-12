@@ -67,6 +67,8 @@ add_executable(${PROJECT_NAME}
     SQLCommands/Where.h 
     SQLCommands/Into.h 
     SQLCommands/Into.cpp
+    SQLCommands/Update.h 
+    SQLCommands/Update.cpp
     SQLCommands/SQLCommand.h
     SQLCommands/SQLCommandCreator.h 
     SQLCommands/SQLCommandCreator.cpp

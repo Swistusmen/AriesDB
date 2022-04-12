@@ -5,10 +5,13 @@
 #include "../../source/SQLCommands/Where.h"
 #include "../../source/SQLCommands/Select.h"
 #include "../../source/SQLCommands/On.h"
+#include "../../source/SQLCommands/Into.h"
+#include "../../source/SQLCommands/Update.h"
 
 #include "../../source/MemoryStorage/DataWarehouse.cpp"
 #include "../../source/MemoryStorage/ReadTaskExecutor.cpp"
 #include "../../source/MemoryStorage/ModifyContentExecutor.cpp"
+#include "../../source/MemoryStorage/ModifyContentExecutor.h"
 #include "../../source/MemoryStorage/CommonExecutorHelperFunctions.cpp"
 #include "../../source/MemoryStorage/Pager/Pager.cpp"
 #include "../../source/MemoryStorage/Pager/OSInterface/FileOperations.cpp"
@@ -21,6 +24,7 @@
 #include <memory>
 #include <utility>
 #include <tuple>
+#include <optional>
 
 class Mocked_DataWarehouse: public ::testing::Test{
     public:

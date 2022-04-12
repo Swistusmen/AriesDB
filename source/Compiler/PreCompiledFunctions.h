@@ -6,6 +6,15 @@
 #include <string>
 #include <algorithm>
 
+class preUpdate{
+    public:
+        preUpdate(const Grammar::Token& _token):
+        token(_token){};
+
+        void operator()(std::vector<Grammar::Token>& tokens,Logger& logger);
+    private:
+        const Grammar::Token& token;
+};
 
 class preValues{
 public:

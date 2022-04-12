@@ -11,7 +11,7 @@ std::pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType> Comp
 Commands::ExecutionType Compiler::deductExecutionType(const std::vector<std::unique_ptr<SQLCommand>>& _commands)
 {
     auto isModifyingContent=std::find_if(_commands.begin(),_commands.end(),[](const auto& ptr){
-        return ptr->getPriority()==SQL::Code::INTO;
+        return ptr->getPriority()==SQL::Code::INTO || ptr->getPriority()==SQL::Code::UPDATE;
     });
     if(isModifyingContent!=_commands.end()){
         return Commands::ExecutionType::MODIFY_CONTENT;

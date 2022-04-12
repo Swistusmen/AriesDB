@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.2.0)
 project(Tests)
 
-
-set(CXX_STANDARD 17)
-set(CXX_STANDARD_REQUIRED TRUE)
+set(CMAKE_CXX_COMPILER)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})

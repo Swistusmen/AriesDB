@@ -1,12 +1,53 @@
 #include "PreCompiledFunctions.h"
 
+void preUpdate::operator()(std::vector<Grammar::Token>& tokens,Logger& logger)
+{
+    //ustaw flage liczenia argumentow
+    //idz po nastepnych argumentach
+    //jesli znajdziesz set, usun je
+    //jesli znajdziesz where - usun je, skoncz liczenie
+    //wstaw wartosc zaraz po update
+    //kazdy argument bedacy komenda powoduje fail
+    bool isCounting{true};
+    int noArguments{0};
+    int index=token.number+1;
+    while(index<tokens.size()){
+        if(tokens[index].lexem==Grammar::Lexem::Command){
+            if(tokens[index].expr=="set"){
+                tokens.erase(tokens.begin()+index);
+                continue;
+            }else if(tokens[index].expr=="where"){
+                tokens.erase(tokens.begin()+index);
+                isCounting=false;
+                continue;
+            }else{
+                logger.log("Syntax error: additional command in update: "+tokens[index].expr,0);
+                return;
+            }
+        }
+        if(isCounting){
+            noArguments++;
+            index++;
+        }else{
+            break;
+        }
+    }
+    Grammar::Token noArgs;
+    noArgs.expr=std::to_string(noArguments);
+    noArgs.lexem=Grammar::Lexem::Argument;
+    tokens.insert(tokens.begin()+token.number+1,noArgs);
+    for(int i=0;i<tokens.size();i++){
+        tokens[i].number=i;
+    }
+}
+
 void preValues::operator()(std::vector<Grammar::Token>& tokens,Logger& logger)
 {
     const int currentIndex=token.number;
     auto toAdd=std::find_if(tokens.begin(),tokens.begin()+currentIndex,[this](auto token){
         return token.expr=="into";
     });
-    //failuje bo nie zaincjalizowały się wartości
+
     if(toAdd==tokens.begin()+currentIndex){
         logger.log("Syntax error: missing into",0);
         return;
