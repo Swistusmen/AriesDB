@@ -69,6 +69,8 @@ add_executable(${PROJECT_NAME}
     SQLCommands/Into.cpp
     SQLCommands/Update.h 
     SQLCommands/Update.cpp
+    SQLCommands/Delete.h 
+    SQLCommands/Delete.cpp
     SQLCommands/SQLCommand.h
     SQLCommands/SQLCommandCreator.h 
     SQLCommands/SQLCommandCreator.cpp

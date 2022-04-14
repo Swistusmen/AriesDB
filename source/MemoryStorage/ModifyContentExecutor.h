@@ -3,6 +3,7 @@
 #include "../SQLCommands/SQLCommand.h"
 #include "../SQLCommands/Into.h"
 #include "../SQLCommands/Update.h"
+#include "../SQLCommands/Delete.h"
 #include "../SQLCommands/ExecutionType.h"
 #include "Pager/Pager.h"
 #include "../Logger/Logger.h"

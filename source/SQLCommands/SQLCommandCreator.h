@@ -8,6 +8,7 @@
 #include "From.h"
 #include "Into.h"
 #include "Update.h"
+#include "Delete.h"
 
 #include "SQLCommand.h"
 

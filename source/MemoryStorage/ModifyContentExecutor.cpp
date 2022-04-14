@@ -35,6 +35,17 @@ bool ModifyContentExecutor::executeCommand(std::vector<std::unique_ptr<SQLComman
         return false;
     }
     break;
+    case SQL::Code::DELETE:{
+        auto val=getTable<Delete>(commands);
+        if(val.has_value()){
+            auto &cols=dynamic_cast<Delete&>(*commands[0]).getColumns();
+            auto &vals=dynamic_cast<Delete&>(*commands[0]).getValues();
+            auto &operators=dynamic_cast<Delete&>(*commands[0]).getOperators();
+            val.value()->findAndRemoveIfEquals(cols,operators,vals);
+            pager.synchronizeDeviceStorageWithADBState();
+            return true;
+        }
+    }break;
     }
 }
 

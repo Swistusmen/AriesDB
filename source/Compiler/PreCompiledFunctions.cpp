@@ -1,13 +1,18 @@
 #include "PreCompiledFunctions.h"
 
+void preDelete::operator()(std::vector<Grammar::Token>& tokens,Logger& logger)
+{
+    tokens.erase(std::remove_if(tokens.begin(),tokens.end(),[](auto& t){
+        return t.lexem==Grammar::Lexem::Command && t.expr!="delete";
+    }));
+    tokens.erase(tokens.begin()+(tokens.size()-1));
+    for(int i=0;i<tokens.size();i++){
+        tokens[i].number=i;
+    }
+}
+
 void preUpdate::operator()(std::vector<Grammar::Token>& tokens,Logger& logger)
 {
-    //ustaw flage liczenia argumentow
-    //idz po nastepnych argumentach
-    //jesli znajdziesz set, usun je
-    //jesli znajdziesz where - usun je, skoncz liczenie
-    //wstaw wartosc zaraz po update
-    //kazdy argument bedacy komenda powoduje fail
     bool isCounting{true};
     int noArguments{0};
     int index=token.number+1;

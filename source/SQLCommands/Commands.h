@@ -5,6 +5,7 @@ namespace SQL{
     enum class Code{
         INSERT,
         UPDATE,
+        DELETE,
         INTO,
         FROM,
         ON, 
@@ -24,6 +25,8 @@ namespace SQL{
             return Code::INSERT;
         }else if(code=="update"){
             return Code::UPDATE;
+        }else if(code=="delete"){
+            return Code::DELETE;
         }else if(code=="into"){
             return Code::INTO;
         }else if(code=="from"){
@@ -53,6 +56,8 @@ namespace SQL{
         }else if(_code==Code::VALUES){
             return true;
         }else if(_code==Code::UPDATE){
+            return true; //but not only compile time
+        }else if(_code==Code::DELETE){
             return true; //but not only compile time
         }
         return false;
