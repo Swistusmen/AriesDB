@@ -1,5 +1,13 @@
 #include "PreCompiledFunctions.h"
 
+void preCreate::operator()(std::vector<Grammar::Token>& tokens,Logger& logger)
+{
+    tokens.erase(tokens.begin()+1); //create table ( ) -deleting table
+    for(int i=0;i<tokens.size();i++){
+        tokens[i].number=i;
+    }
+}
+
 void preDelete::operator()(std::vector<Grammar::Token>& tokens,Logger& logger)
 {
     tokens.erase(std::remove_if(tokens.begin(),tokens.end(),[](auto& t){

@@ -56,6 +56,8 @@ add_executable(${PROJECT_NAME}
     MemoryStorage/CommonExecutorHelperFunctions.cpp
     MemoryStorage/ModifyContentExecutor.h 
     MemoryStorage/ModifyContentExecutor.cpp
+    MemoryStorage/ModifyStructureExecutor.h 
+    MemoryStorage/ModifyStructureExecutor.cpp 
     
     SQLCommands/On.cpp 
     SQLCommands/On.h 
@@ -71,6 +73,8 @@ add_executable(${PROJECT_NAME}
     SQLCommands/Update.cpp
     SQLCommands/Delete.h 
     SQLCommands/Delete.cpp
+    SQLCommands/Create.h 
+    SQLCommands/Create.cpp
     SQLCommands/SQLCommand.h
     SQLCommands/SQLCommandCreator.h 
     SQLCommands/SQLCommandCreator.cpp

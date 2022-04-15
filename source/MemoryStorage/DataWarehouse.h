@@ -6,6 +6,7 @@
 #include "../Common/CommandResult.h"
 #include "ReadTaskExecutor.h"
 #include "ModifyContentExecutor.h"
+#include "ModifyStructureExecutor.h"
 #include "Pager/Pager.h"
 
 //high level interface for a database
@@ -25,4 +26,5 @@ class DataWarehouse{
         Logger& logger;
         ReadTaskExecutor readTaskExecutor;
         ModifyContentExecutor modifyContentExecutor;
+        ModifyStructureExecutor modifyStructureExecutor;
 };

@@ -1,6 +1,6 @@
 #include "DataWarehouse.h"
 
-DataWarehouse::DataWarehouse(Logger& _logger):logger(_logger),readTaskExecutor(pager,logger),modifyContentExecutor(logger,pager)
+DataWarehouse::DataWarehouse(Logger& _logger):logger(_logger),readTaskExecutor(pager,logger),modifyContentExecutor(logger,pager),modifyStructureExecutor(logger,pager)
 {
 }
 
@@ -24,7 +24,12 @@ CommandResult DataWarehouse::executeQuery(std::pair<std::vector<std::unique_ptr<
             _result=wasQuerySuccessful?CommandResult::Result::Success:CommandResult::Result::Failure;
             return {_result,Commands::ExecutionType::MODIFY_CONTENT};
         }
-        case Commands::ExecutionType::MODIFY_STRUCTURE:
+        case Commands::ExecutionType::MODIFY_STRUCTURE:{
+            auto wasQuerySuccessful=modifyStructureExecutor.executeCommand(std::move(commands.first));
+            CommandResult::Result _result;
+            _result=wasQuerySuccessful?CommandResult::Result::Success:CommandResult::Result::Failure;
+            return {_result,Commands::ExecutionType::MODIFY_STRUCTURE};
+        }
         default:
             return CommandResult(CommandResult::Result::Failure,Commands::ExecutionType::MODIFY_STRUCTURE);
     }

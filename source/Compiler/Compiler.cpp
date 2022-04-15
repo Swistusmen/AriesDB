@@ -16,5 +16,11 @@ Commands::ExecutionType Compiler::deductExecutionType(const std::vector<std::uni
     if(isModifyingContent!=_commands.end()){
         return Commands::ExecutionType::MODIFY_CONTENT;
     }
+    auto isModifyingStructure=std::find_if(_commands.begin(),_commands.end(),[](const auto& ptr){
+        return ptr->getPriority()==SQL::Code::CREATE;
+    });
+    if(isModifyingStructure!=_commands.end()){
+        return Commands::ExecutionType::MODIFY_STRUCTURE;
+    }
     return Commands::ExecutionType::READONLY;
 }

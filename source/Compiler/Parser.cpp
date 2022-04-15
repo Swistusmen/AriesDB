@@ -31,6 +31,8 @@ std::optional<std::function<void(std::vector<Grammar::Token>&,Logger&)>>  Parser
         return preUpdate(token);
     }else if(token.lexem==Grammar::Lexem::Command&&token.expr=="delete"){
         return preDelete(token);
+    }else if(token.lexem==Grammar::Lexem::Command&&token.expr=="create"){
+        return preCreate(token);
     }else if(token.lexem==Grammar::Lexem::Control_sign){
         return preStar(token); 
     }

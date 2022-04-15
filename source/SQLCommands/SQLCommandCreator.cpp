@@ -24,6 +24,8 @@ std::optional<std::unique_ptr<SQLCommand>> SQLCommandCreator::createACommand(con
             return std::make_unique<Update>();
         }case SQL::Code::DELETE:{
             return std::make_unique<Delete>();
+        }case SQL::Code::CREATE:{
+            return std::make_unique<Create>();
         }
         default:{
             return {};
