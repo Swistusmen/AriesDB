@@ -3,8 +3,6 @@
 #include "SQLCommand.h"
 #include <exception>
 
-//From for now only with 1 argument
-
 class From : public SQLCommand
 {
 public:
@@ -15,9 +13,11 @@ public:
 
     ~From() override;
 
-    int getValidity() override { return validity; };
-    std::shared_ptr<Table> execute(std::shared_ptr<Table> ) override;
+    SQL::Code getPriority() override { return priority; };
+    std::unique_ptr<Table> execute(std::unique_ptr<Table>) override;
+    std::vector<std::unique_ptr<Table>> execute(const std::vector<DataBaseTable>& tableOfVectors) override;
+    void addArgument(const std::string& word) override;
 
 private:
-    static const int validity = 1;
+    static const SQL::Code priority= SQL::Code::FROM;
 };

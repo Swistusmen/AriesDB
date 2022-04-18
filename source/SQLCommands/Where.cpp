@@ -16,10 +16,14 @@ Where::~Where()
 {
 }
 
-std::shared_ptr<Table> Where::execute(std::shared_ptr<Table> table)
+std::unique_ptr<Table> Where::execute(std::unique_ptr<Table> table)
 {
     if (table == nullptr)
     {
+        return nullptr;
+    }
+    if(arguments.size()%3!=0){
+        log="Error, Where: syntax error, get wrong number arguments";
         return nullptr;
     }
 
@@ -27,10 +31,23 @@ std::shared_ptr<Table> Where::execute(std::shared_ptr<Table> table)
     if (columnMatch != table->columns.end())
     {
         const int columnIndex = columnMatch - table->columns.begin();
-        const auto condition = arguments.at(1);
+        const auto conditionValue = arguments.at(2);
+        std::string conditionOperator=arguments.at(1);
 
-        table->rows.remove_if([columnIndex, condition](auto& a)
-                       { return a.at(columnIndex) != condition; });
+        if(conditionOperator=="="){
+            table->rows.remove_if([columnIndex, conditionValue](auto& a)
+                       { return a.at(columnIndex) != conditionValue; });
+        }else if(conditionOperator=="<"){
+            table->rows.remove_if([columnIndex, conditionValue](auto& a)
+                       { return a.at(columnIndex) >= conditionValue; });
+        }else if(conditionOperator==">"){
+            table->rows.remove_if([columnIndex, conditionValue](auto& a)
+                       { return a.at(columnIndex) <= conditionValue; });
+        }else{
+            log="Error, Where: syntax error, get wrong comparation argument, should be =,< or >";
+            return nullptr;
+        }
+
         return table;
     }
 

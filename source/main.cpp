@@ -1,32 +1,29 @@
 #include "Interface/Interface.h"
-#include "Compiler/Tokenizer.h"
-#include "Compiler/Parser.h"
-#include "Common/Table.h"
+#include "Interface/ConsoleInterface.h"
+#include "Compiler/Compiler.h"
 #include "MemoryStorage/DataWarehouse.h"
+#include "Logger/Logger.h"
 #include <iostream>
+#include <filesystem>
 
 int main()
 {
-    /*std::cout << "Hello world\n";
-    std::cout << takeInputFromKeyboard(std::cin) << std::endl;*/
+    Logger logger("/home/michal/Documents/Programming/Database/Logs/logs.txt",1);
+    Compiler compiler(logger);
+    DataWarehouse dataWarehouse(logger);
+    ConsoleInterface console(logger);
+    dataWarehouse.setDeviceStroageLocation("/home/michal/Documents/Programming/Database/source/Tables");
 
-    Tokenizer tokenizer;
-    std::string test="where category Fashion";
-    auto tokens=tokenizer.tokenizeInputString(test);
-
-    Parser parser;
-    tokens=parser.sortCommands(std::move(tokens));
-    
-    DataWarehouse db;
-    auto ptrToTable=tokens->at(0)->execute(db.tab);
-    std::cout<<(ptrToTable==nullptr)<<std::endl;
-    std::for_each(ptrToTable->rows.begin(),ptrToTable->rows.end(),[](auto row){
-        std::for_each(row.begin(),row.end(),[](auto element){
-            std::cout<<element<<" ";
-        });
-        std::cout<<std::endl;
-    })    ;
-
+    std::string input{""};
+    while ((input=console.userInput(0)) != "exit")
+    {
+        auto commands = compiler.compile(input);
+        auto response = dataWarehouse.executeQuery(std::move(commands));
+        console.handleResponse(response);
+        logger.endSession(0);
+    }
+    //this is temporary as I know that if i put exit for nw, there is only one member
+    logger.endSession(0);
 
     return 0;
 }

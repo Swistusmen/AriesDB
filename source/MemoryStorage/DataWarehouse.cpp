@@ -1,25 +1,47 @@
 #include "DataWarehouse.h"
 
-DataWarehouse::DataWarehouse(){
-    tab=std::make_shared<Table>("Shops","1");
-    tab->columns=std::vector<std::string>{"id","shop","category","floor"};
-    std::vector<std::string> a{"1","Rossman","Beauty","1"};
-    std::vector<std::string> b{"2","H&M","Fashion","1"};
-    std::vector<std::string> c{"3","C&A","Fashion","1"};
-    std::vector<std::string> d{"4","NewYorker","Fashion","2"};
-    std::vector<std::string> e{"5","Biedronka","Supermarket","2"};
-    tab->rows.push_back(a);
-    tab->rows.push_back(b);
-    tab->rows.push_back(c);
-    tab->rows.push_back(d);
-    tab->rows.push_back(e);
+DataWarehouse::DataWarehouse(Logger& _logger):logger(_logger),readTaskExecutor(pager,logger),modifyContentExecutor(logger,pager),modifyStructureExecutor(logger,pager)
+{
 }
 
-DataWarehouse::~DataWarehouse(){
+DataWarehouse::~DataWarehouse()
+{
     tab.reset();
 }
 
-std::unique_ptr<DBExecResult> DataWarehouse::execute(SQLvec vec){
-   // TODO:
-    return nullptr;
+CommandResult DataWarehouse::executeQuery(std::pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType>&& commands)
+{
+    switch(commands.second){
+        case Commands::ExecutionType::READONLY:{
+            auto table=readTaskExecutor.execute(std::move(commands.first));
+            CommandResult::Result _result;
+            table==nullptr?_result=CommandResult::Result::Failure:_result=CommandResult::Result::Success;
+            return CommandResult{_result,Commands::ExecutionType::READONLY,std::move(table)};
+        }break;
+        case Commands::ExecutionType::MODIFY_CONTENT:{
+            auto wasQuerySuccessful=modifyContentExecutor.executeCommand(std::move(commands.first));
+            CommandResult::Result _result;
+            _result=wasQuerySuccessful?CommandResult::Result::Success:CommandResult::Result::Failure;
+            return {_result,Commands::ExecutionType::MODIFY_CONTENT};
+        }
+        case Commands::ExecutionType::MODIFY_STRUCTURE:{
+            auto wasQuerySuccessful=modifyStructureExecutor.executeCommand(std::move(commands.first));
+            CommandResult::Result _result;
+            _result=wasQuerySuccessful?CommandResult::Result::Success:CommandResult::Result::Failure;
+            return {_result,Commands::ExecutionType::MODIFY_STRUCTURE};
+        }
+        default:
+            return CommandResult(CommandResult::Result::Failure,Commands::ExecutionType::MODIFY_STRUCTURE);
+    }
+    
+}
+
+const std::string &DataWarehouse::getDeviceStorageLocation() const
+{
+    return pager.getDeviceDataBaseStorageLocation();
+}
+
+void DataWarehouse::setDeviceStroageLocation(const std::string &storageLocation)
+{
+    pager.changeDB(storageLocation);
 }

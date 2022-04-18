@@ -15,13 +15,13 @@ Select::~Select()
 {
 }
 
-std::shared_ptr<Table> Select::execute(std::shared_ptr<Table> table)
+std::unique_ptr<Table> Select::execute(std::unique_ptr<Table> table)
 {
     if (table == nullptr)
     {
         return nullptr;
     }
-    auto newTable = std::make_shared<Table>("DTO", "0");
+    auto newTable = std::make_unique<Table>(table->tableName, "0");
 
     std::copy_if(table->columns.begin(), table->columns.end(), std::back_inserter(newTable->columns), [this](auto &a)
                  { return std::find(arguments.begin(), arguments.end(), a) != arguments.end(); });

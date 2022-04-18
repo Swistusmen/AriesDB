@@ -1,10 +1,13 @@
 #include "Tokenizer.h"
 
-std::unique_ptr<std::vector<std::unique_ptr<SQLCommand>>> Tokenizer::tokenizeInputString(std::string &inputString)
+std::vector<Grammar::Token> Tokenizer::tokenizeInputString(const std::string &inputString)
 {
     auto words = splitLongStringIntoAWords(inputString);
-    auto commands = initializeSQLCommands(words);
-    return std::move(commands);
+    if(words.empty()){
+        logger.log("Could not tokenize command, there are no tokens",0);
+        return{};
+    }
+    return convertWordsIntoTokens(words);
 }
 
 std::vector<std::string> Tokenizer::splitLongStringIntoAWords(std::string inputStr)
@@ -12,31 +15,40 @@ std::vector<std::string> Tokenizer::splitLongStringIntoAWords(std::string inputS
     std::vector<std::string> words;
     std::string buffer;
 
-    for(auto letter: inputStr){
-        if(letter != DELIMITER){
-            buffer+=letter;
+    for(const auto& letter: inputStr){
+        
+        if(letter != Delimiters::DELIMITER_1 && letter!=Delimiters::DELIMITER_2 ){
+            if(letter!='=' &&letter!= '<' &&letter!='>'){
+                buffer+=letter;
+            }else{
+                if(!buffer.empty()){
+                words.push_back(buffer);
+                buffer="";
+                }
+                words.push_back(std::string{letter});
+            }
         }else{
+            if(buffer!=""){
             words.push_back(buffer);
+            }
             buffer="";
         }
     }
     if(buffer!="")
         words.push_back(buffer);
-    return std::move(words);
+    return words;
 }
 
-std::unique_ptr<std::vector<std::unique_ptr<SQLCommand>>> Tokenizer::initializeSQLCommands(std::vector<std::string> &words)
+std::vector<Grammar::Token> Tokenizer::convertWordsIntoTokens(const std::vector<std::string>& words)
 {
-    int noWords = words.size();
-    auto commands=std::make_unique<std::vector<std::unique_ptr<SQLCommand>>>();
-    for (int i = 0; i < noWords; i++)
-    {
-        auto respond=sqlCreator.createACommand(words[i]);
-        if(respond.has_value()){
-            commands->push_back(std::move(respond.value()));
-        }else{
-            commands->back()->addArgument(words[i]);
-        }
+    std::vector<Grammar::Token> tokens;
+    const int noWords=words.size();
+    for(int i=0;i<noWords;i++){
+        Grammar::Token t;
+        t.expr=words[i];
+        t.number=i;
+        t.lexem=Grammar::identifyLexem(words[i]);
+        tokens.push_back(t);
     }
-    return commands;
+    return tokens;
 }

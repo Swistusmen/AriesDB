@@ -1,14 +1,20 @@
 #pragma once
-#include <iostream>
-//1 tabela- select from where
-//TODO: rozpoznanie słów kluczowych generowanie błędów
-//TODO: sprawdzanie skladni- generowanie bledow
-//TODO: ustalanie polecen i argumentow
-//TODO: ustalanie kolejnosci ich wykonania
+#include "Tokenizer.h"
+#include "Parser.h"
+#include "../SQLCommands/ExecutionType.h"
+#include "../SQLCommands/Commands.h"
 
-class Compiler{
-    public:
+//responsible for semantic analysis
 
-    private:
+class Compiler
+{
+public:
+    Compiler(Logger& _logger):tokenizer(_logger),parser(_logger){};
+    std::pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType> compile(std::string &);
 
+private:
+    Commands::ExecutionType deductExecutionType(const std::vector<std::unique_ptr<SQLCommand>>& _commands);
+
+    Tokenizer tokenizer;
+    Parser parser;
 };

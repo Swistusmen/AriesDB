@@ -2,10 +2,11 @@
 #include <iostream>
 #include <string>
 
-std::string takeInputFromKeyboard(std::istream &inputStream)
+std::string takeInputFromKeyboard()
 {
     std::cout << "db > ";
     std::string input;
-    inputStream >> input;
+    std::getline(std::cin,input);
+
     return input;
 }
