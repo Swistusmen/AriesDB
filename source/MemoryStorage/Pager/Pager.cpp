@@ -22,7 +22,7 @@ void Pager::synchronizeDeviceStorageWithADBState()
 
     for (auto it = tables.begin(); it != tables.end(); it++)
     {
-        if (it->getLastModificationDate() - lastUpdateTime > backupTimeIntervalInSeconds)
+        if (it->getLastModificationDate() - lastUpdateTime < backupTimeIntervalInSeconds)
         {
             toUpdate.push_back(it);
         }
@@ -30,7 +30,7 @@ void Pager::synchronizeDeviceStorageWithADBState()
 
     for (const auto &tab : toUpdate)
     {
-        saveATableIntoATextFile(currentDataBasePath, tab->getTableName(), tab->getTableDataForReadOnly());
+        saveATableIntoATextFile(currentDataBasePath, tab->getTableName()+".txt", tab->getTableDataForReadOnly());
     }
     lastUpdateTime = std::chrono::system_clock::now();
 }

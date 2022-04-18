@@ -29,6 +29,6 @@ private:
     std::vector<std::string> files;
     std::string currentDataBasePath;
 
-    const std::chrono::seconds backupTimeIntervalInSeconds{300};
+    const std::chrono::seconds backupTimeIntervalInSeconds{1};
     std::chrono::time_point<std::chrono::system_clock> lastUpdateTime=std::chrono::system_clock::now();
 };
