@@ -4,4 +4,3 @@ id shop category floor
 3 C&A Fashion 1 
 4 NewYorker Fashion 2 
 5 Biedronka Supermarket 2 
-6 Arnika Apteka 0 
