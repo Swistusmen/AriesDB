@@ -59,9 +59,9 @@ namespace SQL{
         }else if(_code==Code::VALUES){
             return true;
         }else if(_code==Code::UPDATE){
-            return true; //but not only compile time
+            return true; 
         }else if(_code==Code::DELETE){
-            return true; //but not only compile time
+            return true; 
         }else if(_code==Code::CREATE){
             return true;
         }
