@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <memory>
 #include <optional>
+#include <iostream>
 
 #include "../../../Common/Table.h"
 #include "../../../Common/Algorithms.h"
@@ -24,5 +25,7 @@ std::vector<std::string> listFiles(std::filesystem::path path);
 std::string getDirectoryPath(const std::string& filepath);
 
 std::string getFileNameFromPath(const std::string& filepath);
+
+void deleteFile(std::filesystem::path path,const std::string &filename);
 
 #endif

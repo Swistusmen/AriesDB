@@ -23,6 +23,12 @@ std::optional<std::filesystem::path> saveATableIntoATextFile(std::filesystem::pa
     return {};
 }
 
+void deleteFile(std::filesystem::path path,const std::string &filename)
+{
+    std::cout<<path.string() + PATH_SEPARATOR + filename<<std::endl;
+    std::filesystem::remove(path.string() + PATH_SEPARATOR + filename);
+}
+
 std::optional<Table> loadAFile(std::filesystem::path path,const std::string& filename)
 {
     std::ifstream file;
