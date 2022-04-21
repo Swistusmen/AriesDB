@@ -15,6 +15,7 @@
 #include "../../../Common/Algorithms.h"
 
 #define PATH_SEPARATOR "/"
+#define WORDS_SEPARATOR ','
 
 std::optional<std::filesystem::path> saveATableIntoATextFile(std::filesystem::path path,const std::string &filename, const Table& table);
 

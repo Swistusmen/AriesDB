@@ -111,14 +111,19 @@ TEST_F(App,SIMPLE_SELECT_ALL_FROM_SHOPS_JOIN_WORKERS_ON_ID_EQUALS_ID_JOIN_ON_PRO
     std::string input="select * from shops join workers on shops.id = workers.worker_id join products on workers.worker_id = products.product_id";
     auto commands = compiler.compile(input);
     auto response = db.executeQuery(std::move(commands));
-    std::vector<std::string> expected{
-        "id", "shop", "category", "floor", "worker_id", "work_place", "name", "surname", "product_id", "product_name", "product_price", "quality", 
-        "1", "Rossman", "Beauty", "1", "1", "Rossman", "Adam", "Waters", "1", "helmet", "599", "good", 
-        "2", "H&M", "Fashion", "1", "2", "Rossman", "Joseph", "Eilish", "2", "shirt", "10", "good", 
-        "3", "C&A", "Fashion", "1", "3", "Rossman", "Anna", "Scott", "3", "bed", "13", "good", 
-        "4", "NewYorker", "Fashion", "2", "4", "H&M", "Jeronimo", "Kardashian", "4", "hhh", "13", "good", 
-        "5", "Biedronka", "Supermarket", "2", "5", "H&M", "Thomas", "Biden", "5", "cccc", "13", "good"
+
+
+     std::vector<std::string> expected{
+        "worker_id", "work_place", "name", "surname", "id", "shop", "category", "floor", "product_id", "product_name", "product_price", "quality",
+         "1", "Rossman", "Adam", "Waters", "1", "Rossman", "Beauty", "1", "1", "helmet", "599", "good",
+          "2", "Rossman", "Joseph", "Eilish", "2", "H&M", "Fashion", "1","2", "shirt", "10", "good",
+          "3", "Rossman", "Anna", "Scott", "3", "C&A", "Fashion", "1", "3", "bed", "13", "good",
+          "4", "H&M", "Jeronimo", "Kardashian", "4", "NewYorker", "Fashion", "2", "4", "hhh", "13", "good",
+          "5", "H&M", "Thomas", "Biden", "5", "Biedronka", "Supermarket", "2","5", "cccc", "13", "good"
      };
+
+
+    
     auto actual=flat(response.getTable());
     ASSERT_EQ(expected,actual);
 }
