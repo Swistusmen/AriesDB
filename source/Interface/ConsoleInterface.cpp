@@ -54,7 +54,7 @@ std::string ConsoleInterface::userInput(const int _member)
             break;
         }
         else
-        {
+        {const 
             buffer += input;
         }
         system("stty cooked");
@@ -93,7 +93,7 @@ void ConsoleInterface::readLogsHistory(const int member)
     logs=logger.getHistory(member);
 }
 
-const std::string &ConsoleInterface::getPreviousLog()
+std::string ConsoleInterface::getPreviousLog()
 {
     if(logs.empty()){
         return "";
@@ -106,7 +106,7 @@ const std::string &ConsoleInterface::getPreviousLog()
     return logs[logIndex];
 }
 
-const std::string &ConsoleInterface::getNextLog()
+std::string ConsoleInterface::getNextLog()
 {
     if(logs.empty()){
         return "";

@@ -14,13 +14,12 @@ class ConsoleInterface{
         ConsoleInterface(Logger& _logger);
 
         std::string userInput(const int _member);
-        //TODO:in the future replace with class reposnsible only for handling reposnses, and agreagate such a class within Intefrace classes
         void handleResponse(const CommandResult& );
     private:
         void revertLineToBeginState(std::string& buffer);
         void readLogsHistory(const int member);
-        const std::string& getPreviousLog();
-        const std::string& getNextLog();
+        std::string getPreviousLog();
+        std::string getNextLog();
         void removeCharFromConsole();
 
         Logger& logger;

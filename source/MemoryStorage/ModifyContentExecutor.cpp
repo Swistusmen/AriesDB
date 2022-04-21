@@ -22,7 +22,6 @@ bool ModifyContentExecutor::executeCommand(std::vector<std::unique_ptr<SQLComman
         auto val=getTable<Update>(commands);
         if(val.has_value())
         {
-
             auto &cCols = dynamic_cast<Update &>(*commands[0]).getConditionalColumns();
             auto &cVals = dynamic_cast<Update &>(*commands[0]).getConditionalValues();
             auto &cOps = dynamic_cast<Update &>(*commands[0]).getConditionalOperators();
@@ -32,7 +31,6 @@ bool ModifyContentExecutor::executeCommand(std::vector<std::unique_ptr<SQLComman
             pager.synchronizeDeviceStorageWithADBState();
             return true;
         }
-        return false;
     }
     break;
     case SQL::Code::DELETE:{
@@ -46,7 +44,10 @@ bool ModifyContentExecutor::executeCommand(std::vector<std::unique_ptr<SQLComman
             return true;
         }
     }break;
+    default:
+        return false;
     }
+    return false;
 }
 
 template <typename T>

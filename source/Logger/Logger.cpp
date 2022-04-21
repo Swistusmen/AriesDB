@@ -1,82 +1,88 @@
 #include "Logger.h"
 
-Logger::Logger(const std::string& saveLocation, const int noSlots)
+Logger::Logger(const std::string &saveLocation, const int noSlots)
 {
-    fileToSaveLocation=saveLocation;
+    fileToSaveLocation = saveLocation;
     loadLogs(fileToSaveLocation);
-    slots.resize(sizeof(Slot)*noSlots);
-    std::fill(slots.begin(),slots.end(),Slot());
+    slots.resize(sizeof(Slot) * noSlots);
+    std::fill(slots.begin(), slots.end(), Slot());
 }
 
-void Logger::loadLogs(const std::string& location){
-    //find a file, 
-    //open it
-    auto files=listFiles(getDirectoryPath(location));
-    const auto fileName=getFileNameFromPath(location);
-    auto logFile=std::find(files.begin(),files.end(),fileName);
-    if(logFile==files.end()){
+void Logger::loadLogs(const std::string &location)
+{
+    auto files = listFiles(getDirectoryPath(location));
+    const auto fileName = getFileNameFromPath(location);
+    auto logFile = std::find(files.begin(), files.end(), fileName);
+    if (logFile == files.end())
+    {
         return;
     }
     std::ifstream file;
     file.open(location);
-    if(!file.is_open()){
+    if (!file.is_open())
+    {
         return;
     }
-    //initialize a log
     std::string buffer{""};
     std::vector<std::string> lines;
-    while(std::getline(file,buffer)){
-        if(buffer==LogDelimiter){
+    while (std::getline(file, buffer))
+    {
+        if (buffer == LogDelimiter)
+        {
             createALogFromVector(lines);
-        }else{
+        }
+        else
+        {
             lines.push_back(buffer);
         }
     }
 }
 
-void Logger::createALogFromVector(std::vector<std::string>& lines)
+void Logger::createALogFromVector(std::vector<std::string> &lines)
 {
     SessionLog newLog(lines[0]);
-    newLog.isActive=false;
-    newLog.isSaved=true;
+    newLog.isActive = false;
+    newLog.isSaved = true;
     newLog.communicates.push_back(lines[1]);
     logs.push_back(std::move(newLog));
     lines.clear();
 }
 
-Logger::~Logger(){
+Logger::~Logger()
+{
     saveLogs(fileToSaveLocation);
 }
 
-void Logger::saveLogs(const std::string& location){
-    //another method
-    auto files=listFiles(getDirectoryPath(location));
-    const auto fileName=getFileNameFromPath(location);
-    auto logFile=std::find(files.begin(),files.end(),fileName);
-    if(logFile==files.end()){
+void Logger::saveLogs(const std::string &location)
+{
+    auto files = listFiles(getDirectoryPath(location));
+    const auto fileName = getFileNameFromPath(location);
+    auto logFile = std::find(files.begin(), files.end(), fileName);
+    if (logFile == files.end())
+    {
         std::ofstream file;
         file.open(location);
         file.close();
     }
     std::ofstream file;
-    file.open(location,std::ios_base::app);
-    if(!file.is_open())
+    file.open(location, std::ios_base::app);
+    if (file.is_open())
     {
-        return;
-    }
-    //end of another method
-    
-   for(auto& it: logs){
-       if(it.isActive==false&& it.isSaved==false){
-           it.isSaved=true;
-           saveSingleLog(it,file);
-       }
-   }
+        for (auto &it : logs)
+        {
+            if (it.isActive == false && it.isSaved == false)
+            {
+                it.isSaved = true;
+                saveSingleLog(it, file);
+            }
+        }
 
-   file.close();
+        file.close();
+    }
 }
 
-void Logger::saveSingleLog(const Logger::SessionLog& log, std::ofstream& file){
+void Logger::saveSingleLog(const Logger::SessionLog &log, std::ofstream &file)
+{
     /*
     member identifier
     firt command(member input)
@@ -85,93 +91,105 @@ void Logger::saveSingleLog(const Logger::SessionLog& log, std::ofstream& file){
     last action date
     ------------------\n
     */
-    file<<log.member<<'\n';
-    file<<log.communicates[0]<<'\n';
-    if(log.communicates.size()>1){
-        file<<log.communicates.size()-1<<'\n';
-        for(int i=1;i<log.communicates.size();i++){
-            file<<log.communicates[i]<<'\n';
+    file << log.member << '\n';
+    file << log.communicates[0] << '\n';
+    if (log.communicates.size() > 1)
+    {
+        file << log.communicates.size() - 1 << '\n';
+        for (int i = 1; i < log.communicates.size(); i++)
+        {
+            file << log.communicates[i] << '\n';
         }
     }
 
-    file<<dateToString(log.created)<<'\n';
-    file<<dateToString(log.lastAction)<<'\n';
-    file<<LogDelimiter<<'\n';
+    file << dateToString(log.created) << '\n';
+    file << dateToString(log.lastAction) << '\n';
+    file << LogDelimiter << '\n';
 }
 
-std::string Logger::dateToString(const std::chrono::steady_clock::time_point& time){
-    std::string result="TODO: save time format";
+std::string Logger::dateToString(const std::chrono::steady_clock::time_point &time)
+{
+    std::string result = "TODO: save time format";
     return result;
 }
 
-bool Logger::beginSession(const int memberId){
-    auto freeSlot=std::find_if(slots.begin(),slots.end(),[](const auto& it){return it.member==-1;});
-    const int index=std::distance(slots.begin(),freeSlot);
+bool Logger::beginSession(const int memberId)
+{
+    auto freeSlot = std::find_if(slots.begin(), slots.end(), [](const auto &it)
+                                 { return it.member == -1; });
+    const int index = std::distance(slots.begin(), freeSlot);
     slotsChecker.lock();
-    if(!isSlotFree(index)){
+    if (!isSlotFree(index))
+    {
         slotsChecker.unlock();
         return false;
     }
-    createInitLog(index,memberId);
+    createInitLog(index, memberId);
     slotsChecker.unlock();
     return true;
 }
 
-void Logger::endSession(const int memberId){
-    const int slotIndex=getSlotIndex(memberId);
-    logs[slots[slotIndex].logIndex].isActive=false;
-    slots[slotIndex].member=-1;
+void Logger::endSession(const int memberId)
+{
+    const int slotIndex = getSlotIndex(memberId);
+    logs[slots[slotIndex].logIndex].isActive = false;
+    slots[slotIndex].member = -1;
 }
 
-void Logger::log(const std::string& msg, const int memberId){
-    auto time=std::chrono::steady_clock::now();
-    
-    const int index=getLogIndex(memberId);
+void Logger::log(const std::string &msg, const int memberId)
+{
+    auto time = std::chrono::steady_clock::now();
+
+    const int index = getLogIndex(memberId);
     logs[index].communicates.emplace_back(msg);
-    logs[index].lastAction=time;
+    logs[index].lastAction = time;
 }
 
-std::vector<std::string> Logger::getHistory(const int memberId){
+std::vector<std::string> Logger::getHistory(const int memberId)
+{
     std::vector<std::string> history;
-    for(const auto& it: logs){
-        if(std::stoi(it.member)==memberId){
+    for (const auto &it : logs)
+    {
+        if (std::stoi(it.member) == memberId)
+        {
             history.push_back(it.communicates[0]);
         }
     }
     return history;
 }
 
-const Logger::SessionLog& Logger::getLog(const int memberId) const
+const Logger::SessionLog &Logger::getLog(const int memberId) const
 {
-    auto found=std::find_if(logs.cbegin(),logs.cend(),[memberId](const auto& log){
-        return log.member==std::to_string(memberId)&&log.isActive==true;
-    });
-    const int index=found-logs.begin();
+    auto found = std::find_if(logs.cbegin(), logs.cend(), [memberId](const auto &log)
+                              { return log.member == std::to_string(memberId) && log.isActive == true; });
+    const int index = found - logs.begin();
     return logs[index];
 }
 
 bool Logger::wasQuerySuccessful(const int memberId) const
 {
-    auto log=getLog(memberId);
-    return log.communicates.size()==1;
+    auto log = getLog(memberId);
+    return log.communicates.size() == 1;
 }
 
-bool Logger::isSlotFree(const int index) const{
-    return slots[index].member==-1;
+bool Logger::isSlotFree(const int index) const
+{
+    return slots[index].member == -1;
 }
 
 void Logger::createInitLog(const int index, const int memberId)
 {
-    slots[index].member=memberId;
+    slots[index].member = memberId;
     logs.emplace_back(std::to_string(memberId));
-    const int size=logs.size();
-    slots[index].logIndex=size==0?0:size-1;
+    const int size = logs.size();
+    slots[index].logIndex = size == 0 ? 0 : size - 1;
 }
 
 int Logger::getSlotIndex(const int memberId) const
 {
-    auto found=std::find_if(slots.begin(),slots.end(),[memberId](const auto& it){return it.member==memberId;});
-    return std::distance(slots.begin(),found);
+    auto found = std::find_if(slots.begin(), slots.end(), [memberId](const auto &it)
+                              { return it.member == memberId; });
+    return std::distance(slots.begin(), found);
 }
 
 int Logger::getLogIndex(const int memberId) const

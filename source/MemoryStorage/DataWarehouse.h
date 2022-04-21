@@ -9,8 +9,6 @@
 #include "ModifyStructureExecutor.h"
 #include "Pager/Pager.h"
 
-//high level interface for a database
-
 class DataWarehouse{
     public:
         DataWarehouse(Logger& _logger);

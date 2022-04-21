@@ -8,12 +8,6 @@
 #include <iostream>
 #include "../MemoryStorage/Pager/OSInterface/FileOperations.h"
 
-//TODO: save log date
-//TODO: beautify save log and load logs
-//TODO: save periodically
-//TODO: cleaning the buffer
-//TODO: store only subset of all commands stored in file
-
 class Logger{
 public:
     Logger(const std::string& saveLocation, const int noSlots);
