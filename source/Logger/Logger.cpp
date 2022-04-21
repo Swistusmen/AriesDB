@@ -107,9 +107,16 @@ void Logger::saveSingleLog(const Logger::SessionLog &log, std::ofstream &file)
     file << LogDelimiter << '\n';
 }
 
-std::string Logger::dateToString(const std::chrono::steady_clock::time_point &time)
+std::string Logger::dateToString(std::chrono::system_clock::time_point time)
 {
-    std::string result = "TODO: save time format";
+    const auto _tTime=std::chrono::system_clock::to_time_t(time);
+    const auto*_tTm=localtime(&_tTime);
+    const char _dateTimeFormat[]="%Y_%m_%d_%H:%M:%S";
+    char _timeStr[]="yyyy_mm_dd_HH-MM.SS.fff";
+    strftime(_timeStr,strlen(_timeStr),_dateTimeFormat,_tTm);
+
+    std::string result {_timeStr};
+    
     return result;
 }
 
@@ -138,7 +145,7 @@ void Logger::endSession(const int memberId)
 
 void Logger::log(const std::string &msg, const int memberId)
 {
-    auto time = std::chrono::steady_clock::now();
+    auto time = std::chrono::system_clock::now();
 
     const int index = getLogIndex(memberId);
     logs[index].communicates.emplace_back(msg);

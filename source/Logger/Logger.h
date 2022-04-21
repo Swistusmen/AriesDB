@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include "../MemoryStorage/Pager/OSInterface/FileOperations.h"
+#include <cstring>
 
 class Logger{
 public:
@@ -23,13 +24,13 @@ public:
     struct SessionLog{
         std::string member;
         std::vector<std::string> communicates;
-        const std::chrono::steady_clock::time_point created;
-        std::chrono::steady_clock::time_point lastAction;
+        const std::chrono::system_clock::time_point created;
+        std::chrono::system_clock::time_point lastAction;
         bool isActive{false};
         bool isSaved{false};
 
         SessionLog(const std::string& mem):member(mem),isActive(true),
-            created(std::chrono::steady_clock::now()),lastAction(created){}
+            created(std::chrono::system_clock::now()),lastAction(created){}
     };
 
     const SessionLog& getLog(const int memberId) const;
@@ -40,7 +41,7 @@ private:
     void loadLogs(const std::string& filename);
 
     void saveSingleLog(const Logger::SessionLog& log, std::ofstream& file);
-    std::string dateToString(const std::chrono::steady_clock::time_point& time);
+    std::string dateToString(std::chrono::system_clock::time_point time);
     void createInitLog(const int index, const int memberId);
     bool isSlotFree(const int index) const;
     int getSlotIndex(const int memberId) const;

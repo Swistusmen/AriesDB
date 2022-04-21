@@ -54,7 +54,7 @@ std::string ConsoleInterface::userInput(const int _member)
             break;
         }
         else
-        {const 
+        {
             buffer += input;
         }
         system("stty cooked");
