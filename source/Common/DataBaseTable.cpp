@@ -144,3 +144,21 @@ std::vector<std::list<std::vector<std::string>>::iterator> DataBaseTable::findRo
     
     return toOperateOn;
 }
+
+
+int getIndexOfColumn(const std::vector<std::array<std::string, 2>> &tableColumn, std::unique_ptr<Table> &table)
+{
+    if (table == nullptr)
+    {
+        return -1;
+    }
+    auto tables=splitString(table->tableName,'*');
+    auto matchingTableName=std::find(tables.begin(),tables.end(),tableColumn[0][0]);
+    int mapIndex = matchingTableName!=tables.end() ? 0 : 1;
+    auto found = std::find(table->columns.begin(), table->columns.end(), tableColumn[mapIndex][1]);
+    if (found == table->columns.end())
+    {
+        return -1;
+    }
+    return found - table->columns.begin();
+}
