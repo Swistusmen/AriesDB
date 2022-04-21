@@ -31,9 +31,9 @@ class make_comparator{
         const int noOperators=operators.size();
         for(int i=0;i<noOperators;i++){
             if(operators[i]=="<"){
-                functions.push_back(lessThan(toCompare[i]));
-            }else if(operators[i]==">"){
                 functions.push_back(greaterThan(toCompare[i]));
+            }else if(operators[i]==">"){
+                functions.push_back(lessThan(toCompare[i]));
             }else if(operators[i]=="="){
                 functions.push_back(equals(toCompare[i]));
             }

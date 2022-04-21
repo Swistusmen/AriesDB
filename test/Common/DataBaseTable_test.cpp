@@ -83,7 +83,7 @@ TEST(DATA_BASE_TABLE,DELETE_ROW_NOT_FULL_ROW_GIVEN_LOWER){
     getShopTable(table);
     DataBaseTable db (std::move(table));
     std::vector<std::string> toDelete{"2"};
-    db.findAndRemoveIfEquals({"id"},{">"},toDelete);
+    db.findAndRemoveIfEquals({"id"},{"<"},toDelete);
     std::vector<std::string>entities;
 
     auto tab=db.getTableDataForReadOnly();
@@ -100,7 +100,7 @@ TEST(DATA_BASE_TABLE,DELETE_ROW_NOT_FULL_ROW_GIVEN_LOWER_AND_EQUALS){
     getShopTable(table);
     DataBaseTable db (std::move(table));
     std::vector<std::string> toDelete{"Fashion","2"};
-    db.findAndRemoveIfEquals({"category","floor"},{"=",">"},toDelete);
+    db.findAndRemoveIfEquals({"category","floor"},{"=","<"},toDelete);
     std::vector<std::string>entities;
 
     auto tab=db.getTableDataForReadOnly();
@@ -117,7 +117,7 @@ TEST(DATA_BASE_TABLE,DELETE_ROW_NOT_FULL_ROW_GIVEN_GREATER_AND_EQUALS){
     getShopTable(table);
     DataBaseTable db (std::move(table));
     std::vector<std::string> toDelete{"Fashion","1"};
-    db.findAndRemoveIfEquals({"category","floor"},{"=","<"},toDelete);
+    db.findAndRemoveIfEquals({"category","floor"},{"=",">"},toDelete);
     std::vector<std::string>entities;
 
     auto tab=db.getTableDataForReadOnly();
@@ -151,7 +151,7 @@ TEST(DATA_BASE_TABLE,UPDATE_ROW_EQUALS_NOT_FULL_ROW_GIVEN_LOWER){
     getShopTable(table);
     DataBaseTable db (std::move(table));
     std::vector<std::string> toUpdate{"3"};
-    db.findRowsAndUpdate({"id"},{">"},toUpdate,{"xd"});
+    db.findRowsAndUpdate({"id"},{"<"},toUpdate,{"xd"});
     std::vector<std::string>entities;
 
     auto tab=db.getTableDataForReadOnly();
