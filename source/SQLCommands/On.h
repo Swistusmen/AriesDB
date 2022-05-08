@@ -1,10 +1,10 @@
 #pragma once
 #include <algorithm>
 #include <vector>
-#include "SQLCommand.h"
+#include "ReadCommand.h"
 #include "../Common/Algorithms.h"
 
-class On : public SQLCommand
+class On : public ReadCommand
 {
 public:
     using iter=std::list<std::vector<std::string>>;

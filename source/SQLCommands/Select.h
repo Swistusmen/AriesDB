@@ -1,9 +1,9 @@
 #pragma once
 
-#include "SQLCommand.h"
+#include "ReadCommand.h"
 #include <algorithm>
 
-class Select : public SQLCommand
+class Select : public ReadCommand
 {
 public:
     Select() = default;

@@ -14,6 +14,7 @@ public:
 
 private:
     Commands::ExecutionType deductExecutionType(const std::vector<std::unique_ptr<SQLCommand>>& _commands);
+    commandToExecute&& pack(std::vector<std::unique_ptr<SQLCommand>>&& commands,const Commands::ExecutionType type);
 
     Tokenizer tokenizer;
     Parser parser;

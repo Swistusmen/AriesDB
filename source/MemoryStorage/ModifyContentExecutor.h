@@ -1,9 +1,7 @@
 #pragma once
 
 #include "../SQLCommands/SQLCommand.h"
-#include "../SQLCommands/Into.h"
-#include "../SQLCommands/Update.h"
-#include "../SQLCommands/Delete.h"
+#include "../SQLCommands/WriteCommand.h"
 #include "../SQLCommands/ExecutionType.h"
 #include "Pager/Pager.h"
 #include "../Logger/Logger.h"
@@ -19,9 +17,6 @@ public:
     bool executeCommand(std::vector<std::unique_ptr<SQLCommand>> &&);
 
 private:
-    template <typename T>
-    std::optional<std::vector<DataBaseTable>::iterator> getTable(std::vector<std::unique_ptr<SQLCommand>> &);
-
     Logger &logger;
     Pager &pager;
 };

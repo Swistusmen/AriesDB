@@ -2,30 +2,24 @@
 
 Delete::Delete(Delete &&command)
 {
-    this->arguments=std::move(command.arguments);
+    this->columns=std::move(command.columns);
+    this->operators=std::move(command.operators);
+    this->values=std::move(command.values);
     this->tableName=std::move(command.tableName);
 }
 
-Delete& Delete::operator=(Delete && Delete) noexcept
+Delete& Delete::operator=(Delete && command) noexcept
 {
-    this->arguments=std::move(Delete.arguments);
-    this->tableName=std::move(Delete.tableName);
+    this->columns=std::move(command.columns);
+    this->operators=std::move(command.operators);
+    this->values=std::move(command.values);
+    this->tableName=std::move(command.tableName);
     return *this;
 }
 
 Delete::~Delete()
 {
 
-}
-
-std::unique_ptr<Table> Delete::execute(std::unique_ptr<Table>)
-{
-    return nullptr;
-}
-
-std::vector<std::unique_ptr<Table>> Delete::execute(const std::vector<DataBaseTable>& vectorOfTables)
-{
-    return {};
 }
 
 void Delete::addArgument(const std::string& word) 
@@ -44,4 +38,9 @@ void Delete::addArgument(const std::string& word)
         }
     }
 
+}
+
+bool Delete::execute(DataBaseTable& table)
+{
+    return static_cast<bool>(table.findAndRemoveIfEquals(columns,operators,values));
 }

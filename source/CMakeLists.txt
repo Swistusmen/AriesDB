@@ -15,6 +15,9 @@ include_directories(
 )
 
 add_executable(${PROJECT_NAME}
+
+
+
     main.cpp
 
     Common/Table.h 
@@ -58,7 +61,7 @@ add_executable(${PROJECT_NAME}
     MemoryStorage/ModifyContentExecutor.cpp
     MemoryStorage/ModifyStructureExecutor.h 
     MemoryStorage/ModifyStructureExecutor.cpp 
-    
+
     SQLCommands/On.cpp 
     SQLCommands/On.h 
     SQLCommands/From.cpp 
@@ -75,7 +78,14 @@ add_executable(${PROJECT_NAME}
     SQLCommands/Delete.cpp
     SQLCommands/Create.h 
     SQLCommands/Create.cpp
+    #SQLCommands/SQLCommand.h
+    
     SQLCommands/SQLCommand.h
+SQLCommands/WriteCommand.h 
+SQLCommands/ReadCommand.h 
+SQLCommands/ReadCommand.cpp 
+SQLCommands/ReorganizeCommand.h
+
     SQLCommands/SQLCommandCreator.h 
     SQLCommands/SQLCommandCreator.cpp
 )

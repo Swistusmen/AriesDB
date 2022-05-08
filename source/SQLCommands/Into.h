@@ -1,8 +1,8 @@
 #pragma once
 
-#include "SQLCommand.h"
+#include "WriteCommand.h"
 
-class Into: public SQLCommand{
+class Into: public WriteCommand{
 public:
     Into() = default;
     Into(Into &&command);
@@ -12,12 +12,10 @@ public:
     ~Into() override;
 
     SQL::Code getPriority() override { return priority; };
-    std::unique_ptr<Table> execute(std::unique_ptr<Table>);
-    std::vector<std::unique_ptr<Table>> execute(const std::vector<DataBaseTable>& vectorOfTables) override;
     void addArgument(const std::string& word) override;
-    const std::string& getTableName();
-
+    const std::vector<std::string>& getArguments(){return arguments;}
+    bool execute(DataBaseTable& ) override;
 private:
     static const SQL::Code priority= SQL::Code::INTO;
-    std::string tableName {""};
+    std::vector<std::string> arguments;
 };

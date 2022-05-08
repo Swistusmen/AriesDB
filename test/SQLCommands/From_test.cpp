@@ -4,7 +4,7 @@
 
 TEST(From, One_correct_table_in_db){
     ShopTable shop;
-    SQLCommand* from=new From;
+    ReadCommand* from=new From;
     from->addArgument("Shops");
     auto res=from->execute(std::move(shop.tab));
     ShopTable shop2;
@@ -13,7 +13,7 @@ TEST(From, One_correct_table_in_db){
 
 TEST(From, One_incorrect_table_in_db){
     ShopTable shop;
-    SQLCommand* from=new From;
+    ReadCommand* from=new From;
     from->addArgument("Tanks");
     auto res=from->execute(std::move(shop.tab));
     EXPECT_EQ(res,nullptr);

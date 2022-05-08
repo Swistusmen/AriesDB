@@ -10,50 +10,37 @@
 #include <algorithm>
 #include <optional>
 
+#include <variant>
+
+
 class SQLCommand
 {
 public:
     SQLCommand() = default;
     SQLCommand(const SQLCommand &command) = delete;
-    SQLCommand(SQLCommand &&command) { arguments = std::move(command.arguments); };
+    SQLCommand(SQLCommand &&command){log=std::move(command.log);};
 
-    SQLCommand &operator=(SQLCommand &&) noexcept;
-    SQLCommand &operator=(const SQLCommand &) = delete;
-
-    virtual ~SQLCommand()
-    {
-        arguments.clear();
+    SQLCommand &operator=(SQLCommand && command){
+        log=std::move(command.log);
+        return *this;
     };
 
-    virtual void addArgument(const std::string& word) { arguments.push_back(word); };
-    std::vector<std::string> &getArguments() { return arguments; };
+    SQLCommand &operator=(const SQLCommand &) = delete;
+
+    virtual ~SQLCommand(){};
+
+    virtual void addArgument(const std::string& word)=0;
+
     virtual SQL::Code getPriority() = 0;
-
-    virtual std::unique_ptr<Table> execute(std::unique_ptr<Table>) = 0;
-
-    //TODO: it need to be refactored, the stupidiest thing I've ever done
-    virtual std::vector<std::unique_ptr<Table>> execute(std::vector<std::unique_ptr<Table>> & tables)
-    {
-        std::vector<std::unique_ptr<Table>> vecOfValidTables;
-        for (auto &tab : tables)
-        {
-            auto res = this->execute(std::move(tab));
-            if (res != nullptr)
-            {
-                vecOfValidTables.push_back(std::move(res));
-            }
-        }
-        return vecOfValidTables;
-    }
-
-    virtual std::vector<std::unique_ptr<Table>> execute(const std::vector< DataBaseTable>& tableOfVectors){return {};};
 
     std::optional<std::string> getLog() const {
         if(log=="")
             return {};
         return log;
     };
+
 protected:
-    std::vector<std::string> arguments;
     std::string log{""};
 };
+
+using commandToExecute=std::variant<std::unique_ptr<SQLCommand>,std::vector<std::unique_ptr<SQLCommand>>>;

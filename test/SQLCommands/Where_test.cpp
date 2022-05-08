@@ -4,7 +4,7 @@
 
 TEST(Where, Where_equals_one_row){
     ShopTable shop;
-    SQLCommand* where=new Where;
+    ReadCommand* where=new Where;
     where->addArgument("category");
     where->addArgument("=");
     where->addArgument("Beauty");
@@ -23,7 +23,7 @@ TEST(Where, Where_equals_one_row){
 
 TEST(Where, Where_equals_multiple_rows){
     ShopTable shop;
-    SQLCommand* where=new Where;
+    ReadCommand* where=new Where;
     where->addArgument("category");
     where->addArgument("=");
     where->addArgument("Fashion");
@@ -45,7 +45,7 @@ TEST(Where, Where_equals_multiple_rows){
 
 TEST(Where, Where_greater_than_multiple_rows){
     ShopTable shop;
-    SQLCommand* where=new Where;
+    ReadCommand* where=new Where;
     where->addArgument("id");
     where->addArgument(">");
     where->addArgument("3");
@@ -67,7 +67,7 @@ TEST(Where, Where_greater_than_multiple_rows){
 
 TEST(Where, Where_less_than_multiple_rows){
     ShopTable shop;
-    SQLCommand* where=new Where;
+    ReadCommand* where=new Where;
     where->addArgument("id");
     where->addArgument("<");
     where->addArgument("3");
@@ -89,7 +89,7 @@ TEST(Where, Where_less_than_multiple_rows){
 
 TEST(Where, Where_greater_than_multiple_rows_2){
     ShopTable shop;
-    SQLCommand* where=new Where;
+    ReadCommand* where=new Where;
     where->addArgument("category");
     where->addArgument(">");
     where->addArgument("Beauty");
@@ -111,7 +111,7 @@ TEST(Where, Where_greater_than_multiple_rows_2){
 
 TEST(Where, Where_less_than_multiple_rows_2){
     ShopTable shop;
-    SQLCommand* where=new Where;
+    ReadCommand* where=new Where;
     where->addArgument("category");
     where->addArgument("<");
     where->addArgument("Beauty");
