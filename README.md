@@ -1,17 +1,34 @@
-# AriesDB
-My own implementation of SQL DB. 
+# AriesDB features
 
-### Next version- only refactoring and performance, no new features- develop 0.2
+SQL database created in educational purpose. 
 
-- better handle with save time
-- refactor-> improve code structure
-- better coverage with tests
-- switch to csv
+- CRUD operations
+- data are saved into csv  files
+- commands logging
+- for now only CLI application, no web support
+
+### Build
+
+```
+sh scripts/build.sh
+cd build
+./DB
+```
+### Test
+
+```
+sh scripts/unt_test.sh
+```
 
 ### Further version- develop 0.3
 
 -  add socket interface
 -  add administrative operations
+
+### Additional information
+
+- MIT license
+- lot of code here could be refactored,what I'm aware of, however I prefer to go forward than focus on fixing 
 
 
 
