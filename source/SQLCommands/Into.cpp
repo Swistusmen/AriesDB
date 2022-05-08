@@ -18,16 +18,6 @@ Into::~Into()
 
 }
 
-std::unique_ptr<Table> Into::execute(std::unique_ptr<Table>)
-{
-    return nullptr;
-}
-
-std::vector<std::unique_ptr<Table>> Into::execute(const std::vector<DataBaseTable>& vectorOfTables)
-{
-    return {};
-}
-
 void Into::addArgument(const std::string& word)
 {
     if(word=="("||word==")")
@@ -39,7 +29,9 @@ void Into::addArgument(const std::string& word)
     }
 }
 
-const std::string& Into::getTableName()
+bool Into::execute(DataBaseTable& table)
 {
-    return tableName;
+    auto rows=getArguments();
+    table.addRow(std::move(rows));
+    return true;
 }

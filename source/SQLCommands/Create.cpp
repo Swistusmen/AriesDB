@@ -18,16 +18,6 @@ Create::~Create()
 
 }
 
-std::unique_ptr<Table> Create::execute(std::unique_ptr<Table>)
-{
-    return nullptr;
-}
-
-std::vector<std::unique_ptr<Table>> Create::execute(const std::vector<DataBaseTable>& vectorOfTables)
-{
-    return {};
-}
-
 void Create::addArgument(const std::string& word){
     if(tableName==""){
         tableName=word;

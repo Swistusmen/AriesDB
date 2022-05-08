@@ -4,5 +4,5 @@ then
 fi
 mkdir build
 cd  build
-cmake -S .. -B .
+cmake -S ../source/ -B .
 make

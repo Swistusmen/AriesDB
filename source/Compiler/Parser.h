@@ -11,15 +11,6 @@
 #include "Grammar.h"
 #include <functional>
 
-//1. Sprawdz control values:
-// ma w sobie expr-> wykonaj je
-// else usun
-//2. Sprawdz komendy prekompilacji
-// komendy nie bedace rzeczywistymi funkcjami np join
-// przetworz je
-//3. Znajdz komendy zagniezdzone tj 2x On itd
-// tutaj potrzebna prekompilacja
-
 class Parser{
     public:
     Parser(Logger& _logger):logger(_logger){}

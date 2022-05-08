@@ -12,6 +12,12 @@
 #include "../../source/SQLCommands/Create.cpp"
 #include "../../source/SQLCommands/Delete.cpp"
 
+#include "../../source/SQLCommands/ReadCommand.h"
+#include "../../source/SQLCommands/ReadCommand.cpp"
+#include "../../source/SQLCommands/WriteCommand.h"
+#include "../../source/SQLCommands/ReorganizeCommand.h"
+
+
 #include <optional>
 
 TEST(SQL_COMMAND_CREATOR,CREATE_FROM){

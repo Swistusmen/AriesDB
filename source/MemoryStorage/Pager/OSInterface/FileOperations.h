@@ -9,11 +9,13 @@
 #include <algorithm>
 #include <memory>
 #include <optional>
+#include <iostream>
 
 #include "../../../Common/Table.h"
 #include "../../../Common/Algorithms.h"
 
 #define PATH_SEPARATOR "/"
+#define WORDS_SEPARATOR ','
 
 std::optional<std::filesystem::path> saveATableIntoATextFile(std::filesystem::path path,const std::string &filename, const Table& table);
 
@@ -24,5 +26,7 @@ std::vector<std::string> listFiles(std::filesystem::path path);
 std::string getDirectoryPath(const std::string& filepath);
 
 std::string getFileNameFromPath(const std::string& filepath);
+
+void deleteFile(std::filesystem::path path,const std::string &filename);
 
 #endif

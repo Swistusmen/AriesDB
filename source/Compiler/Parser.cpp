@@ -2,7 +2,6 @@
 
 std::vector<std::unique_ptr<SQLCommand>> Parser::convertTokensIntoCommands(std::vector<Grammar::Token>& tokens)
 {
-    //TODO: add nested expressions
     precompileTokens(tokens);
     auto commands=initializeSqlCommands(tokens);
     sortCommands(commands);

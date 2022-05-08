@@ -5,8 +5,8 @@
 #include "../SQLCommands/ExecutionType.h"
 #include "Pager/Pager.h"
 #include "../Logger/Logger.h"
-#include <optional>
 
+#include <optional>
 #include <memory>
 
 class ModifyStructureExecutor

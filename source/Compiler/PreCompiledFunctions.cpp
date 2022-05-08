@@ -2,7 +2,7 @@
 
 void preCreate::operator()(std::vector<Grammar::Token>& tokens,Logger& logger)
 {
-    tokens.erase(tokens.begin()+1); //create table ( ) -deleting table
+    tokens.erase(tokens.begin()+1); 
     for(int i=0;i<tokens.size();i++){
         tokens[i].number=i;
     }
@@ -100,11 +100,11 @@ void preJoin::operator()(std::vector<Grammar::Token>& tokens,Logger& logger)
     const int fromIndex=from-tokens.begin();
 
     std::vector<Grammar::Token> toCarry;
-    tokens.erase(tokens.begin()+currentIndex); //deleting join
+    tokens.erase(tokens.begin()+currentIndex); 
     
     while(tokens[currentIndex].lexem==Grammar::Lexem::Argument){
         toCarry.emplace_back(tokens[currentIndex]);
-        tokens.erase(tokens.begin()+currentIndex); //arguments will be carried from after join to after from
+        tokens.erase(tokens.begin()+currentIndex); 
     }
     
     if(toCarry.empty()){

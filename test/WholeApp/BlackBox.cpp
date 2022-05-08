@@ -16,12 +16,22 @@
 #include <memory>
 #include <utility>
 
+/*
+When creating test table to enable deletion after tests, it should have *_test name so that bash script could delete it
+*/
+
 class App: public ::testing::Test{
     public:
      App():logger("/home/michal/Documents/Programming/Database/Logs/test.txt",1),db(logger),compiler(logger){
          db.setDeviceStroageLocation("/home/michal/Documents/Programming/Database/source/Tables");
      }   
+
     protected:
+
+    void query (std::string input){
+        auto commands = compiler.compile(input);
+        db.executeQuery(std::move(commands));
+    }
 
     DataWarehouse db;
     Compiler compiler;
@@ -101,13 +111,101 @@ TEST_F(App,SIMPLE_SELECT_ALL_FROM_SHOPS_JOIN_WORKERS_ON_ID_EQUALS_ID_JOIN_ON_PRO
     std::string input="select * from shops join workers on shops.id = workers.worker_id join products on workers.worker_id = products.product_id";
     auto commands = compiler.compile(input);
     auto response = db.executeQuery(std::move(commands));
+
+
+     std::vector<std::string> expected{
+        "worker_id", "work_place", "name", "surname", "id", "shop", "category", "floor", "product_id", "product_name", "product_price", "quality",
+         "1", "Rossman", "Adam", "Waters", "1", "Rossman", "Beauty", "1", "1", "helmet", "599", "good",
+          "2", "Rossman", "Joseph", "Eilish", "2", "H&M", "Fashion", "1","2", "shirt", "10", "good",
+          "3", "Rossman", "Anna", "Scott", "3", "C&A", "Fashion", "1", "3", "bed", "13", "good",
+          "4", "H&M", "Jeronimo", "Kardashian", "4", "NewYorker", "Fashion", "2", "4", "hhh", "13", "good",
+          "5", "H&M", "Thomas", "Biden", "5", "Biedronka", "Supermarket", "2","5", "cccc", "13", "good"
+     };
+
+
+    
+    auto actual=flat(response.getTable());
+    ASSERT_EQ(expected,actual);
+}
+
+TEST_F(App,CREATE_INSERT_SELECT){
+    std::string input="create table cartoons_test, cartoon_id, name, year";
+    auto commands = compiler.compile(input);
+    db.executeQuery(std::move(commands));
+
+
+    query("insert into cartoons_test values 0, Scooby-Doo, 1980");
+
+    query("insert into cartoons_test values 1, Naruto, 1998");
+
+    std::string input3="select * from cartoons_test";
+    auto commands3 = compiler.compile(input3);
+    auto response = db.executeQuery(std::move(commands3));
+
     std::vector<std::string> expected{
-        "id", "shop", "category", "floor", "worker_id", "work_place", "name", "surname", "product_id", "product_name", "product_price", "quality", 
-        "1", "Rossman", "Beauty", "1", "1", "Rossman", "Adam", "Waters", "1", "helmet", "599", "good", 
-        "2", "H&M", "Fashion", "1", "2", "Rossman", "Joseph", "Eilish", "2", "shirt", "10", "good", 
-        "3", "C&A", "Fashion", "1", "3", "Rossman", "Anna", "Scott", "3", "bed", "13", "good", 
-        "4", "NewYorker", "Fashion", "2", "4", "H&M", "Jeronimo", "Kardashian", "4", "hhh", "13", "good", 
-        "5", "Biedronka", "Supermarket", "2", "5", "H&M", "Thomas", "Biden", "5", "cccc", "13", "good"
+        "cartoon_id", "name", "year",
+        "0", "Scooby-Doo", "1980",
+        "1", "Naruto", "1998"
+     };
+    auto actual=flat(response.getTable());
+    ASSERT_EQ(expected,actual);
+}
+
+TEST_F(App,CREATE_INSERT_UPDATE_SELECT){
+    std::string input="create table movies_test, movie_id, name, genre, year";
+    auto commands = compiler.compile(input);
+    db.executeQuery(std::move(commands));
+
+    query("insert into movies_test values 0, Scooby-Doo, kids, 1980");
+
+    query("insert into movies_test values 1, Naruto, anime, 1998");
+
+    query("insert into movies_test values 2, Batman, thriller, 2007");
+
+    query("insert into movies_test values 3, Fight-club, comedy, 1998");
+
+    query("update movies_test set genre = thriller where name = Fight-club");
+    
+    std::string input3="select * from movies_test";
+    auto commands3 = compiler.compile(input3);
+    auto response = db.executeQuery(std::move(commands3));
+
+    std::vector<std::string> expected{
+        "movie_id", "name", "genre", "year",
+        "0", "Scooby-Doo", "kids", "1980",
+        "1", "Naruto", "anime","1998",
+        "2", "Batman", "thriller", "2007",
+        "3", "Fight-club", "thriller", "1998"
+     };
+    auto actual=flat(response.getTable());
+    ASSERT_EQ(expected,actual);
+}
+
+TEST_F(App,CREATE_INSERT_DELETE_SELECT){
+    std::string input="create table films_test, movie_id, name, genre, year";
+    auto commands = compiler.compile(input);
+    db.executeQuery(std::move(commands));
+
+
+    query("insert into films_test values 0, Scooby-Doo, kids, 1980");
+
+    query("insert into films_test values 1, Naruto, anime, 1998");
+
+    query("insert into films_test values 2, Batman, thriller, 2007");
+
+    query("insert into films_test values 3, Fight-club, comedy, 1998");
+
+    query("delete from films_test where movie_id = 2");
+    
+    std::string input3="select * from films_test";
+    auto commands3 = compiler.compile(input3);
+    auto response = db.executeQuery(std::move(commands3));
+
+    std::vector<std::string> expected{
+        "movie_id", "name", "genre", "year",
+        "0", "Scooby-Doo", "kids", "1980",
+        "1", "Naruto", "anime","1998",
+        "3", "Fight-club", "comedy", "1998"
      };
     auto actual=flat(response.getTable());
     ASSERT_EQ(expected,actual);

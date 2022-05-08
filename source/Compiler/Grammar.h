@@ -21,11 +21,7 @@ namespace Grammar
         bool isUsed{false};
     };
 
-
-    //must be processed in compile time
     const std::vector<std::string> controlSigns{
-     //   "(",
-     //   ")",
         "*"};
 
     Lexem identifyLexem(const std::string &expr);

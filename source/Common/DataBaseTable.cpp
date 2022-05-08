@@ -97,8 +97,6 @@ int DataBaseTable::findAndUpdate(const std::vector<std::string> &conditionalColu
     int updates = 0;
     for (auto &it : toUpdate)
     {
-        try
-        {
             std::vector<std::string> copyOfRow = *it;
             const int noNewValues = newValues.size();
             for (int i = 0; i < noNewValues; i++)
@@ -107,12 +105,6 @@ int DataBaseTable::findAndUpdate(const std::vector<std::string> &conditionalColu
             }
             std::lock_guard<std::mutex>lock(modificationMutex);
             *it = copyOfRow;
-        }
-        catch (const std::exception &e)
-        {
-            std::cerr << e.what() << '\n';
-            continue;
-        }
         updates++;
         lastChangedDate = std::chrono::system_clock::now();
     }
@@ -143,4 +135,22 @@ std::vector<std::list<std::vector<std::string>>::iterator> DataBaseTable::findRo
     }
     
     return toOperateOn;
+}
+
+
+int getIndexOfColumn(const std::vector<std::array<std::string, 2>> &tableColumn, std::unique_ptr<Table> &table)
+{
+    if (table == nullptr)
+    {
+        return -1;
+    }
+    auto tables=splitString(table->tableName,'*');
+    auto matchingTableName=std::find(tables.begin(),tables.end(),tableColumn[0][0]);
+    int mapIndex = matchingTableName!=tables.end() ? 0 : 1;
+    auto found = std::find(table->columns.begin(), table->columns.end(), tableColumn[mapIndex][1]);
+    if (found == table->columns.end())
+    {
+        return -1;
+    }
+    return found - table->columns.begin();
 }

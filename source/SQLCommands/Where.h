@@ -1,9 +1,8 @@
 #pragma once
 
-#include "SQLCommand.h"
-#include "SQLExceptions.h"
+#include "ReadCommand.h"
 
-class Where : public SQLCommand
+class Where : public ReadCommand
 {
 public:
     Where() = default;

@@ -5,7 +5,7 @@
 TEST(On, On_correct_join_two_correct_tables){
     ShopTable shop;
     WorkersTable workers;
-    SQLCommand* on=new On;
+    ReadCommand* on=new On;
     on->addArgument("Shops.id");
     on->addArgument("Workers.worker_id");
     std::vector<std::unique_ptr<Table>> input;

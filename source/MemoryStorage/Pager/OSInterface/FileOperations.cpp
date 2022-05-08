@@ -9,18 +9,24 @@ std::optional<std::filesystem::path> saveATableIntoATextFile(std::filesystem::pa
     if (file.is_open())
     {
         std::for_each(table.columns.begin(), table.columns.end(), [&file](auto a)
-                      { file << a << " "; });
+                      { file << a << WORDS_SEPARATOR; });
         file << '\n';
         std::for_each(table.rows.begin(), table.rows.end(), [&file](auto row)
                       {
                           std::for_each(row.begin(), row.end(), [&file](auto value)
-                                        { file << value + ' '; });
+                                        { file << value + WORDS_SEPARATOR; });
                           file << '\n';
                       });
         file.close();
         return path;
     }
     return {};
+}
+
+void deleteFile(std::filesystem::path path,const std::string &filename)
+{
+    std::cout<<path.string() + PATH_SEPARATOR + filename<<std::endl;
+    std::filesystem::remove(path.string() + PATH_SEPARATOR + filename);
 }
 
 std::optional<Table> loadAFile(std::filesystem::path path,const std::string& filename)
@@ -34,10 +40,10 @@ std::optional<Table> loadAFile(std::filesystem::path path,const std::string& fil
         Table output(rawFilenName,"1");
         std::string buffer;
         std::getline(file,buffer);
-        output.columns=std::move(splitString(buffer,' '));
+        output.columns=std::move(splitString(buffer,WORDS_SEPARATOR));
         buffer="";
         while(std::getline(file,buffer)){
-                output.rows.push_back(std::move(splitString(buffer,' ')));
+                output.rows.push_back(std::move(splitString(buffer,WORDS_SEPARATOR)));
                 buffer="";
         }
         file.close();

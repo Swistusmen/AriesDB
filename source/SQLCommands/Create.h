@@ -1,8 +1,8 @@
 #pragma once
 
-#include "SQLCommand.h"
+#include "ReorganizeCommand.h"
 
-class Create: public SQLCommand{
+class Create: public ReorganizeCommand{
 public:
     Create() = default;
     Create(Create &&command);
@@ -12,12 +12,9 @@ public:
     ~Create() override;
 
     SQL::Code getPriority() override { return priority; };
-    std::unique_ptr<Table> execute(std::unique_ptr<Table>);
-    std::vector<std::unique_ptr<Table>> execute(const std::vector<DataBaseTable>& vectorOfTables) override;
+
     void addArgument(const std::string& word) override;
-    const std::string& getTableName(){return tableName;};
 
 private:
     static const SQL::Code priority= SQL::Code::CREATE;
-    std::string tableName {""};
 };

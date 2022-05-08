@@ -6,3 +6,4 @@ make
 ./Tests
 cd ..
 rm -r build_test
+rm -r source/Tables/*_test.csv

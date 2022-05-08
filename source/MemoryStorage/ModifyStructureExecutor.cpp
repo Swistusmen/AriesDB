@@ -7,7 +7,7 @@ bool ModifyStructureExecutor::executeCommand(std::vector<std::unique_ptr<SQLComm
     case SQL::Code::CREATE:
     {
         auto tableName = dynamic_cast<Create&>(*commands[0]).getTableName();
-        const auto& columns=commands[0]->getArguments();
+        const auto& columns=dynamic_cast<Create&>(*commands[0]).getArguments();
         Table tab;
         tab.tableName=tableName;
         tab.columns=columns;

@@ -1,5 +1,4 @@
 #include "Where.h"
-#include<iostream>
 
 Where::Where(Where &&command)
 {

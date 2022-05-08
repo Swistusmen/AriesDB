@@ -1,6 +1,7 @@
 #pragma once
 #include "Table.h"
 #include "make_comparator.h"
+#include "Algorithms.h"
 #include <string>
 #include <vector>
 #include <tuple>
@@ -8,6 +9,7 @@
 #include <chrono>
 #include <mutex>
 #include <iostream>
+#include <memory>
 
 class DataBaseTable
 {
@@ -44,3 +46,6 @@ private:
     std::mutex modificationMutex;
     Table table;
 };
+
+
+int getIndexOfColumn(const std::vector<std::array<std::string, 2>> &tableColumn, std::unique_ptr<Table> &table);

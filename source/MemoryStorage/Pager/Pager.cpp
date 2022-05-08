@@ -30,7 +30,7 @@ void Pager::synchronizeDeviceStorageWithADBState()
 
     for (const auto &tab : toUpdate)
     {
-        saveATableIntoATextFile(currentDataBasePath, tab->getTableName()+".txt", tab->getTableDataForReadOnly());
+        saveATableIntoATextFile(currentDataBasePath, tab->getTableName()+fileExtenstion, tab->getTableDataForReadOnly());
     }
     lastUpdateTime = std::chrono::system_clock::now();
 }

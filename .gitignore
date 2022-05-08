@@ -5,3 +5,5 @@ source/build
 source/debug
 Logs/logs.txt
 .vscode
+build/
+debug/

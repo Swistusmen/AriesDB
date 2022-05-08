@@ -5,7 +5,7 @@
 TEST(Select, Select_single_column)
 {
     ShopTable shop;
-    SQLCommand *select = new Select;
+    ReadCommand *select = new Select;
     select->addArgument("shop");
     auto res = select->execute(std::move(shop.tab));
 
@@ -22,7 +22,7 @@ TEST(Select, Select_single_column)
 TEST(Select, Select_two_columns)
 {
     ShopTable shop;
-    SQLCommand *select = new Select;
+    ReadCommand *select = new Select;
     select->addArgument("shop");
     select->addArgument("category");
     auto res = select->execute(std::move(shop.tab));

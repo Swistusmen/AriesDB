@@ -2,27 +2,27 @@
 
 Update::Update(Update &&command)
 {
-    this->arguments = std::move(command.arguments);
+    conditionColumns=std::move(command.conditionColumns);
+    conditionOperators=std::move(command.conditionOperators);
+    conditionValues=std::move(command.conditionValues);
+    values=std::move(command.values);
+    valuesColumns=std::move(command.valuesColumns);
+    tableName=std::move(command.tableName);
 }
 
 Update &Update::operator=(Update &&command) noexcept
 {
-    this->arguments = std::move(command.arguments);
+    conditionColumns=std::move(command.conditionColumns);
+    conditionOperators=std::move(command.conditionOperators);
+    conditionValues=std::move(command.conditionValues);
+    values=std::move(command.values);
+    valuesColumns=std::move(command.valuesColumns);
+    tableName=std::move(command.tableName);
     return *this;
 }
 
 Update::~Update()
 {
-}
-
-std::unique_ptr<Table> Update::execute(std::unique_ptr<Table>)
-{
-    return nullptr;
-}
-
-std::vector<std::unique_ptr<Table>> Update::execute(const std::vector<DataBaseTable> &vectorOfTables)
-{
-    return {};
 }
 
 void Update::addArgument(const std::string &word)
@@ -46,11 +46,6 @@ void Update::addArgument(const std::string &word)
         addToValues(word);
         noValuesAfterWhichAddToConditionNotArgumentsNorTableName--;
     }
-}
-
-const std::string &Update::getTableName()
-{
-    return tableName;
 }
 
 void Update::addToConditional(const std::string& word)
@@ -83,4 +78,10 @@ void Update::addToValues(const std::string& word){
                 values.push_back(word);
             }
         }
+}
+
+
+bool Update::execute(DataBaseTable& table)
+{
+    return static_cast<bool>(table.findAndUpdate(conditionColumns,conditionOperators,conditionValues,valuesColumns,values));
 }

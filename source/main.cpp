@@ -8,7 +8,7 @@
 
 int main()
 {
-    Logger logger("/home/michal/Documents/Programming/Database/Logs/logs.txt",1);
+    Logger logger("/home/michal/Documents/Programming/Database/Logs/logs.txt",NUMBER_OF_SLOTS);
     Compiler compiler(logger);
     DataWarehouse dataWarehouse(logger);
     ConsoleInterface console(logger);

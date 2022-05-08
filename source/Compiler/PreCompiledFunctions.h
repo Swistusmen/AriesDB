@@ -6,6 +6,12 @@
 #include <string>
 #include <algorithm>
 
+/*
+Classes are not virtual cause:
+1. They are small
+2. They are created in builder method,so in fact using virtual class would cause the could will look nicer,
+but would probably slow it
+*/
 class preCreate{
     public:
         preCreate(const Grammar::Token& _token):

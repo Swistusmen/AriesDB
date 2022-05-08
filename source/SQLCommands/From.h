@@ -1,9 +1,8 @@
 #pragma once
 
-#include "SQLCommand.h"
-#include <exception>
+#include "ReadCommand.h"
 
-class From : public SQLCommand
+class From : public ReadCommand
 {
 public:
     From() = default;

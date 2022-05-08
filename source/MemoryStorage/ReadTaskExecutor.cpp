@@ -12,13 +12,13 @@ std::unique_ptr<Table> ReadTaskExecutor::execute(std::vector<std::unique_ptr<SQL
     if(readOnlyTable.empty()){
         logger.log("Database is empty",0);
     }
-    auto temporaryTables = commands.at(0)->execute(readOnlyTable);
+    auto temporaryTables = (dynamic_cast<ReadCommand&>(*commands.at(0))).execute(readOnlyTable);
     if(commands.at(0)->getLog().has_value()){
         logger.log(commands.at(0)->getLog().value(),0);
     }
     for (auto it = commands.begin() + 1; it != commands.end(); it++)
     {
-        temporaryTables = (*it)->execute(temporaryTables);
+        temporaryTables = (dynamic_cast<ReadCommand&>(**it)).execute(temporaryTables);
         if((*it)->getLog().has_value()){
             logger.log((*it)->getLog().value(),0);
             return nullptr;
