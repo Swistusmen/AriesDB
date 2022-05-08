@@ -97,8 +97,6 @@ int DataBaseTable::findAndUpdate(const std::vector<std::string> &conditionalColu
     int updates = 0;
     for (auto &it : toUpdate)
     {
-        try
-        {
             std::vector<std::string> copyOfRow = *it;
             const int noNewValues = newValues.size();
             for (int i = 0; i < noNewValues; i++)
@@ -107,12 +105,6 @@ int DataBaseTable::findAndUpdate(const std::vector<std::string> &conditionalColu
             }
             std::lock_guard<std::mutex>lock(modificationMutex);
             *it = copyOfRow;
-        }
-        catch (const std::exception &e)
-        {
-            std::cerr << e.what() << '\n';
-            continue;
-        }
         updates++;
         lastChangedDate = std::chrono::system_clock::now();
     }

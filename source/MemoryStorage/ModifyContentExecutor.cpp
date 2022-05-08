@@ -10,7 +10,6 @@ bool ModifyContentExecutor::executeCommand(std::vector<std::unique_ptr<SQLComman
                                      
     
     if(foundedTable!=tables.end()){
-        std::cout<<"YES\n";
         command->execute(*foundedTable);
         pager.synchronizeDeviceStorageWithADBState();
         delete command;

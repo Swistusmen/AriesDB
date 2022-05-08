@@ -5,7 +5,6 @@ std::pair<std::vector<std::unique_ptr<SQLCommand>>,Commands::ExecutionType> Comp
     auto tokens = tokenizer.tokenizeInputString(inputString);
     auto commands=parser.convertTokensIntoCommands(tokens);
     auto executionType=deductExecutionType(commands);
-    //TODO: create object which holds this and is transferable to the executor, next refactor
     return {std::move(commands),executionType};
 }
 

@@ -83,6 +83,5 @@ void Update::addToValues(const std::string& word){
 
 bool Update::execute(DataBaseTable& table)
 {
-    std::cout<<"UPDATE UPDATE\n";
     return static_cast<bool>(table.findAndUpdate(conditionColumns,conditionOperators,conditionValues,valuesColumns,values));
 }
