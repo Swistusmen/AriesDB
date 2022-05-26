@@ -8,6 +8,7 @@
 #include "../Common/CommandResult.h"
 
 void printTable(const std::unique_ptr<Table>& tab);
+std::string stringifyTable(const std::unique_ptr<Table>&tab);
 
 class ConsoleInterface{
     public:

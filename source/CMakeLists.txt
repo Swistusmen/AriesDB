@@ -5,6 +5,11 @@ set(CMAKE_CXX_COMPILER)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
+set(Boost_USE_STATIC_LIBS OFF)
+set(Boost_USE_MULTITHREAD ON)
+find_package(Boost 1.74.0 REQUIRED system thread regex)
+set(USED_LIBS ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_REGEX_LIBRARY})
+
 include_directories(
     Interface
     SQLCommands
@@ -15,8 +20,6 @@ include_directories(
 )
 
 add_executable(${PROJECT_NAME}
-
-
 
     main.cpp
 
@@ -43,6 +46,8 @@ add_executable(${PROJECT_NAME}
     Interface/Interface.h 
     Interface/ConsoleInterface.h
     Interface/ConsoleInterface.cpp
+    Interface/WebInterface.h 
+    Interface/WebInterface.cpp
 
     Logger/Logger.h 
     Logger/Logger.cpp
@@ -78,16 +83,18 @@ add_executable(${PROJECT_NAME}
     SQLCommands/Delete.cpp
     SQLCommands/Create.h 
     SQLCommands/Create.cpp
-    #SQLCommands/SQLCommand.h
     
     SQLCommands/SQLCommand.h
-SQLCommands/WriteCommand.h 
-SQLCommands/ReadCommand.h 
-SQLCommands/ReadCommand.cpp 
-SQLCommands/ReorganizeCommand.h
+    SQLCommands/WriteCommand.h 
+    SQLCommands/ReadCommand.h 
+    SQLCommands/ReadCommand.cpp 
+    SQLCommands/ReorganizeCommand.h
 
     SQLCommands/SQLCommandCreator.h 
     SQLCommands/SQLCommandCreator.cpp
+
+    TCPServer/Server.h 
+    TCPServer/Server.cpp
 )
 
-#target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${USED_LIBS})
