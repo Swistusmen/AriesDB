@@ -1,0 +1,12 @@
+1.Dodać interfejs sieciowy
+
+-ogarnięcie jak zrobić sensowny refactor
+
+-obiekt serwera TCP, server leci na osobnym wątku, przyjmuje wiadomość (tych obiekt<ow moze by<c kilka)
+-do obiektu ma referencje jakiś obiekt X mający też referencje do Compilera
+-obiekt X odpytuje servery czy potrzeba reakcji, jeśli tak, odpala compilator i wszystko leci jak było
+
+
+-Przerobienie Loggera do możliwości logowania danych z Interfejsu sieciowego
+
+-Przerobienie programu na obiektowy (z pętli while)

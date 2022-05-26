@@ -3,6 +3,7 @@
 #include "Compiler/Compiler.h"
 #include "MemoryStorage/DataWarehouse.h"
 #include "Logger/Logger.h"
+#include "TCPServer/Server.h"
 #include <iostream>
 #include <filesystem>
 
