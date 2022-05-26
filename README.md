@@ -36,16 +36,16 @@ sh scripts/unt_test.sh
 
 ### TODO:
 
--improve receiving and sending messages
--add JenkinsPipeline
--add port in cli
--clean code
+- improve receiving and sending messages
+- add JenkinsPipeline
+- add port in cli
+- clean code
 
 ### FUTURE IDEAS:
 
--accounts
--security
--reading .sql files
+- accounts
+- security
+- reading .sql files
 
 
 
