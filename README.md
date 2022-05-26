@@ -6,6 +6,7 @@ SQL database created in educational purpose.
 - data are saved into csv  files
 - commands logging
 - for now only CLI application, no web support
+- Can be build as webServer or CLI
 
 ### Build
 
@@ -20,15 +21,24 @@ cd build
 sh scripts/unt_test.sh
 ```
 
-### Further version- develop 0.3
-
--  add socket interface
--  add administrative operations
-
 ### Additional information
 
 - MIT license
 - lot of code here could be refactored,what I'm aware of, however I prefer to go forward than focus on fixing 
+- Program runs by default as webserver, after commenting WEB_SERVER flag in Config.h it can run as CLI app
+
+###TODO:
+
+-improve receiving and sending messages
+-add JenkinsPipeline
+-add port in cli
+-clean code
+
+###FUTURE IDEAS:
+
+-accounts
+-security
+-reading .sql files
 
 
 
