@@ -32,5 +32,4 @@ class CommandResult{
         std::unique_ptr<Table> output {nullptr};
         Result result;
         Commands::ExecutionType executionType;
-
 };

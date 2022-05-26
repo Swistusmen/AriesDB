@@ -10,8 +10,10 @@ void tcpConnection::start(){
           boost::asio::placeholders::error,
           boost::asio::placeholders::bytes_transferred));
 
+        std::cout<<buf.data()<<std::endl;
         server.aquisitRequest(buf.data());
         auto message=server.waitUntilRequestProcessed();
+        std::cout<<message<<std::endl;
         server.refresh();
 
         boost::asio::async_write(socket,boost::asio::buffer(message),
@@ -25,7 +27,7 @@ tcpConnection::tcpConnection(boost::asio::io_context& io, Server& _server):socke
 
 //tcpServer
 
-tcpServer::tcpServer(boost::asio::io_context& _context, const int _port, Server & _server):server(_server),context(_context),port(_port),acceptor(context,tcp::endpoint(tcp::v4(),port))
+tcpServer::tcpServer(boost::asio::io_context& _context, const int _port, Server & _server):server(_server),context(_context),port(_port),acceptor(context,tcp::endpoint(tcp::v4(),_port))
 {
     accept_connections();
 }
@@ -63,6 +65,7 @@ void Server::communication()
     server=std::make_unique<tcpServer>(io_context,port,*this);
     boost::thread t(boost::bind(&boost::asio::io_context::run, &io_context));
     io_context.run();
+    t.join();
 }
 
 void Server::aquisitRequest(std::string request)

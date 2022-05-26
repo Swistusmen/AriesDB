@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREAD ON)
-find_package(Boost 1.70.0 REQUIRED system thread regex)
+find_package(Boost 1.74.0 REQUIRED system thread regex)
 set(USED_LIBS ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_REGEX_LIBRARY})
 
 include_directories(
@@ -46,6 +46,8 @@ add_executable(${PROJECT_NAME}
     Interface/Interface.h 
     Interface/ConsoleInterface.h
     Interface/ConsoleInterface.cpp
+    Interface/WebInterface.h 
+    Interface/WebInterface.cpp
 
     Logger/Logger.h 
     Logger/Logger.cpp

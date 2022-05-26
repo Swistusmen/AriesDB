@@ -164,3 +164,20 @@ void printTable(const std::unique_ptr<Table>& tab)
                                     { std::cout << element << " "; });
                       std::cout << std::endl; });
 }
+
+std::string stringifyTable(const std::unique_ptr<Table>&tab)
+{
+    std::string result{""};
+
+    std::for_each(tab->columns.begin(), tab->columns.end(), [&result](auto a)
+                  { result+= a + " "; });
+    result+="\n";
+
+    std::for_each(tab->rows.begin(), tab->rows.end(), [&result](auto row)
+                  {
+                      std::for_each(row.begin(), row.end(), [&result](auto element)
+                                    { result+= element + " "; });
+                      result+="\n"; });
+
+    return result;
+}
