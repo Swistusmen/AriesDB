@@ -10,6 +10,7 @@ void tcpConnection::start(){
           boost::asio::placeholders::error,
           boost::asio::placeholders::bytes_transferred));
 
+        //TODO: trim strings- enable to get letters, numbers, *, , . ( ) ! = > < remove other characters
         std::cout<<buf.data()<<std::endl;
         server.aquisitRequest(buf.data());
         auto message=server.waitUntilRequestProcessed();

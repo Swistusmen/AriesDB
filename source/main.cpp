@@ -4,6 +4,7 @@
 #include "MemoryStorage/DataWarehouse.h"
 #include "Logger/Logger.h"
 #include "TCPServer/Server.h"
+#include "Interface/CLIInterface.h"
 #include <iostream>
 #include <filesystem>
 
@@ -11,8 +12,12 @@
 #include "Interface/WebInterface.h"
 #endif
 
-int main()
+int main(int argc,char*argv[])
 {
+    const int _portNumber=processInputArguments(argc,argv);
+    if(_portNumber==-1){
+        return;
+    }
     Logger logger("/home/michal/Documents/Programming/Database/Logs/logs.txt",NUMBER_OF_SLOTS);
     Compiler compiler(logger);
     DataWarehouse dataWarehouse(logger);
@@ -20,7 +25,7 @@ int main()
     std::string input{""};
 #if defined(WEB_INTERFACE)
     WebInterface console(logger);
-    Server server(9000);
+    Server server(_portNumber);
     server.run();
     while(true)
     {
