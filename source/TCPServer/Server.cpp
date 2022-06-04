@@ -21,14 +21,11 @@ void tcpConnection::start(){
           boost::asio::placeholders::error,
           boost::asio::placeholders::bytes_transferred));
 
-        //TODO: trim strings- enable to get letters, numbers, *, , . ( ) ! = > < remove other characters
         std::string request=buf.data();
         auto trimmed=trimMessage(request);
-        std::cout<<buf.data()<<std::endl;
         std::cout<<trimmed<<std::endl;
         server.aquisitRequest(trimmed);
         auto message=server.waitUntilRequestProcessed();
-        std::cout<<message<<std::endl;
         server.refresh();
 
         boost::asio::async_write(socket,boost::asio::buffer(message),
@@ -91,6 +88,7 @@ void Server::aquisitRequest(std::string request)
 void Server::setResponse(const std::string& response)
 {
     requestResponse[1]=response;
+    requestResponse[0]="";
 }
 
 std::optional<std::string> Server::waitForRequest()
@@ -106,6 +104,7 @@ std::string Server::waitUntilRequestProcessed()
     while(true){
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
         if(requestResponse[1]!=""){
+            requestResponse[0]="";
             return requestResponse[1];
         }
     }
