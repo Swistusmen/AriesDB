@@ -16,7 +16,7 @@ int main(int argc,char*argv[])
 {
     const int _portNumber=processInputArguments(argc,argv);
     if(_portNumber==-1){
-        return;
+        return 0;
     }
     Logger logger("/home/michal/Documents/Programming/Database/Logs/logs.txt",NUMBER_OF_SLOTS);
     Compiler compiler(logger);

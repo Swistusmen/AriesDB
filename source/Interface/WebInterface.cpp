@@ -27,4 +27,5 @@ std::string WebInterface::handleResponse(const CommandResult& result )
             }
         }
     }
+    return "error\n";
     }

@@ -4,21 +4,23 @@
 
 static int processInputArguments(int argc,char* argv[]){
     if (argc==1){
-        std::cout<<"Running on 3306";
+        printf("Running on 3306\n");
         return 3306;
     }
-    if(argv[2]=="--h"||argv[2]=="--help"){
+    std::string arg2(argv[1]);
+    
+    if(arg2=="--h"||arg2=="--h"){
         std::cout<<"--port / --p [] - gives the port number\n nothing will cause running on 3306\n";
-    }else if(argv[2]=="--p"||argv[2]=="--port"){
+    }else if(arg2=="--p"||arg2=="--port"&&argc==3){
         try{
-        const int _portNumber=std::stoi(argv[3]);
-        std::cout<<"Running on "+_portNumber<<std::endl;
+        std::string arg3(argv[2]);
+        const int _portNumber=std::stoi(arg3);
+        printf("Running on %d \n",_portNumber);
         return _portNumber;
         }catch(const std::exception& e){
             std::cout<<"Port number argument is not a number";
         }
-    }else{
-        std::cout<<"Error, AriesDB could not run, for more helprun --help";
-        return -1;
     }
+    std::cout<<"Error, AriesDB could not run, for more helprun h\n";
+    return -1;
 }
