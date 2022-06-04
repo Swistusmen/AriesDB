@@ -1,5 +1,16 @@
 #include "Server.h"
 
+std::string trimMessage(const std::string& msg){
+    const int len=msg.size();
+    std::string trimmedMessage{""};
+    for(const auto& it:msg){
+        if(it>47&&it<90||it>96&&it<123||it=='*'||it==','|| it==' '){
+            trimmedMessage+=it;
+        }
+    }
+    return trimmedMessage;
+}
+
 //tcpConnection
 
 void tcpConnection::start(){
@@ -10,10 +21,11 @@ void tcpConnection::start(){
           boost::asio::placeholders::error,
           boost::asio::placeholders::bytes_transferred));
 
-        std::cout<<buf.data()<<std::endl;
-        server.aquisitRequest(buf.data());
+        std::string request=buf.data();
+        auto trimmed=trimMessage(request);
+        std::cout<<trimmed<<std::endl;
+        server.aquisitRequest(trimmed);
         auto message=server.waitUntilRequestProcessed();
-        std::cout<<message<<std::endl;
         server.refresh();
 
         boost::asio::async_write(socket,boost::asio::buffer(message),
@@ -76,6 +88,7 @@ void Server::aquisitRequest(std::string request)
 void Server::setResponse(const std::string& response)
 {
     requestResponse[1]=response;
+    requestResponse[0]="";
 }
 
 std::optional<std::string> Server::waitForRequest()
@@ -91,6 +104,7 @@ std::string Server::waitUntilRequestProcessed()
     while(true){
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
         if(requestResponse[1]!=""){
+            requestResponse[0]="";
             return requestResponse[1];
         }
     }

@@ -16,6 +16,8 @@ class Server;
 
 using boost::asio::ip::tcp;
 
+std::string trimMessage(const std::string& msg);
+
 class tcpConnection: public boost::enable_shared_from_this<tcpConnection>
 {
 public:
