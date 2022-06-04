@@ -1,5 +1,16 @@
 #include "Server.h"
 
+std::string trimMessage(const std::string& msg){
+    const int len=msg.size();
+    std::string trimmedMessage{""};
+    for(const auto& it:msg){
+        if(it>47&&it<90||it>96&&it<123||it=='*'||it==','|| it==' '){
+            trimmedMessage+=it;
+        }
+    }
+    return trimmedMessage;
+}
+
 //tcpConnection
 
 void tcpConnection::start(){
@@ -11,8 +22,11 @@ void tcpConnection::start(){
           boost::asio::placeholders::bytes_transferred));
 
         //TODO: trim strings- enable to get letters, numbers, *, , . ( ) ! = > < remove other characters
+        std::string request=buf.data();
+        auto trimmed=trimMessage(request);
         std::cout<<buf.data()<<std::endl;
-        server.aquisitRequest(buf.data());
+        std::cout<<trimmed<<std::endl;
+        server.aquisitRequest(trimmed);
         auto message=server.waitUntilRequestProcessed();
         std::cout<<message<<std::endl;
         server.refresh();
