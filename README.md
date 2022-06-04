@@ -28,6 +28,13 @@ cd build
 sh scripts/unt_test.sh
 ```
 
+### Commands
+
+```
+--p --port [port number] by default 3306
+--h --help help
+```
+
 ### Additional information
 
 - MIT license
@@ -36,10 +43,10 @@ sh scripts/unt_test.sh
 
 ### TODO:
 
-- improve receiving and sending messages
+- add accounts
+- add administrative options (like create new db, change location etc)
+- improve autosave
 - add JenkinsPipeline
-- add port in cli
-- clean code
 
 ### FUTURE IDEAS:
 
